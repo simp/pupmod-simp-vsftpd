@@ -165,11 +165,14 @@ class vsftpd::conf (
   include 'vsftpd'
 
   file { '/etc/vsftpd/vsftpd.conf':
-    owner    => 'root',
-    group    => versioncmp(simp_version(),'5') ? { '-1' => 'vsftpd', default => 'ftp'},
-    mode     => '0640',
-    content  => template('vsftpd/vsftpd.conf.erb'),
-    notify   => Service['vsftpd']
+    owner   => 'root',
+    group   => versioncmp(simp_version(),'5') ? {
+        '-1'    => 'vsftpd',
+        default => 'ftp'
+      },
+    mode    => '0640',
+    content => template('vsftpd/vsftpd.conf.erb'),
+    notify  => Service['vsftpd']
   }
 
   # Only apply the IPTables rules if iptables is an included class.
