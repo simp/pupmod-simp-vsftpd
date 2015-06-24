@@ -32,29 +32,29 @@ class vsftpd {
   }
 
   file { '/etc/vsftpd/ftpusers':
-    owner    => 'root',
-    group    => $l_group,
-    mode     => '0640',
-    source   => 'puppet:///modules/vsftpd/ftpusers',
-    notify   => Service['vsftpd'],
-    require  => Package['vsftpd']
+    owner   => 'root',
+    group   => $l_group,
+    mode    => '0640',
+    source  => 'puppet:///modules/vsftpd/ftpusers',
+    notify  => Service['vsftpd'],
+    require => Package['vsftpd']
   }
 
   file { '/etc/vsftpd/user_list':
-    owner    => 'root',
-    group    => $l_group,
-    mode     => '0640',
-    source   => 'puppet:///modules/vsftpd/user_list',
-    notify   => Service['vsftpd'],
-    require  => Package['vsftpd']
+    owner   => 'root',
+    group   => $l_group,
+    mode    => '0640',
+    source  => 'puppet:///modules/vsftpd/user_list',
+    notify  => Service['vsftpd'],
+    require => Package['vsftpd']
   }
 
   file { '/etc/pam.d/vsftpd':
-    owner    => 'root',
-    group    => 'root',
-    mode     => '0640',
-    source   => 'puppet:///modules/vsftpd/vsftpd.pam',
-    require  => Package['vsftpd']
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0640',
+    source  => 'puppet:///modules/vsftpd/vsftpd.pam',
+    require => Package['vsftpd']
   }
 
   group { $l_group:
