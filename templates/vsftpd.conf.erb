@@ -5,339 +5,339 @@
 -%>
 
 <% if @ssl_enable then -%>
-<%   if !@allow_anon_ssl.to_s.empty? then -%>
+<%   if @allow_anon_ssl then -%>
 allow_anon_ssl=<%= bool_translate[@allow_anon_ssl] %>
 <%   end -%>
-<%   if !@force_anon_data_ssl.to_s.empty? then -%>
+<%   if @force_anon_data_ssl then -%>
 force_anon_data_ssl=<%= bool_translate[@force_anon_data_ssl] %>
 <%   end -%>
-<%   if !@force_anon_logins_ssl.to_s.empty? then -%>
+<%   if @force_anon_logins_ssl then -%>
 force_anon_logins_ssl=<%= bool_translate[@force_anon_logins_ssl] %>
 <%   end -%>
-<%   if !@force_local_data_ssl.to_s.empty? then -%>
+<%   if @force_local_data_ssl then -%>
 force_local_data_ssl=<%= bool_translate[@force_local_data_ssl] %>
 <%   end -%>
-<%   if !@force_local_logins_ssl.to_s.empty? then -%>
+<%   if @force_local_logins_ssl then -%>
 force_local_logins_ssl=<%= bool_translate[@force_local_logins_ssl] %>
 <%   end -%>
 ssl_sslv2=<%= bool_translate[@ssl_sslv2] %>
 ssl_sslv3=<%= bool_translate[@ssl_sslv3] %>
 ssl_tlsv1=<%= bool_translate[@ssl_tlsv1] %>
-<%   if !@ssl_ciphers.to_s.empty? then -%>
+<%   if @ssl_ciphers then -%>
 ssl_ciphers=<%= Array(@ssl_ciphers).join(":") %>
 <%   end -%>
-<%   if !@dsa_cert_file.to_s.empty? then -%>
+<%   if @dsa_cert_file then -%>
 dsa_cert_file=<%= @dsa_cert_file %>
 <%   end -%>
-<%   if !@dsa_private_key_file.to_s.empty? then -%>
+<%   if @dsa_private_key_file then -%>
 dsa_private_key_file=<%= @dsa_private_key_file %>
 <%   end -%>
-<%   if !@rsa_cert_file.to_s.empty? then -%>
+<%   if @rsa_cert_file then -%>
 rsa_cert_file=<%= @rsa_cert_file %>
 <%   end -%>
-<%   if !@rsa_private_key_file.to_s.empty? then -%>
+<%   if @rsa_private_key_file then -%>
 rsa_private_key_file=<%= @rsa_private_key_file %>
 <%   end -%>
 <% end -%>
-<% if !@anon_mkdir_write_enable.to_s.empty? then -%>
+<% if @anon_mkdir_write_enable then -%>
 anon_mkdir_write_enable=<%= bool_translate[@anon_mkdir_write_enable] %>
 <% end -%>
-<% if !@anon_other_write_enable.to_s.empty? then -%>
+<% if @anon_other_write_enable then -%>
 anon_other_write_enable=<%= bool_translate[@anon_other_write_enable] %>
 <% end -%>
-<% if !@anon_upload_enable.to_s.empty? then -%>
+<% if @anon_upload_enable then -%>
 anon_upload_enable=<%= bool_translate[@anon_upload_enable] %>
 <% end -%>
-<% if !@anon_world_readable_only.to_s.empty? then -%>
+<% if @anon_world_readable_only then -%>
 anon_world_readable_only=<%= bool_translate[@anon_world_readable_only] %>
 <% end -%>
-<% if !@anonymous_enable.to_s.empty? then -%>
+<% if @anonymous_enable then -%>
 anonymous_enable=<%= bool_translate[@anonymous_enable] %>
 <% end -%>
-<% if !@ascii_download_enable.to_s.empty? then -%>
+<% if @ascii_download_enable then -%>
 ascii_download_enable=<%= bool_translate[@ascii_download_enable] %>
 <% end -%>
-<% if !@ascii_upload_enable.to_s.empty? then -%>
+<% if @ascii_upload_enable then -%>
 ascii_upload_enable=<%= bool_translate[@ascii_upload_enable] %>
 <% end -%>
-<% if !@async_abor_enable.to_s.empty? then -%>
+<% if @async_abor_enable then -%>
 async_abor_enable=<%= bool_translate[@async_abor_enable] %>
 <% end -%>
-<% if !@background.to_s.empty? then -%>
+<% if @background then -%>
 background=<%= bool_translate[@background] %>
 <% end -%>
-<% if !@check_shell.to_s.empty? then -%>
+<% if @check_shell then -%>
 check_shell=<%= bool_translate[@check_shell] %>
 <% end -%>
-<% if !@chmod_enable.to_s.empty? then -%>
+<% if @chmod_enable then -%>
 chmod_enable=<%= bool_translate[@chmod_enable] %>
 <% end -%>
-<% if !@chown_uploads.to_s.empty? then -%>
+<% if @chown_uploads then -%>
 chown_uploads=<%= bool_translate[@chown_uploads] %>
-<%   if !@chown_username.to_s.empty? then -%>
+<%   if @chown_username then -%>
 chown_username=<%= @chown_username %>
 <%   end -%>
 <% end -%>
-<% if !@chroot_list_enable.to_s.empty? then -%>
+<% if @chroot_list_enable then -%>
 chroot_list_enable=<%= bool_translate[@chroot_list_enable] %>
 <% end -%>
-<% if !@chroot_local_user.to_s.empty? then -%>
+<% if @chroot_local_user then -%>
 chroot_local_user=<%= bool_translate[@chroot_local_user] %>
 <% end -%>
-<% if !@connect_from_port_20.to_s.empty? then -%>
+<% if @connect_from_port_20 then -%>
 connect_from_port_20=<%= bool_translate[@connect_from_port_20] %>
 <% end -%>
-<% if !@deny_email_enable.to_s.empty? then -%>
+<% if @deny_email_enable then -%>
 deny_email_enable=<%= bool_translate[@deny_email_enable] %>
 <% end -%>
-<% if !@dirlist_enable.to_s.empty? then -%>
+<% if @dirlist_enable then -%>
 dirlist_enable=<%= bool_translate[@dirlist_enable] %>
 <% end -%>
-<% if !@dirmessage_enable.to_s.empty? then -%>
+<% if @dirmessage_enable then -%>
 dirmessage_enable=<%= bool_translate[@dirmessage_enable] %>
-<%   if !@message_file.to_s.empty? then -%>
+<%   if @message_file then -%>
 message_file=<%= @message_file %>
 <%   end -%>
 <% end -%>
-<% if !@download_enable.to_s.empty? then -%>
+<% if @download_enable then -%>
 download_enable=<%= bool_translate[@download_enable] %>
 <% end -%>
-<% if !@dual_log_enable.to_s.empty? then -%>
+<% if @dual_log_enable then -%>
 dual_log_enable=<%= bool_translate[@dual_log_enable] %>
 <% end -%>
-<% if !@force_dot_files.to_s.empty? then -%>
+<% if @force_dot_files then -%>
 force_dot_files=<%= bool_traslate[@force_dot_files] %>
 <% end -%>
-<% if !@guest_enable.to_s.empty? then -%>
+<% if @guest_enable then -%>
 guest_enable=<%= bool_translate[@guest_enable] %>
 <% end -%>
-<% if !@hide_ids.to_s.empty? then -%>
+<% if @hide_ids then -%>
 hide_ids=<%= bool_translate[@hide_ids] %>
 <% end -%>
-<% if !@listen_ipv6.to_s.empty? && @ipv6_enabled.eql?('true') then -%>
+<% if @listen_ipv6 && @ipv6_enabled.eql?('true') then -%>
 listen_ipv6=<%= bool_translate[@listen_ipv6] %>
-<% elsif !@listen_ipv4.to_s.empty? then -%>
+<% elsif @listen_ipv4 then -%>
 listen=<%= bool_translate[@listen_ipv4] %>
 <% end -%>
-<% if !@local_enable.to_s.empty? then -%>
+<% if @local_enable then -%>
 local_enable=<%= bool_translate[@local_enable] %>
 <% end -%>
-<% if !@lock_upload_files.to_s.empty? then -%>
+<% if @lock_upload_files then -%>
 lock_upload_files=<%= bool_translate[@lock_upload_files] %>
 <% end -%>
-<% if !@log_ftp_protocol.to_s.empty? then -%>
+<% if @log_ftp_protocol then -%>
 log_ftp_protocol=<%= bool_translate[@log_ftp_protocol] %>
 <% end -%>
-<% if !@ls_recurse_enable.to_s.empty? then -%>
+<% if @ls_recurse_enable then -%>
 ls_recurse_enable=<%= bool_translate[@ls_recurse_enable] %>
 <% end -%>
-<% if !@mdtm_write.to_s.empty? then -%>
+<% if @mdtm_write then -%>
 mdtm_write=<%= bool_translate[@mdtm_write] %>
 <% end -%>
-<% if !@no_anon_password.to_s.empty? then -%>
+<% if @no_anon_password then -%>
 no_anon_password=<%= bool_translate[@no_anon_password] %>
 <% end -%>
-<% if !@no_log_lock.to_s.empty? then -%>
+<% if @no_log_lock then -%>
 no_log_lock=<%= bool_translate[@no_log_lock] %>
 <% end -%>
-<% if !@one_process_model.to_s.empty? then -%>
+<% if @one_process_model then -%>
 one_process_model=<%= bool_translate[@one_process_model] %>
 <% end -%>
-<% if !@passwd_chroot_enable.to_s.empty? then -%>
+<% if @passwd_chroot_enable then -%>
 passwd_chroot_enable=<%= bool_translate[@passwd_chroot_enable] %>
 <% end -%>
-<% if !@pasv_addr_resolve.to_s.empty? then -%>
+<% if @pasv_addr_resolve then -%>
 pasv_addr_resolve=<%= bool_translate[@pasv_addr_resolve] %>
 <% end -%>
-<% if !@pasv_enable.to_s.empty? then -%>
+<% if @pasv_enable then -%>
 pasv_enable=<%= bool_translate[@pasv_enable] %>
 <% end -%>
-<% if !@pasv_promiscuous.to_s.empty? then -%>
+<% if @pasv_promiscuous then -%>
 pasv_promiscuous=<%= bool_translate[@pasv_promiscuous] %>
 <% end -%>
-<% if !@port_enable.to_s.empty? then -%>
+<% if @port_enable then -%>
 port_enable=<%= bool_translate[@port_enable] %>
 <% end -%>
-<% if !@port_promiscuous.to_s.empty? then -%>
+<% if @port_promiscuous then -%>
 port_promiscuous=<%= bool_translate[@port_promiscuous] %>
 <% end -%>
-<% if !@reverse_lookup_enable.to_s.empty? then -%>
+<% if @reverse_lookup_enable then -%>
 reverse_lookup_enable=<%= bool_translate[@reverse_lookup_enable] %>
 <% end -%>
-<% if !@run_as_launching_user.to_s.empty? then -%>
+<% if @run_as_launching_user then -%>
 run_as_launching_user=<%= bool_translate[@run_as_launching_user] %>
 <% end -%>
-<% if !@secure_email_list_enable.to_s.empty? then -%>
+<% if @secure_email_list_enable then -%>
 secure_email_list_enable=<%= bool_translate[@secure_email_list_enable] %>
 <% end -%>
-<% if !@session_support.to_s.empty? then -%>
+<% if @session_support then -%>
 session_support=<%= bool_translate[@session_support] %>
 <% end -%>
-<% if !@setproctitle_enable.to_s.empty? then -%>
+<% if @setproctitle_enable then -%>
 setproctitle_enable=<%= bool_translate[@setproctitle_enable] %>
 <% end -%>
-<% if !@ssl_enable.to_s.empty? then -%>
+<% if @ssl_enable then -%>
 ssl_enable=<%= bool_translate[@ssl_enable] %>
 <% end -%>
-<% if !@syslog_enable.to_s.empty? then -%>
+<% if @syslog_enable then -%>
 syslog_enable=<%= bool_translate[@syslog_enable] %>
 <% end -%>
-<% if !@tcp_wrappers.to_s.empty? then -%>
+<% if @tcp_wrappers then -%>
 tcp_wrappers=<%= bool_translate[@tcp_wrappers] %>
 <% end -%>
-<% if !@text_userdb_names.to_s.empty? then -%>
+<% if @text_userdb_names then -%>
 text_userdb_names=<%= bool_translate[@text_userdb_names] %>
 <% end -%>
-<% if !@tilde_user_enable.to_s.empty? then -%>
+<% if @tilde_user_enable then -%>
 tilde_user_enable=<%= bool_translate[@tilde_user_enable] %>
 <% end -%>
-<% if !@use_localtime.to_s.empty? then -%>
+<% if @use_localtime then -%>
 use_localtime=<%= bool_translate[@use_localtime] %>
 <% end -%>
-<% if !@use_sendfile.to_s.empty? then -%>
+<% if @use_sendfile then -%>
 use_sendfile=<%= bool_translate[@use_sendfile] %>
 <% end -%>
-<% if !@userlist_deny.to_s.empty? then -%>
+<% if @userlist_deny then -%>
 userlist_deny=<%= bool_translate[@userlist_deny] %>
 <% end -%>
-<% if !@userlist_enable.to_s.empty? then -%>
+<% if @userlist_enable then -%>
 userlist_enable=<%= bool_translate[@userlist_enable] %>
 <% end -%>
-<% if !@userlist_log.to_s.empty? then -%>
+<% if @userlist_log then -%>
 userlist_log=<%= bool_translate[@userlist_log] %>
 <% end -%>
-<% if !@virtual_use_local_privs.to_s.empty? then -%>
+<% if @virtual_use_local_privs then -%>
 virtual_use_local_privs=<%= bool_translate[@virtual_use_local_privs] %>
 <% end -%>
-<% if !@write_enable.to_s.empty? then -%>
+<% if @write_enable then -%>
 write_enable=<%= bool_translate[@write_enable] %>
 <% end -%>
-<% if !@xferlog_enable.to_s.empty? then -%>
+<% if @xferlog_enable then -%>
 xferlog_enable=<%= bool_translate[@xferlog_enable] %>
 <% end -%>
-<% if !@xferlog_std_format.to_s.empty? then -%>
+<% if @xferlog_std_format then -%>
 xferlog_std_format=<%= bool_translate[@xferlog_std_format] %>
 <% end -%>
-<% if !@accept_timeout.to_s.empty? then -%>
+<% if @accept_timeout then -%>
 accept_timeout=<%= @accept_timeout %>
 <% end -%>
-<% if !@anon_max_rate.to_s.empty? then -%>
+<% if @anon_max_rate then -%>
 anon_max_rate=<%= @anon_max_rate %>
 <% end -%>
-<% if !@anon_umask.to_s.empty? then -%>
+<% if @anon_umask then -%>
 anon_umask=<%= @anon_umask %>
 <% end -%>
-<% if !@connect_timeout.to_s.empty? then -%>
+<% if @connect_timeout then -%>
 connect_timeout=<%= @connect_timeout %>
 <% end -%>
-<% if !@data_connection_timeout.to_s.empty? then -%>
+<% if @data_connection_timeout then -%>
 data_connection_timeout=<%= @data_connection_timeout %>
 <% end -%>
-<% if !@delay_failed_login.to_s.empty? then -%>
+<% if @delay_failed_login then -%>
 delay_failed_login=<%= @delay_failed_login %>
 <% end -%>
-<% if !@delay_successful_login.to_s.empty? then -%>
+<% if @delay_successful_login then -%>
 delay_successful_login=<%= @delay_successful_login %>
 <% end -%>
-<% if !@file_open_mode.to_s.empty? then -%>
+<% if @file_open_mode then -%>
 file_open_mode=<%= @file_open_mode %>
 <% end -%>
-<% if !@ftp_data_port.to_s.empty? then -%>
+<% if @ftp_data_port then -%>
 ftp_data_port=<%= @ftp_data_port %>
 <% end -%>
-<% if !@idle_session_timeout.to_s.empty? then -%>
+<% if @idle_session_timeout then -%>
 idle_session_timeout=<%= @idle_session_timeout %>
 <% end -%>
-<% if !@listen_port.to_s.empty? then -%>
+<% if @listen_port then -%>
 listen_port=<%= @listen_port %>
 <% end -%>
-<% if !@local_max_rate.to_s.empty? then -%>
+<% if @local_max_rate then -%>
 local_max_rate=<%= @local_max_rate %>
 <% end -%>
-<% if !@local_umask.to_s.empty? then -%>
+<% if @local_umask then -%>
 local_umask=<%= @local_umask %>
 <% end -%>
-<% if !@max_clients.to_s.empty? then -%>
+<% if @max_clients then -%>
 max_clients=<%= @max_clients %>
 <% end -%>
-<% if !@max_login_fails.to_s.empty? then -%>
+<% if @max_login_fails then -%>
 max_login_fails=<%= @max_login_fails %>
 <% end -%>
-<% if !@max_per_ip.to_s.empty? then -%>
+<% if @max_per_ip then -%>
 max_per_ip=<%= @max_per_ip %>
 <% end -%>
-<% if !@pasv_max_port.to_s.empty? then -%>
+<% if @pasv_max_port then -%>
 pasv_max_port=<%= @pasv_max_port %>
 <% end -%>
-<% if !@pasv_min_port.to_s.empty? then -%>
+<% if @pasv_min_port then -%>
 pasv_min_port=<%= @pasv_min_port %>
 <% end -%>
-<% if !@trans_chunk_size.to_s.empty? then -%>
+<% if @trans_chunk_size then -%>
 trans_chunk_size=<%= @trans_chunk_size %>
 <% end -%>
-<% if !@anon_root.to_s.empty? then -%>
+<% if @anon_root then -%>
 anon_root=<%= @anon_root %>
 <% end -%>
-<% if !@banned_email_file.to_s.empty? then -%>
+<% if @banned_email_file then -%>
 banned_email_file=<%= @banned_email_file %>
 <% end -%>
-<% if !@banner_file.to_s.empty? then -%>
+<% if @banner_file then -%>
 banner_file=<%= @banner_file %>
 <% end -%>
-<% if !@chroot_list_file.to_s.empty? then -%>
+<% if @chroot_list_file then -%>
 chroot_list_file=<%= @chroot_list_file %>
 <% end -%>
-<% if !@cmds_allowed.to_s.empty? then -%>
+<% if @cmds_allowed then -%>
 cmds_allowed=<%= @cmds_allowed %>
 <% end -%>
-<% if !@deny_file.to_s.empty? then -%>
+<% if @deny_file then -%>
 deny_file=<%= @deny_file %>
 <% end -%>
-<% if !@email_password_file.to_s.empty? then -%>
+<% if @email_password_file then -%>
 email_password_file=<%= @email_password_file %>
 <% end -%>
-<% if !@ftp_username.to_s.empty? then -%>
+<% if @ftp_username then -%>
 ftp_username=<%= @ftp_username %>
 <% end -%>
-<% if !@guest_username.to_s.empty? then -%>
+<% if @guest_username then -%>
 guest_username=<%= @guest_username %>
 <% end -%>
-<% if !@hide_file.to_s.empty? then -%>
+<% if @hide_file then -%>
 hide_file=<%= @hide_file %>
 <% end -%>
-<% if !@listen_address.to_s.empty? then -%>
+<% if @listen_address then -%>
 listen_address=<%= @listen_address %>
 <% end -%>
-<% if !@listen_address6.to_s.empty? then -%>
+<% if @listen_address6 then -%>
 listen_address6=<%= @listen_address6 %>
 <% end -%>
-<% if !@local_root.to_s.empty? then -%>
+<% if @local_root then -%>
 local_root=<%= @local_root %>
 <% end -%>
-<% if !@nopriv_user.to_s.empty? then -%>
+<% if @nopriv_user then -%>
 nopriv_user=<%= @nopriv_user %>
 <% end -%>
-<% if !@pam_service_name.to_s.empty? then -%>
+<% if @pam_service_name then -%>
 pam_service_name=<%= @pam_service_name %>
 <% end -%>
-<% if !@pasv_address.to_s.empty? then -%>
+<% if @pasv_address then -%>
 pasv_address=<%= @pasv_address %>
 <% end -%>
-<% if !@secure_chroot_dir.to_s.empty? then -%>
+<% if @secure_chroot_dir then -%>
 secure_chroot_dir=<%= @secure_chroot_dir %>
 <% end -%>
-<% if !@user_config_dir.to_s.empty? then -%>
+<% if @user_config_dir then -%>
 user_config_dir=<%= @user_config_dir %>
 <% end -%>
-<% if !@user_sub_token.to_s.empty? then -%>
+<% if @user_sub_token then -%>
 user_sub_token=<%= @user_sub_token %>
 <% end -%>
-<% if !@userlist_file.to_s.empty? then -%>
+<% if @userlist_file then -%>
 userlist_file=<%= @userlist_file %>
 <% end -%>
-<% if !@vsftpd_log_file.to_s.empty? then -%>
+<% if @vsftpd_log_file then -%>
 vsftpd_log_file=<%= @vsftpd_log_file %>
 <% end -%>
-<% if !@xferlog_file.to_s.empty? then -%>
+<% if @xferlog_file then -%>
 xferlog_file=<%= @xferlog_file %>
 <% end -%>
