@@ -1,27 +1,8 @@
 #
 # == Class vsftpd::conf
 #
-# This function provides a method for setting up the main body of
+# This class provides a method for setting up the main body of
 # /etc/vsftpd/vsftpd.conf.
-#
-# All of the variables presented are defined in the vsftpd documentation.
-#
-# This class sets up the appropriate IPtables rules based on the value of
-# $fw_rules.
-#
-# By default, it will allow access only to localhost, you will need to
-# define an array at fw_rules to add additional hosts.
-#
-# Localhost is always listed as a host that is allowed to access the system.
-#
-# NOTE: At this time, you cannot overload this function, the first
-# definition must be the only definition within that scope.
-#
-# The defaults are set to those contained in the sample config file shipped
-# with Red Hat 5.4 plus some generally useful additions.
-#
-# One thing to note is that local users are forced to SSL for security
-# reasons.
 #
 # == Parameters
 #
@@ -35,187 +16,179 @@
 #   If you change this from the default, you will need to ensure that you
 #   manage the file and that vsftpd restarts when the file is updated.
 #
-# == Example
-#
-#  vsftpd::conf { 'default':
-#    allowed_nets => [ '10.0.0.0/8', '192.168.0.14' ]
-#  }
-#
 # == Authors
 #
 # * Trevor Vaughan <tvaughan@onyxpoint.com>
+# * Nick Markowski <nmarkowski@keywcorp.com>
 #
-class vsftpd::conf (
-  $allow_anon_ssl='',
-  $anon_mkdir_write_enable='',
-  $anon_other_write_enable='',
-  $anon_upload_enable=true,
-  $anon_world_readable_only='',
-  $anonymous_enable=true,
-  $ascii_download_enable='',
-  $ascii_upload_enable='',
-  $async_abor_enable='',
-  $background='',
-  $check_shell='',
-  $chmod_enable='',
-  $chown_uploads='',
-  $chroot_list_enable='',
-  $chroot_local_user='',
-  $connect_from_port_20=true,
-  $deny_email_enable='',
-  $dirlist_enable='',
-  $dirmessage_enable=true,
-  $download_enable='',
-  $dual_log_enable='',
-  $force_dot_files='',
-  $force_anon_data_ssl='',
-  $force_anon_logins_ssl='',
-  $force_local_data_ssl=true,
-  $force_local_logins_ssl=true,
-  $guest_enable='',
-  $hide_ids='',
-  $listen_ipv4=true,
-  $listen_ipv6='',
-  $local_enable=true,
-  $lock_upload_files='',
-  $log_ftp_protocol='',
-  $ls_recurse_enable='',
-  $mdtm_write='',
-  $no_anon_password='',
-  $no_log_lock='',
-  $one_process_model='',
-  $passwd_chroot_enable='',
-  $pasv_addr_resolve='',
-  $pasv_enable=true,
-  $pasv_promiscuous='',
-  $port_enable='',
-  $port_promiscuous='',
-  $reverse_lookup_enable='',
-  $run_as_launching_user='',
-  $secure_email_list_enable='',
-  $session_support='',
-  $setproctitle_enable='',
-  $ssl_enable=true,
-  $ssl_sslv2=false,
-  $ssl_sslv3=false,
-  $ssl_tlsv1=true,
-  $syslog_enable=true,
-  $tcp_wrappers=true,
-  $text_userdb_names='',
-  $tilde_user_enable='',
-  $use_localtime='',
-  $use_sendfile='',
-  $userlist_deny='',
-  $userlist_enable=true,
-  $userlist_log=true,
-  $virtual_use_local_privs='',
-  $write_enable=true,
-  $xferlog_enable=true,
-  $xferlog_std_format=true,
-  $accept_timeout='',
-  $anon_max_rate='',
-  $anon_umask='',
-  $connect_timeout='',
-  $data_connection_timeout='',
-  $delay_failed_login='',
-  $delay_successful_login='',
-  $file_open_mode='',
-  $ftp_data_port='20',
-  $idle_session_timeout='',
-  $listen_port='21',
-  $local_max_rate='',
-  $local_umask='022',
-  $max_clients='',
-  $max_login_fails='',
-  $max_per_ip='',
-  $pasv_max_port='',
-  $pasv_min_port='',
-  $trans_chunk_size='',
-  $anon_root='',
-  $banned_email_file='',
-  $banner_file='/etc/issue.net',
-  $chown_username='',
-  $chroot_list_file='',
-  $cmds_allowed='',
-  $deny_file='',
-  $dsa_cert_file='',
-  $dsa_private_key_file='',
-  $email_password_file='',
-  $ftp_username=versioncmp(simp_version(),'5') ? { '-1' => 'vsftpd', default => 'ftp'},
-  $guest_username=versioncmp(simp_version(),'5') ? { '-1' => 'vsftpd', default => 'ftp'},
-  $hide_file='',
-  $listen_address='',
-  $listen_address6='',
-  $local_root='',
-  $message_file='',
-  $nopriv_user='',
-  $pam_service_name=versioncmp(simp_version(),'5') ? { '-1' => 'vsftpd', default => 'ftp'},
-  $pasv_address='',
-  $rsa_cert_file="/etc/vsftpd/pki/public/${::fqdn}.pub",
-  $rsa_private_key_file="/etc/vsftpd/pki/private/${::fqdn}.pem",
-  $secure_chroot_dir='',
-  $ssl_ciphers=['HIGH'],
-  $user_config_dir='',
-  $user_sub_token='',
-  $userlist_file='',
-  $vsftpd_log_file='',
-  $xferlog_file='',
-  $allowed_nets=['127.0.0.1']
-) {
-  include 'vsftpd'
+class vsftpd::config (
+  $vsftpd_user              = $vsftpd::params::vsftpd_user,
+  $vsftpd_group             = $vsftpd::params::vsftpd_group,
+  $allow_anon_ssl           = '',
+  $anon_mkdir_write_enable  = '',
+  $anon_other_write_enable  = '',
+  $anon_upload_enable       = true,
+  $anon_world_readable_only = '',
+  $anonymous_enable         = true,
+  $ascii_download_enable    = '',
+  $ascii_upload_enable      = '',
+  $async_abor_enable        = '',
+  $background               = '',
+  $check_shell              = '',
+  $chmod_enable             = '',
+  $chown_uploads            = '',
+  $chroot_list_enable       = '',
+  $chroot_local_user        = '',
+  $connect_from_port_20     = true,
+  $deny_email_enable        = '',
+  $dirlist_enable           = '',
+  $dirmessage_enable        = true,
+  $download_enable          = '',
+  $dual_log_enable          = '',
+  $force_dot_files          = '',
+  $force_anon_data_ssl      = '',
+  $force_anon_logins_ssl    = '',
+  $force_local_data_ssl     = true,
+  $force_local_logins_ssl   = true,
+  $guest_enable             = '',
+  $hide_ids                 = '',
+  $listen_ipv4              = $vsftpd::params::listen_ipv4,
+  $listen_ipv6              = '',
+  $local_enable             = true,
+  $lock_upload_files        = '',
+  $log_ftp_protocol         = '',
+  $ls_recurse_enable        = '',
+  $mdtm_write               = '',
+  $no_anon_password         = '',
+  $no_log_lock              = '',
+  $one_process_model        = '',
+  $passwd_chroot_enable     = '',
+  $pasv_addr_resolve        = '',
+  $pasv_enable              = $vsftpd::params::pasv_enable,
+  $pasv_promiscuous         = '',
+  $port_enable              = '',
+  $port_promiscuous         = '',
+  $reverse_lookup_enable    = '',
+  $run_as_launching_user    = '',
+  $secure_email_list_enable = '',
+  $session_support          = '',
+  $setproctitle_enable      = '',
+  $ssl_enable               = true,
+  $ssl_sslv2                = false,
+  $ssl_sslv3                = false,
+  $ssl_tlsv1                = true,
+  $syslog_enable            = true,
+  $tcp_wrappers             = $vsftpd::params::tcp_wrappers,
+  $text_userdb_names        = '',
+  $tilde_user_enable        = '',
+  $use_localtime            = '',
+  $use_sendfile             = '',
+  $userlist_deny            = '',
+  $userlist_enable          = true,
+  $userlist_log             = true,
+  $virtual_use_local_privs  = '',
+  $write_enable             = true,
+  $xferlog_enable           = true,
+  $xferlog_std_format       = true,
+  $accept_timeout           = '',
+  $anon_max_rate            = '',
+  $anon_umask               = '',
+  $connect_timeout          = '',
+  $data_connection_timeout  = '',
+  $delay_failed_login       = '',
+  $delay_successful_login   = '',
+  $file_open_mode           = '',
+  $ftp_data_port            = $vsftpd::params::ftp_data_port,
+  $idle_session_timeout     = '',
+  $listen_port              = $vsftpd::params::listen_port,
+  $local_max_rate           = '',
+  $local_umask              = '022',
+  $max_clients              = '',
+  $max_login_fails          = '',
+  $max_per_ip               = '',
+  $pasv_max_port            = '',
+  $pasv_min_port            = '',
+  $trans_chunk_size         = '',
+  $anon_root                = '',
+  $banned_email_file        = '',
+  $banner_file              = '/etc/issue.net',
+  $chown_username           = '',
+  $chroot_list_file         = '',
+  $cmds_allowed             = '',
+  $deny_file                = '',
+  $dsa_cert_file            = '',
+  $dsa_private_key_file     = '',
+  $email_password_file      = '',
+  $ftp_username             = $vsftpd_user,
+  $guest_username           = $vsftpd_user,
+  $hide_file                = '',
+  $listen_address           = '',
+  $listen_address6          = '',
+  $local_root               = '',
+  $message_file             = '',
+  $nopriv_user              = '',
+  $pam_service_name         = versioncmp(simp_version(),'5') ? { '-1' => 'vsftpd', default => 'ftp'},
+  $pasv_address             = '',
+  $rsa_cert_file            = "/etc/vsftpd/pki/public/${::fqdn}.pub",
+  $rsa_private_key_file     = "/etc/vsftpd/pki/private/${::fqdn}.pem",
+  $secure_chroot_dir        = '',
+  $ssl_ciphers              = ['HIGH'],
+  $user_config_dir          = '',
+  $user_sub_token           = '',
+  $userlist_file            = '',
+  $vsftpd_log_file          = '',
+  $xferlog_file             = '',
+  $allowed_nets             = $vsftpd::params::allowed_nets,
+) inherits vsftpd::params {
+  include '::vsftpd'
+
+  file { '/etc/vsftpd':
+    ensure   => 'directory',
+    owner    => 'root',
+    group    => $vsftpd_group,
+    mode     => '0640',
+    recurse  => true,
+    checksum => undef,
+    purge    => true,
+    require  => Package['vsftpd']
+  }
+
+  file { '/etc/vsftpd/ftpusers':
+    owner   => 'root',
+    group   => $vsftpd_group,
+    mode    => '0640',
+    source  => 'puppet:///modules/vsftpd/ftpusers',
+    notify  => Service['vsftpd'],
+    require => Package['vsftpd']
+  }
+
+  file { '/etc/vsftpd/user_list':
+    owner   => 'root',
+    group   => $vsftpd_group,
+    mode    => '0640',
+    source  => 'puppet:///modules/vsftpd/user_list',
+    notify  => Service['vsftpd'],
+    require => Package['vsftpd']
+  }
+
+  file { '/etc/pam.d/vsftpd':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0640',
+    source  => 'puppet:///modules/vsftpd/vsftpd.pam',
+    require => Package['vsftpd']
+  }
 
   file { '/etc/vsftpd/vsftpd.conf':
     owner   => 'root',
-    group   => versioncmp(simp_version(),'5') ? {
-        '-1'    => 'vsftpd',
-        default => 'ftp'
-      },
+    group   => $vsftpd_group,
     mode    => '0640',
     content => template('vsftpd/vsftpd.conf.erb'),
     notify  => Service['vsftpd']
   }
 
-  # Only apply the IPTables rules if iptables is an included class.
-  if $listen_ipv4 {
-    iptables::add_tcp_stateful_listen { 'allow_vsftpd_data_port':
-      client_nets => $allowed_nets,
-      dports      => $ftp_data_port
-    }
-
-    iptables::add_tcp_stateful_listen { 'allow_vsftpd_listen_port':
-      client_nets => $allowed_nets,
-      dports      => $listen_port
-    }
-
-    if $pasv_enable {
-
-      # This feels like a hack.
-      exec { 'check_conntrack_ftp':
-        command => '/bin/true',
-        onlyif  => '/bin/grep -F "nf_conntrack_ftp" /proc/modules; test $? -ne 0',
-        notify  => Service['iptables']
-      }
-
-      exec { 'nf_conntrack_ftp':
-        command     => '/sbin/modprobe -q nf_conntrack_ftp',
-        refreshonly => true,
-        subscribe   => Service['iptables']
-      }
-    }
-  }
-
-  if $tcp_wrappers {
-    include 'tcpwrappers'
-    tcpwrappers::allow { 'vsftpd':
-      pattern => $allowed_nets
-    }
-  }
-  else {
-    notify { 'allow_vsftpd':
-      message => "TCPWrappers not detected, not setting tcpwrappers for $name"
-    }
-  }
-
+  validate_string($vsftpd_user)
+  validate_string($vsftpd_group)
   if $allow_anon_ssl { validate_bool($allow_anon_ssl) }
   if $anon_mkdir_write_enable { validate_bool($anon_mkdir_write_enable) }
   if $anon_other_write_enable { validate_bool($anon_other_write_enable) }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'vsftpd' do
+describe 'vsftpd::config' do
 
   let(:facts) { {
       :fqdn => 'spec.test',
@@ -16,13 +16,13 @@ describe 'vsftpd' do
       :simp_version => '5.0.0'
   } }
 
-  it { should create_class('vsftpd') }
   it { should compile.with_all_deps }
-  it { should create_class('vsftpd::install') }
   it { should create_class('vsftpd::config') }
-  it { should create_class('vsftpd::service') }
-  it { should create_class('vsftpd::config::firewall') }
-  it { should create_class('vsftpd::config::pki') }
-  it { should create_class('vsftpd::config::tcpwrappers') }
+
+  it { should create_file('/etc/vsftpd/vsftpd.conf') }
+  it { should contain_file('/etc/vsftpd') }
+  it { should contain_file('/etc/vsftpd/ftpusers') }
+  it { should contain_file('/etc/vsftpd/user_list') }
+  it { should contain_file('/etc/pam.d/vsftpd') }
 
 end

@@ -1,7 +1,7 @@
 Summary: vsftpd Puppet Module
 Name: pupmod-vsftpd
 Version: 4.1.0
-Release: 8
+Release: 9
 License: Apache License, Version 2.0
 Group: Applications/System
 Source: %{name}-%{version}-%{release}.tar.gz
@@ -57,6 +57,11 @@ fi
 # Post uninstall stuff
 
 %changelog
+* Tue Jul 17 2015 Nick Markowski <nmarkowski@keywcorp.com> - 4.1.0-9
+- Refactored module to new layout, to better conform with Puppetlabs.
+- Vsftpd user and group mutable.
+- Package requires user and group to be set before installation.
+
 * Thu Feb 19 2015 Trevor Vaughan <tvaughan@onyxpoint.com> - 4.1.0-8
 - Migrated to the new 'simp' environment.
 
