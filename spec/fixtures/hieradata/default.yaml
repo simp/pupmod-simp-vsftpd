@@ -1,0 +1,7 @@
+---
+client_nets : ['192.168.122.0/24']
+enable_firewall : true
+enable_pki : true
+enable_tcpwrappers : true
+vsftpd::vsftpd_group : 'vsftpd'
+vsftpd::vsftpd_user  : 'vsftpd'
