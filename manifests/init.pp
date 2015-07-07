@@ -3,90 +3,41 @@
 #
 # This class configures a vsftpd server.  It ensures that the appropriate
 # files are in the appropriate places and synchronizes the external
-# materials.
+# materials.  
 #
-# == Parameters
+# One thing to note is that local users are forced to SSL for security
+# reasons.
+#
+# == Example
+#
+#  vsftpd { 'default':
+#    allowed_nets => [ '10.0.0.0/8', '192.168.0.14' ]
+#  }
 #
 # == Authors
 #
 # * Trevor Vaughan <tvaughan@onyxpoint.com>
+# * Nick Markowski <nmarkowski@keywcorp.com>
 #
-class vsftpd {
+class vsftpd inherits vsftpd::params {
 
-  if $::operatingsystem in ['RedHat','CentOS'] and $::operatingsystemmajrelease < '7' {
-    $l_group = 'vsftpd'
+  include '::vsftpd::install'
+  include '::vsftpd::config'
+  include '::vsftpd::service'
+  Class['vsftpd::install'] ~>
+  Class['vsftpd::config'] ~>
+  Class['vsftpd::service']
+
+  if $::use_simp_firewall or hiera('use_simp_firewall',false) {
+    include '::vsftpd::config::firewall'
+    Class['vsftpd::config'] -> Class['vsftpd::config::firewall']
   }
-  else {
-    $l_group = 'ftp'
+  if $::use_simp_pki or hiera('use_simp_pki',false) {
+    include '::vsftpd::config::pki'
+    Class['vsftpd::config'] -> Class['vsftpd::config::pki']
   }
-
-  file { '/etc/vsftpd':
-    ensure   => 'directory',
-    owner    => 'root',
-    group    => $l_group,
-    mode     => '0640',
-    recurse  => true,
-    checksum => undef,
-    purge    => true,
-    require  => Package['vsftpd']
-  }
-
-  file { '/etc/vsftpd/ftpusers':
-    owner   => 'root',
-    group   => $l_group,
-    mode    => '0640',
-    source  => 'puppet:///modules/vsftpd/ftpusers',
-    notify  => Service['vsftpd'],
-    require => Package['vsftpd']
-  }
-
-  file { '/etc/vsftpd/user_list':
-    owner   => 'root',
-    group   => $l_group,
-    mode    => '0640',
-    source  => 'puppet:///modules/vsftpd/user_list',
-    notify  => Service['vsftpd'],
-    require => Package['vsftpd']
-  }
-
-  file { '/etc/pam.d/vsftpd':
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0640',
-    source  => 'puppet:///modules/vsftpd/vsftpd.pam',
-    require => Package['vsftpd']
-  }
-
-  group { $l_group:
-    ensure    => 'present',
-    allowdupe => false,
-    gid       => '50'
-  }
-
-  # Make sure that the thing's the latest version before we try to do stuff.
-  package { 'vsftpd': ensure => 'latest' }
-
-  user { 'ftp':
-    ensure     => 'present',
-    allowdupe  => false,
-    gid        => $l_group,
-    home       => '/var/ftp',
-    membership => 'inclusive',
-    shell      => '/sbin/nologin',
-    uid        => '14',
-    require    => Group[$l_group],
-    notify     => Service['vsftpd']
-  }
-
-  pki::copy { '/etc/vsftpd':
-    group  => $l_group,
-    notify => Service['vsftpd']
-  }
-
-  service { 'vsftpd':
-    ensure     => 'running',
-    enable     => true,
-    hasrestart => true,
-    hasstatus  => true,
+  if $::use_simp_tcpwrappers or hiera('use_simp_tcpwrappers',false) {
+    include '::vsftpd::config::tcpwrappers'
+    Class['vsftpd::config'] -> Class['vsftpd::config::tcpwrappers']
   }
 }
