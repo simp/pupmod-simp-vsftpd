@@ -1,0 +1,296 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ad9bd40_f23cdfc1",
+        "filename": "manifests/config/firewall.pp",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-14T01:20:57Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "7b10aa87efc0bb3221ede2a58e11dbcb6293a897",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_124ce36f",
+        "filename": "manifests/config/firewall.pp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-14T01:20:57Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "7b10aa87efc0bb3221ede2a58e11dbcb6293a897",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_3247274d",
+        "filename": "manifests/config/firewall.pp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-14T01:20:57Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "7b10aa87efc0bb3221ede2a58e11dbcb6293a897",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_52758b96",
+        "filename": "manifests/config/firewall.pp",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-14T01:20:57Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "range": {
+        "startLine": 50,
+        "startChar": 1,
+        "endLine": 50,
+        "endChar": 2
+      },
+      "revId": "7b10aa87efc0bb3221ede2a58e11dbcb6293a897",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_926f13c5",
+        "filename": "manifests/config/firewall.pp",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-14T01:20:57Z",
+      "side": 1,
+      "message": "Move validations to the top of the class",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 15
+      },
+      "revId": "7b10aa87efc0bb3221ede2a58e11dbcb6293a897",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_b27257ab",
+        "filename": "manifests/config/pki.pp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-14T01:20:57Z",
+      "side": 1,
+      "message": "Move validations to the top of the class.",
+      "revId": "7b10aa87efc0bb3221ede2a58e11dbcb6293a897",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_d268bbbc",
+        "filename": "manifests/config/tcpwrappers.pp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-14T01:20:57Z",
+      "side": 1,
+      "message": "trailing whitespace.",
+      "revId": "7b10aa87efc0bb3221ede2a58e11dbcb6293a897",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_f263ffda",
+        "filename": "manifests/config/tcpwrappers.pp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-14T01:20:57Z",
+      "side": 1,
+      "message": "Move validations to the top of the class.",
+      "range": {
+        "startLine": 30,
+        "startChar": 1,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "7b10aa87efc0bb3221ede2a58e11dbcb6293a897",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_126303dd",
+        "filename": "manifests/install.pp",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-14T01:20:57Z",
+      "side": 1,
+      "message": "Move validations to the top of the class.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "7b10aa87efc0bb3221ede2a58e11dbcb6293a897",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_d2afdbe1",
+        "filename": "spec/classes/install_spec.rb",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-14T01:20:57Z",
+      "side": 1,
+      "message": "Remove commented-out code.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 4
+      },
+      "revId": "7b10aa87efc0bb3221ede2a58e11dbcb6293a897",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_f2aa1fd1",
+        "filename": "spec/classes/install_spec.rb",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-14T01:20:57Z",
+      "side": 1,
+      "message": "Take a look at the simp-rspec-puppet-facts tests in simp/puppet-module-skeleton.  You will need a valid metadata.json to use it.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 5
+      },
+      "revId": "7b10aa87efc0bb3221ede2a58e11dbcb6293a897",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_b2a977e1",
+        "filename": "spec/classes/install_spec.rb",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-14T01:20:57Z",
+      "side": 1,
+      "message": "Remove commented-out code.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 6
+      },
+      "revId": "7b10aa87efc0bb3221ede2a58e11dbcb6293a897",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_32b56731",
+        "filename": "spec/classes/service_spec.rb",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-14T01:20:57Z",
+      "side": 1,
+      "message": "Take a look at the simp-rspec-puppet-facts tests in simp/puppet-module-skeleton.  You will need a valid metadata.json to use it.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 5
+      },
+      "revId": "7b10aa87efc0bb3221ede2a58e11dbcb6293a897",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_5283cb55",
+        "filename": "spec/spec_helper.rb",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-14T01:20:57Z",
+      "side": 1,
+      "message": "These directory slashes would be safer in a File.expand_path()",
+      "range": {
+        "startLine": 47,
+        "startChar": 23,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "7b10aa87efc0bb3221ede2a58e11dbcb6293a897",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
