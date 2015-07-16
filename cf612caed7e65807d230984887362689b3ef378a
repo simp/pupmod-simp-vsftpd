@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ad9bd40_3c00d166",
+        "filename": "manifests/config.pp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-16T01:42:19Z",
+      "side": 1,
+      "message": "Should be config",
+      "range": {
+        "startLine": 2,
+        "startChar": 19,
+        "endLine": 2,
+        "endChar": 23
+      },
+      "revId": "cf612caed7e65807d230984887362689b3ef378a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_9c3b9d37",
+        "filename": "manifests/config.pp",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-16T01:42:19Z",
+      "side": 1,
+      "message": "This (and many other parameters) are validated as booleans in the code but are initialized as empty Strings.   This will break in Puppet 4 because 1.) empty Strings no longer test as false, and 2.) types.",
+      "range": {
+        "startLine": 27,
+        "startChar": 30,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "cf612caed7e65807d230984887362689b3ef378a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_dcee05b4",
+        "filename": "manifests/config.pp",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-16T01:42:19Z",
+      "side": 1,
+      "message": "::config should not inherit from ::params.  ::init should inherit from ::params and ::config can refer to parameters in ::init using the module name as the scope.",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 26
+      },
+      "revId": "cf612caed7e65807d230984887362689b3ef378a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_5c03d572",
+        "filename": "manifests/config.pp",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-16T01:42:19Z",
+      "side": 1,
+      "message": "Move validations to the top of the class.",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 277,
+        "endChar": 50
+      },
+      "revId": "cf612caed7e65807d230984887362689b3ef378a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_7c4099a5",
+        "filename": "manifests/install.pp",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-16T01:42:19Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this only happen if $manage_group and $manage_user are true?",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 56
+      },
+      "revId": "cf612caed7e65807d230984887362689b3ef378a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_1c306d55",
+        "filename": "manifests/params.pp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-16T01:42:19Z",
+      "side": 1,
+      "message": "There are no class parameters in param.pp",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 15
+      },
+      "revId": "cf612caed7e65807d230984887362689b3ef378a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_fc2ca904",
+        "filename": "manifests/params.pp",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-16T01:42:19Z",
+      "side": 1,
+      "message": "What happens if the operatingsystem is not RedHat or CentOS?",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 3
+      },
+      "revId": "cf612caed7e65807d230984887362689b3ef378a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
