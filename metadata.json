@@ -1,0 +1,61 @@
+{
+  "name":    "pupmod-simp-vsftpd",
+  "version": "4.1.0",
+  "author":  "simp",
+  "summary": "Manage vsftpd",
+  "license": "Apache-2.0",
+  "source":  "https://github.com/simp/pupmod-simp-vsftpd",
+  "project_page": "https://github.com/simp/pupmod-simp-vsftpd",
+  "issues_url":   "https://simp-project.atlassian.net",
+  "tags": [ "simp", "vsftpd" ],
+  "dependencies": [
+    {
+      "name": "pupmod-simp-common",
+      "version_requirement": ">= 4.2.0"
+    },
+    {
+      "name": "pupmod-simp-pki",
+      "version_requirement": ">= 4.1.0"
+    },
+    {
+      "name": "pupmod-simp-stunnel",
+      "version_requirement": ">= 4.2.0"
+    },
+    {
+      "name": "pupmod-simp-tcpwrappers",
+      "version_requirement": ">= 2.1.0"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": ">= 3.3.0"
+    },
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 4.1.0"
+    },
+    {
+      "name": "simp-iptables",
+      "version_requirement": ">= 4.1.0"
+    },
+    {
+      "name": "simp-simplib",
+      "version_requirement": ">= 4.1.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    }
+  ]
+}
