@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ad9bd40_18977e91",
+        "filename": "manifests/config.pp",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-21T00:05:40Z",
+      "side": 1,
+      "message": "::params should not be referenced directly within ::config, instead reference module-scoped variables from init.pp\u0027s class parameters.",
+      "range": {
+        "startLine": 25,
+        "startChar": 30,
+        "endLine": 25,
+        "endChar": 57
+      },
+      "revId": "f884579e12a130a17e26e18580bd612e96bfc073",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_3892829f",
+        "filename": "manifests/config/firewall.pp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-21T00:05:40Z",
+      "side": 1,
+      "message": "::params pattern is for init.pp",
+      "range": {
+        "startLine": 18,
+        "startChar": 1,
+        "endLine": 24,
+        "endChar": 27
+      },
+      "revId": "f884579e12a130a17e26e18580bd612e96bfc073",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_1873fe80",
+        "filename": "manifests/config/firewall.pp",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-21T00:05:40Z",
+      "side": 1,
+      "message": "This is implied",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "f884579e12a130a17e26e18580bd612e96bfc073",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_133be1d1",
+        "filename": "manifests/config/tcpwrappers.pp",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-21T00:05:40Z",
+      "side": 1,
+      "message": "::params pattern is for init.pp",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "f884579e12a130a17e26e18580bd612e96bfc073",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_f8b81ae7",
+        "filename": "manifests/init.pp",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-21T00:05:40Z",
+      "side": 1,
+      "message": "the init.pp class should inherit ::params in order to provide defaults for its class parameters.",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "f884579e12a130a17e26e18580bd612e96bfc073",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_f8ec9a91",
+        "filename": "manifests/init.pp",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-21T00:05:40Z",
+      "side": 1,
+      "message": "This does not use the new module layout ordering or variables  SIMP has adopted since June 19. See https://simp-project.atlassian.net/wiki/display/SD/The+New+Layout+for+all+SIMP+Modules",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "f884579e12a130a17e26e18580bd612e96bfc073",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_d8e99681",
+        "filename": "manifests/init.pp",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-21T00:05:40Z",
+      "side": 1,
+      "message": "This kind of logic should be in the class parameters or ::params.  See https://github.com/simp/puppet-module-skeleton/blob/master/skeleton/manifests/init.pp.erb for examples.\n\nAlso, use defined() instead of relying on the truthy value of a variable.  An empty string (\u0027\u0027) will yield different results between Puppet 3 and Puppet 4.",
+      "revId": "f884579e12a130a17e26e18580bd612e96bfc073",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_1803fe42",
+        "filename": "manifests/install.pp",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-21T00:05:40Z",
+      "side": 1,
+      "message": "Only use ::params pattern in init.pp",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "f884579e12a130a17e26e18580bd612e96bfc073",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_f8481a89",
+        "filename": "manifests/install.pp",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-21T00:05:40Z",
+      "side": 1,
+      "message": "No need to include this module again.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "f884579e12a130a17e26e18580bd612e96bfc073",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_333625e8",
+        "filename": "manifests/service.pp",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-21T00:05:40Z",
+      "side": 1,
+      "message": "::params pattern is only for init.pp, no need to include module.",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "f884579e12a130a17e26e18580bd612e96bfc073",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_72735de7",
+        "filename": "metadata.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-21T00:05:40Z",
+      "side": 1,
+      "message": "These are not possible as puppet forge module names.  Try \"simp-SAFEFORFORGENAME\"",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 5
+      },
+      "revId": "f884579e12a130a17e26e18580bd612e96bfc073",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_9282a192",
+        "filename": "metadata.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-21T00:05:40Z",
+      "side": 1,
+      "message": "This is not a puppet module.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 6
+      },
+      "revId": "f884579e12a130a17e26e18580bd612e96bfc073",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_f324bdb0",
+        "filename": "spec/fixtures/hieradata/default.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-07-21T00:05:40Z",
+      "side": 1,
+      "message": "Use $enable_* variables:                                                                                                                    https://simp-project.atlassian.net/wiki/display/SD/The+New+Layout+for+all+SIMP+Modules",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 27
+      },
+      "revId": "f884579e12a130a17e26e18580bd612e96bfc073",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
