@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ad9bd40_4dab5789",
+        "filename": "manifests/init.pp",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-08-28T17:09:23Z",
+      "side": 1,
+      "message": "doh, trailing whitespace!",
+      "range": {
+        "startLine": 6,
+        "startChar": 12,
+        "endLine": 6,
+        "endChar": 14
+      },
+      "revId": "182317a0b8006e2cfc6dccfd58bb0a92a41814d7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_ad914354",
+        "filename": "metadata.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-08-28T17:09:23Z",
+      "side": 1,
+      "message": "This is due for a bump after all the API refactorings.",
+      "range": {
+        "startLine": 3,
+        "startChar": 14,
+        "endLine": 3,
+        "endChar": 15
+      },
+      "revId": "182317a0b8006e2cfc6dccfd58bb0a92a41814d7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
