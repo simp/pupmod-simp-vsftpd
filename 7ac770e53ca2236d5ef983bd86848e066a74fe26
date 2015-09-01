@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ad9bd40_46716443",
+        "filename": "manifests/config.pp",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-09-01T15:30:51Z",
+      "side": 1,
+      "message": "moar comments plz",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 1
+      },
+      "revId": "7ac770e53ca2236d5ef983bd86848e066a74fe26",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_06775c3c",
+        "filename": "manifests/config.pp",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-09-01T15:30:51Z",
+      "side": 1,
+      "message": "Not validated.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 36
+      },
+      "revId": "7ac770e53ca2236d5ef983bd86848e066a74fe26",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_2676203f",
+        "filename": "manifests/config.pp",
+        "patchSetId": 6
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-09-01T15:30:51Z",
+      "side": 1,
+      "message": "If we expose parameters like $vsftpd::config::userlist_deny and $vsftpd::config::userlist_file, we should not hardcode the actual userlist file resource.\n\nI would suggest turning this into a template, and changing $vsftpd::config::userlist_file to an array (perhaps $vsftpd::user_list) that defaults to the users in the current file.",
+      "range": {
+        "startLine": 252,
+        "startChar": 16,
+        "endLine": 252,
+        "endChar": 50
+      },
+      "revId": "7ac770e53ca2236d5ef983bd86848e066a74fe26",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_e6a27899",
+        "filename": "manifests/install.pp",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-09-01T15:30:51Z",
+      "side": 1,
+      "message": "This should probably be in params.pp like $vsftpd_user and $vsftpd_group",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 14
+      },
+      "revId": "7ac770e53ca2236d5ef983bd86848e066a74fe26",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad9bd40_46a88477",
+        "filename": "manifests/params.pp",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-09-01T15:30:51Z",
+      "side": 1,
+      "message": "Should this be client_nets (and do a defined-\u003ehiera-\u003edefault lookup on client_nets)?",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "7ac770e53ca2236d5ef983bd86848e066a74fe26",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
