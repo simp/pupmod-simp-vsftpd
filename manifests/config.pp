@@ -51,7 +51,6 @@ class vsftpd::config (
   $guest_enable             = undef,
   $hide_ids                 = undef,
   $listen_ipv6              = undef,
-  $local_enable             = true,
   $lock_upload_files        = undef,
   $log_ftp_protocol         = undef,
   $ls_recurse_enable        = undef,
@@ -69,7 +68,7 @@ class vsftpd::config (
   $secure_email_list_enable = undef,
   $session_support          = undef,
   $setproctitle_enable      = undef,
-  $ssl_enable               = true,
+  $ssl_enable               = $::vsftpd::ssl_enable,
   $ssl_sslv2                = false,
   $ssl_sslv3                = false,
   $ssl_tlsv1                = true,
@@ -97,8 +96,6 @@ class vsftpd::config (
   $max_clients              = undef,
   $max_login_fails          = undef,
   $max_per_ip               = undef,
-  $pasv_max_port            = undef,
-  $pasv_min_port            = undef,
   $trans_chunk_size         = undef,
   $anon_root                = undef,
   $banned_email_file        = undef,
@@ -111,15 +108,16 @@ class vsftpd::config (
   $dsa_private_key_file     = undef,
   $email_password_file      = undef,
   $hide_file                = undef,
-  $listen_address           = undef,
   $listen_address6          = undef,
   $local_root               = undef,
   $message_file             = undef,
   $nopriv_user              = undef,
   $pam_service_name         = 'ftp',
   $pasv_address             = undef,
-  $rsa_cert_file            = "/etc/vsftpd/pki/public/${::fqdn}.pub",
-  $rsa_private_key_file     = "/etc/vsftpd/pki/private/${::fqdn}.pem",
+  $rsa_cert_file            = "${::vsftpd::pki_certs_dir}/public/${::fqdn}.pub",
+  $rsa_private_key_file     = "${::vsftpd::pki_certs_dir}/private/${::fqdn}.pem",
+  $ca_certs_file            = "${::vsftpd::pki_certs_dir}/cacerts/cacerts.pem",
+  $validate_cert            = $::vsftpd::validate_cert,
   $secure_chroot_dir        = undef,
   $ssl_ciphers              = ['HIGH'],
   $user_config_dir          = undef,
@@ -158,7 +156,6 @@ class vsftpd::config (
   if $guest_enable { validate_bool($guest_enable) }
   if $hide_ids { validate_bool($hide_ids) }
   if $listen_ipv6 { validate_bool($listen_ipv6) }
-  if $local_enable { validate_bool($local_enable) }
   if $lock_upload_files { validate_bool($lock_upload_files) }
   if $log_ftp_protocol { validate_bool($log_ftp_protocol) }
   if $ls_recurse_enable { validate_bool($ls_recurse_enable) }
@@ -204,18 +201,18 @@ class vsftpd::config (
   if $max_clients { validate_integer($max_clients) }
   if $max_login_fails { validate_integer($max_login_fails) }
   if $max_per_ip { validate_integer($max_per_ip) }
-  if $pasv_max_port { validate_integer($pasv_max_port) }
-  if $pasv_min_port { validate_integer($pasv_min_port) }
   if $trans_chunk_size { validate_integer($trans_chunk_size) }
   if $ssl_ciphers { validate_array($ssl_ciphers) }
   if $user_config_dir  { validate_absolute_path($user_config_dir) }
   if $user_sub_token { validate_string($user_sub_token) }
   if $vsftpd_log_file { validate_absolute_path($vsftpd_log_file) }
   if $xferlog_file { validate_absolute_path($xferlog_file) }
+  validate_absolute_path($ca_certs_file)
 
   $tcp_wrappers    = $::vsftpd::tcp_wrappers
   $listen_port     = $::vsftpd::listen_port
-  $allowed_nets    = $::vsftpd::allowed_nets
+  $listen_address  = $::vsftpd::listen_address
+  $client_nets     = $::vsftpd::client_nets
   $ftp_data_port   = $::vsftpd::ftp_data_port
   $pasv_enable     = $::vsftpd::pasv_enable
   $listen_ipv4     = $::vsftpd::listen_ipv4
@@ -226,6 +223,10 @@ class vsftpd::config (
   $guest_username  = $::vsftpd::vsftpd_user
   $userlist_deny   = $::vsftpd::userlist_deny
   $userlist_enable = $::vsftpd::userlist_enable
+  $pasv_max_port   = $::vsftpd::pasv_max_port
+  $pasv_min_port   = $::vsftpd::pasv_min_port
+  $local_enable    = $::vsftpd::local_enable
+  ### TODO:  $userlist_file   = '/etc/vsftd/users'
 
   file { '/etc/vsftpd':
     ensure   => 'directory',

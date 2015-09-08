@@ -26,7 +26,7 @@
 #   Manage vsftpd group.
 #   Defaults to true.
 #
-# [*manage_iptables*]
+# [*manage_firewall*]
 #   Manage iptables rules.
 #   Defaults to true.
 #
@@ -37,23 +37,8 @@
 #
 class vsftpd::params {
   if $::operatingsystem in ['RedHat','CentOS'] {
-    $vsftpd_user     = 'ftp'
-    $vsftpd_group    = 'ftp'
-    $vsftpd_uid      = '14'
-    $vsftpd_gid      = '50'
-    $manage_user     = true
-    $manage_group    = true
-    $manage_iptables = true
     # Conf Options #
-    $allowed_nets    = defined('$::client_nets') ? { true => $::client_nets, default => hiera('client_nets', ['127.0.0.1/32']) }
-    $ftp_data_port   = '20'
-    $listen_ipv4     = true
-    $listen_port     = '21'
-    $pasv_enable     = true
-    $tcp_wrappers    = true
     $user_list       = ['root','bin','daemon','adm','lp','sync','shutdown','halt','mail','news','uucp',	'operator','games','nobody']
-    $userlist_enable = true
-    $userlist_deny   = true
   }
   else {
     fail("Unsupported Operating System ${::operatingsystem}")

@@ -9,13 +9,13 @@
 # * Nick Markowski <nmarkowski@keywcorp.com>
 #
 class vsftpd::config::tcpwrappers {
-  include '::vsftpd'
+  assert_private()
 
   if $::vsftpd::tcp_wrappers {
     include 'tcpwrappers'
 
     tcpwrappers::allow { 'vsftpd':
-      pattern => $::vsftpd::allowed_nets
+      pattern => $::vsftpd::client_nets
     }
   }
   else {

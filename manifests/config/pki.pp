@@ -9,11 +9,10 @@
 # * Nick Markowski <nmarkowski@keywcorp.com>
 #
 class vsftpd::config::pki {
-  include '::vsftpd'
+  assert_private()
 
-  pki::copy { '/etc/vsftpd':
+  pki::copy { $::vsftpd::pki_certs_dir:
     group  => $::vsftpd::vsftpd_group,
     notify => Service['vsftpd']
   }
-
 }
