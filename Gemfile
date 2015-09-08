@@ -15,6 +15,7 @@ group :test do
   gem "puppetlabs_spec_helper"
   gem "metadata-json-lint"
   gem "simp-rspec-puppet-facts"
+  gem 'simp-beaker-helpers'
 
   # simp-rake-helpers does not suport puppet 2.7.X
   # FIXME: simp-rake-helpers should support Puppet 4.X
@@ -40,4 +41,7 @@ end
 group :system_tests do
   gem "beaker"
   gem "beaker-rspec"
+  # NOTE: Workaround because net-ssh 2.10 is busting beaker
+  # lib/ruby/1.9.1/socket.rb:251:in `tcp': wrong number of arguments (5 for 4) (ArgumentError)
+  gem 'net-ssh', '~> 2.9.0'
 end

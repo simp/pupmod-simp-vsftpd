@@ -10,7 +10,7 @@
 # * Nick Markowski <nmarkowski@keywcorp.com>
 #
 class vsftpd::install {
-  include '::vsftpd'
+  assert_private()
 
   if $::vsftpd::manage_group {
     group { $::vsftpd::vsftpd_group:

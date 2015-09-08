@@ -3,7 +3,6 @@
   false => 'NO'
 }
 -%>
-
 <% if @ssl_enable then -%>
 <%   if @allow_anon_ssl then -%>
 allow_anon_ssl=<%= bool_translate[@allow_anon_ssl] %>
@@ -32,12 +31,10 @@ dsa_cert_file=<%= @dsa_cert_file %>
 <%   if @dsa_private_key_file then -%>
 dsa_private_key_file=<%= @dsa_private_key_file %>
 <%   end -%>
-<%   if @rsa_cert_file then -%>
 rsa_cert_file=<%= @rsa_cert_file %>
-<%   end -%>
-<%   if @rsa_private_key_file then -%>
 rsa_private_key_file=<%= @rsa_private_key_file %>
-<%   end -%>
+ca_certs_file=<%= @ca_certs_file %>
+validate_cert=<%= bool_translate[@validate_cert] %>
 <% end -%>
 <% if @anon_mkdir_write_enable then -%>
 anon_mkdir_write_enable=<%= bool_translate[@anon_mkdir_write_enable] %>
@@ -119,9 +116,7 @@ listen_ipv6=<%= bool_translate[@listen_ipv6] %>
 <% elsif @listen_ipv4 then -%>
 listen=<%= bool_translate[@listen_ipv4] %>
 <% end -%>
-<% if @local_enable then -%>
 local_enable=<%= bool_translate[@local_enable] %>
-<% end -%>
 <% if @lock_upload_files then -%>
 lock_upload_files=<%= bool_translate[@lock_upload_files] %>
 <% end -%>
@@ -149,9 +144,7 @@ passwd_chroot_enable=<%= bool_translate[@passwd_chroot_enable] %>
 <% if @pasv_addr_resolve then -%>
 pasv_addr_resolve=<%= bool_translate[@pasv_addr_resolve] %>
 <% end -%>
-<% if @pasv_enable then -%>
 pasv_enable=<%= bool_translate[@pasv_enable] %>
-<% end -%>
 <% if @pasv_promiscuous then -%>
 pasv_promiscuous=<%= bool_translate[@pasv_promiscuous] %>
 <% end -%>
@@ -176,15 +169,10 @@ session_support=<%= bool_translate[@session_support] %>
 <% if @setproctitle_enable then -%>
 setproctitle_enable=<%= bool_translate[@setproctitle_enable] %>
 <% end -%>
-<% if @ssl_enable then -%>
 ssl_enable=<%= bool_translate[@ssl_enable] %>
-<% end -%>
-<% if @syslog_enable then -%>
+require_ssl_reuse=<%= bool_translate[@require_ssl_reuse] %>
 syslog_enable=<%= bool_translate[@syslog_enable] %>
-<% end -%>
-<% if @tcp_wrappers then -%>
 tcp_wrappers=<%= bool_translate[@tcp_wrappers] %>
-<% end -%>
 <% if @text_userdb_names then -%>
 text_userdb_names=<%= bool_translate[@text_userdb_names] %>
 <% end -%>
@@ -197,12 +185,8 @@ use_localtime=<%= bool_translate[@use_localtime] %>
 <% if @use_sendfile then -%>
 use_sendfile=<%= bool_translate[@use_sendfile] %>
 <% end -%>
-<% if @userlist_deny then -%>
 userlist_deny=<%= bool_translate[@userlist_deny] %>
-<% end -%>
-<% if @userlist_enable then -%>
 userlist_enable=<%= bool_translate[@userlist_enable] %>
-<% end -%>
 <% if @userlist_log then -%>
 userlist_log=<%= bool_translate[@userlist_log] %>
 <% end -%>

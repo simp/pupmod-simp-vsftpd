@@ -8,6 +8,7 @@
 # * Nick Markowski <nmarkowski@keywcorp.com>
 #
 class vsftpd::service {
+  assert_private()
 
   service { 'vsftpd':
     ensure     => 'running',
