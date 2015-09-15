@@ -1,0 +1,10 @@
+---
+# SIMP infrastructure settings
+client_nets:           ['192.168.122.0/24']
+manage_firewall:       true
+manage_pki:            true
+manage_tcpwrappers:    true
+
+# application
+#vsftpd::vsftpd_group: 'vsftpd'
+# vsftpd::vsftpd_user:  'vsftpd'
