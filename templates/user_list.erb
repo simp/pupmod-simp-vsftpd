@@ -4,17 +4,6 @@
 # do not even prompt for a password.
 # Note that the default vsftpd pam config also checks /etc/vsftpd/ftpusers
 # for users that are denied.
-root
-bin
-daemon
-adm
-lp
-sync
-shutdown
-halt
-mail
-news
-uucp
-operator
-games
-nobody
+<% @user_list.each do |user| -%>
+<%= user %>
+<% end -%>
