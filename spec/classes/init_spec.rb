@@ -35,9 +35,11 @@ describe 'vsftpd' do
           it { is_expected.to contain_file('/etc/vsftpd/user_list') }
           it { is_expected.to contain_file('/etc/pam.d/vsftpd') }
 
+          # test the logic for parameter defaults
           it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[^userlist_enable=YES]) }
           it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[^userlist_deny=YES]) }
           it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(%r[^userlist_list=]) }
+          it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[^ssl_ciphers=HIGH]) }
           it { is_expected.to contain_file('/etc/vsftpd/user_list').with_content(/^root\nbin\ndaemon\nadm\nlp\nsync\nshutdown\nhalt\nmail\nnews\nuucp\noperator\ngames\nnobody/) }
 
           if ['RedHat','CentOS'].include? facts.fetch(:operatingsystem, '')
@@ -52,7 +54,6 @@ describe 'vsftpd' do
             :vsftpd_user  => 'vsftpd',
             :vsftpd_group => 'vsftpd',
           }}
-
           it { is_expected.to contain_user('vsftpd') }
           it { is_expected.to contain_group('vsftpd') }
           it { is_expected.to contain_package('vsftpd').that_requires('Group[vsftpd]') }
@@ -61,7 +62,6 @@ describe 'vsftpd' do
 
         context 'with SSL enabled' do
           let(:params) {{ :ssl_enable  => true }}
-
           it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[ssl_enable=YES]) }
           it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[rsa_cert_file=/etc/vsftpd/pki/public/test.host.simp.pub]) }
           it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[rsa_private_key_file=/etc/vsftpd/pki/private/test.host.simp.pem]) }
@@ -141,6 +141,22 @@ describe 'vsftpd' do
           let(:params) {{ :manage_firewall => true }}
           it { is_expected.to contain_iptables__add_tcp_stateful_listen('allow_vsftpd_data_port').with_dports(%r[^20]) }
           it { is_expected.to contain_iptables__add_tcp_stateful_listen('allow_vsftpd_listen_port').with_dports(%r[^21]) }
+        end
+
+        context 'with FIPS disabled ' do
+          let(:params) {{ :use_fips => false }}
+          it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[^ssl_ciphers=HIGH]) }
+        end
+
+        context 'with FIPS enabled (via parameter)' do
+          let(:params) {{ :use_fips => true }}
+          it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[^ssl_ciphers=FIPS]) }
+        end
+
+        context 'with FIPS enabled (via fact)' do
+          let(:params) {{ :use_fips => false }}
+          let(:facts) { facts.merge( { :fips_enabled => true } ) }
+          it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[^ssl_ciphers=FIPS]) }
         end
       end
     end

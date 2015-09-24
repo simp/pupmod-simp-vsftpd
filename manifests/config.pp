@@ -123,6 +123,7 @@ class vsftpd::config (
   $vsftpd_log_file          = undef,
   $xferlog_file             = undef,
 ) {
+  #assert_private()
   include '::vsftpd'
 
   if $allow_anon_ssl { validate_bool($allow_anon_ssl) }
@@ -207,31 +208,29 @@ class vsftpd::config (
   if $xferlog_file { validate_absolute_path($xferlog_file) }
   validate_absolute_path($ca_certs_file)
 
-  $tcp_wrappers       = $::vsftpd::tcp_wrappers
-  $listen_port        = $::vsftpd::listen_port
-  $listen_address     = $::vsftpd::listen_address
-  $client_nets        = $::vsftpd::client_nets
-  $ftp_data_port      = $::vsftpd::ftp_data_port
-  $pasv_enable        = $::vsftpd::pasv_enable
-  $listen_ipv4        = $::vsftpd::listen_ipv4
-  $vsftpd_group       = $::vsftpd::vsftpd_group
-  $vsftpd_user        = $::vsftpd::vsftpd_user
-  $user_list          = $::vsftpd::user_list
-  $ftp_username       = $::vsftpd::vsftpd_user
-  $guest_username     = $::vsftpd::vsftpd_user
-  $userlist_deny      = $::vsftpd::userlist_deny
-  $userlist_enable    = $::vsftpd::userlist_enable
-  $pasv_max_port      = $::vsftpd::pasv_max_port
-  $pasv_min_port      = $::vsftpd::pasv_min_port
-  $local_enable       = $::vsftpd::local_enable
-  $pam_service_name   = $::vsftpd::pam_service_name
-  $ssl_enable         = $::vsftpd::ssl_enable
-  $require_ssl_reuse  = $::vsftpd::require_ssl_reuse
-
+  $_tcp_wrappers       = $::vsftpd::tcp_wrappers
+  $_listen_port        = $::vsftpd::listen_port
+  $_listen_address     = $::vsftpd::listen_address
+  $_ftp_data_port      = $::vsftpd::ftp_data_port
+  $_pasv_enable        = $::vsftpd::pasv_enable
+  $_listen_ipv4        = $::vsftpd::listen_ipv4
+  $_vsftpd_group       = $::vsftpd::vsftpd_group
+  $_ftp_username       = $::vsftpd::vsftpd_user
+  $_user_list          = $::vsftpd::user_list
+  $_guest_username     = $::vsftpd::vsftpd_user
+  $_userlist_deny      = $::vsftpd::userlist_deny
+  $_userlist_enable    = $::vsftpd::userlist_enable
+  $_pasv_max_port      = $::vsftpd::pasv_max_port
+  $_pasv_min_port      = $::vsftpd::pasv_min_port
+  $_local_enable       = $::vsftpd::local_enable
+  $_pam_service_name   = $::vsftpd::pam_service_name
+  $_ssl_enable         = $::vsftpd::ssl_enable
+  $_require_ssl_reuse  = $::vsftpd::require_ssl_reuse
+  $_ssl_ciphers        = $::vsftpd::_enable_fips ? { true => ['FIPS'], default => $ssl_ciphers }
   file { '/etc/vsftpd':
     ensure   => 'directory',
     owner    => 'root',
-    group    => $vsftpd_group,
+    group    => $_vsftpd_group,
     mode     => '0640',
     recurse  => true,
     checksum => undef,
@@ -241,7 +240,7 @@ class vsftpd::config (
 
   file { '/etc/vsftpd/ftpusers':
     owner   => 'root',
-    group   => $vsftpd_group,
+    group   => $_vsftpd_group,
     mode    => '0640',
     source  => 'puppet:///modules/vsftpd/ftpusers',
     notify  => Service['vsftpd'],
@@ -250,7 +249,7 @@ class vsftpd::config (
 
   file { '/etc/vsftpd/user_list':
     owner   => 'root',
-    group   => $vsftpd_group,
+    group   => $_vsftpd_group,
     mode    => '0640',
     content => template('vsftpd/user_list.erb'),
     notify  => Service['vsftpd'],
@@ -267,7 +266,7 @@ class vsftpd::config (
 
   file { '/etc/vsftpd/vsftpd.conf':
     owner   => 'root',
-    group   => $vsftpd_group,
+    group   => $_vsftpd_group,
     mode    => '0640',
     content => template('vsftpd/vsftpd.conf.erb'),
     notify  => Service['vsftpd']
