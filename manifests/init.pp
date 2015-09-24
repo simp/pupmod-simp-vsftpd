@@ -27,6 +27,13 @@
 #   If true, use SIMP's TCP Wrapper management to configure TCP Wrappers to
 #   acommodate <%= metadata.name %>.
 #
+# [*use_fips*]
+#   Type: Boolean
+#   Default: +false+, or the value of the +fips_enabled+ fact If true,
+#   configure vsftpd to run in FIPS mode.  Note that even if this parameter is
+#   false, vsftpd will be configured to be FIPS-compliant if the system is
+#   running in FIPS mode.
+#
 # One thing to note is that local users are forced to SSL for security
 # reasons.
 #
@@ -44,11 +51,11 @@
 #
 class vsftpd (
   # SIMP options
-  $manage_firewall    = defined('$::manage_firewall') ? { true => $::manage_firewall, default => hiera('manage_firewall',false) },
-  $manage_pki         = defined('$::manage_pki') ? { true => $::manage_pki, default => hiera('manage_pki',false) },
+  $manage_firewall    = defined('$::manage_firewall') ? { true    => $::manage_firewall, default    => hiera('manage_firewall',false) },
+  $manage_pki         = defined('$::manage_pki') ? { true         => $::manage_pki, default         => hiera('manage_pki',false) },
   $manage_tcpwrappers = defined('$::manage_tcpwrappers') ? { true => $::manage_tcpwrappers, default => hiera('manage_tcpwrappers',false) },
-  $client_nets        = defined('$::client_nets') ? { true => $::client_nets, default => hiera('client_nets', ['127.0.0.1/32']) },
-
+  $client_nets        = defined('$::client_nets') ? { true        => $::client_nets, default        => hiera('client_nets', ['127.0.0.1/32']) },
+  $use_fips           =  $::vsftpd::params::use_fips,
   # certs
   $pki_certs_dir      = "/etc/vsftpd/pki",
 
@@ -100,8 +107,13 @@ class vsftpd (
   validate_bool($manage_tcpwrappers)
   validate_string($pki_certs_dir)
   validate_bool($ssl_enable)
+  validate_bool($use_fips)
   if $pasv_max_port { validate_integer($pasv_max_port) }
   if $pasv_min_port { validate_integer($pasv_min_port) }
+
+  # regardless of the $vsftpd::use_fips parameter, configure vsftpd for FIPS if
+  # the system is already running in FIPS mode.
+  $_enable_fips = $use_fips or $vsftpd::params::use_fips
 
   include '::vsftpd::install'
   include '::vsftpd::config'

@@ -14,7 +14,6 @@ unless ENV['BEAKER_provision'] == 'no'
   end
 end
 
-
 RSpec.configure do |c|
   # ensure that environment OS is ready on each host
   fix_errata_on hosts
