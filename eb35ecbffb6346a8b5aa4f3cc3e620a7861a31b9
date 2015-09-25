@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ae5cdf2_997741d4",
+        "filename": "manifests/config.pp",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-09-25T07:22:21Z",
+      "side": 1,
+      "message": "remove this line if commented out",
+      "range": {
+        "startLine": 126,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 3
+      },
+      "revId": "eb35ecbffb6346a8b5aa4f3cc3e620a7861a31b9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ae5cdf2_b9723de1",
+        "filename": "spec/acceptance/nodesets/centos-66-x64.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-09-25T07:22:21Z",
+      "side": 1,
+      "message": "remove commented line",
+      "revId": "eb35ecbffb6346a8b5aa4f3cc3e620a7861a31b9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ae5cdf2_d981c990",
+        "filename": "spec/acceptance/nodesets/centos-7-x64.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-09-25T07:22:21Z",
+      "side": 1,
+      "message": "remove commented line",
+      "revId": "eb35ecbffb6346a8b5aa4f3cc3e620a7861a31b9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ae5cdf2_f97cc5b7",
+        "filename": "spec/acceptance/nodesets/default.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-09-25T07:22:21Z",
+      "side": 1,
+      "message": "remove commented line",
+      "revId": "eb35ecbffb6346a8b5aa4f3cc3e620a7861a31b9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ae5cdf2_7948b587",
+        "filename": "spec/classes/init_spec.rb",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2015-09-25T07:22:21Z",
+      "side": 1,
+      "message": "Same name as test in simp_integrations_spec.rb; looks confusing in rspec output",
+      "range": {
+        "startLine": 3,
+        "startChar": 10,
+        "endLine": 3,
+        "endChar": 16
+      },
+      "revId": "eb35ecbffb6346a8b5aa4f3cc3e620a7861a31b9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
