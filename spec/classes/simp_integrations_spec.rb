@@ -39,7 +39,7 @@ describe 'vsftpd' do
         context 'with SIMP distributing PKI certs' do
           let(:params) {{ :manage_pki => true }}
           it { is_expected.to contain_class('vsftpd::config::pki') }
-          it { is_expected.to contain_pki__copy('/etc/vsftpd/pki') }
+          it { is_expected.to contain_pki__copy('/etc/vsftpd') }
         end
 
         context 'without SIMP distributing PKI certs' do

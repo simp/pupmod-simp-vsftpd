@@ -281,7 +281,9 @@ guest_username=<%= @_guest_username %>
 <% if @hide_file then -%>
 hide_file=<%= @hide_file %>
 <% end -%>
+<% if @_listen_address then -%>
 listen_address=<%= @_listen_address %>
+<% end -%>
 <% if @listen_address6 then -%>
 listen_address6=<%= @listen_address6 %>
 <% end -%>

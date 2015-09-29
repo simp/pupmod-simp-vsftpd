@@ -45,7 +45,7 @@ describe 'vsftpd' do
           if ['RedHat','CentOS'].include? facts.fetch(:operatingsystem, '')
             it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[^pam_service_name=vsftpd]) }
           end
-          it { is_expected.to contain_pki__copy('/etc/vsftpd/pki') }
+          it { is_expected.to contain_pki__copy('/etc/vsftpd') }
           it { is_expected.to contain_tcpwrappers__allow('vsftpd') }
         end
 
@@ -77,9 +77,9 @@ describe 'vsftpd' do
 
         context 'with a custom certificate directory location' do
           let(:params) {{ :pki_certs_dir => '/opt/custom/cert/dir' }}
-          it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[rsa_cert_file=/opt/custom/cert/dir/public/test.host.simp.pub]) }
-          it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[rsa_private_key_file=/opt/custom/cert/dir/private/test.host.simp.pem]) }
-          it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[ca_certs_file=/opt/custom/cert/dir/cacerts/cacerts.pem]) }
+          it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[rsa_cert_file=/opt/custom/cert/dir/pki/public/test.host.simp.pub]) }
+          it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[rsa_private_key_file=/opt/custom/cert/dir/pki/private/test.host.simp.pem]) }
+          it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[ca_certs_file=/opt/custom/cert/dir/pki/cacerts/cacerts.pem]) }
         end
 
         context 'with SSL reuse disabled' do
