@@ -15,7 +15,7 @@ group :test do
   gem "puppetlabs_spec_helper"
   gem "metadata-json-lint"
   gem "simp-rspec-puppet-facts"
-  gem 'simp-beaker-helpers'
+  gem 'simp-beaker-helpers', '>= 1.0.4'
 
   # simp-rake-helpers does not suport puppet 2.7.X
   # FIXME: simp-rake-helpers should support Puppet 4.X

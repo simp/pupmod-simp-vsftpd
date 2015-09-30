@@ -109,9 +109,9 @@ describe 'An FTP-over-TLS session' do
 
   context 'connection' do
     let(:curl_ftp_cmd) {
-      'curl --verbose --cacert /etc/pki/simp-testing/cacerts/cacerts.pem ' +
-      "--key /etc/pki//simp-testing/private/#{client_fqdn}.pem " +
-      "--cert /etc/pki/simp-testing/public/#{client_fqdn}.pub " +
+      'curl --verbose --cacert /etc/pki/simp-testing/pki/cacerts/cacerts.pem ' +
+      "--key /etc/pki//simp-testing/pki/private/#{client_fqdn}.pem " +
+      "--cert /etc/pki/simp-testing/pki/public/#{client_fqdn}.pub " +
       "--ftp-ssl ftp://foo:foo@#{server_fqdn}"
       # ^^ these arguments are deprecated in modern curl, but EL6 needs them.
       # In the future, '--ssl --ss-reqd' should replace '--ftp-ssl' here
