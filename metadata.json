@@ -10,8 +10,8 @@
   "tags": [ "simp", "vsftpd" ],
   "dependencies": [
     {
-      "name": "simp-common",
-      "version_requirement": ">= 4.2.0"
+      "name": "simp-simplib",
+      "version_requirement": ">= 1.0.0"
     },
     {
       "name": "simp-pki",
@@ -31,10 +31,6 @@
     },
     {
       "name": "simp-iptables",
-      "version_requirement": ">= 4.1.0"
-    },
-    {
-      "name": "simp-simplib",
       "version_requirement": ">= 4.1.0"
     }
   ],

@@ -1,12 +1,13 @@
 Summary: vsftpd Puppet Module
 Name: pupmod-vsftpd
 Version: 5.0.0
-Release: 0
+Release: 1
 License: Apache License, Version 2.0
 Group: Applications/System
 Source: %{name}-%{version}-%{release}.tar.gz
 Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires: pupmod-common >= 4.2.0-0
+Requires: pupmod-simplib >= 1.0.0-0
 Requires: pupmod-iptables >= 4.1.0-3
 Requires: pupmod-pki >= 4.1.0-0
 Requires: pupmod-stunnel >= 4.2.0-0
@@ -57,7 +58,10 @@ fi
 # Post uninstall stuff
 
 %changelog
-* Tue Jul 17 2015 Nick Markowski <nmarkowski@keywcorp.com> - 5.0.0-0
+* Mon Nov 09 2015 Chris Tessmer <chris.tessmer@onypoint.com> - 5.0.0-1
+- migration to simplib and simpcat (lib/ only)
+
+* Fri Jul 17 2015 Nick Markowski <nmarkowski@keywcorp.com> - 5.0.0-0
 - Refactored module to new layout, to better conform with Puppetlabs.
 - Vsftpd user and group mutable.
 - Package requires user and group to be set before installation.
