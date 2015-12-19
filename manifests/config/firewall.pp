@@ -39,7 +39,7 @@ class vsftpd::config::firewall {
             dports      => "${::vsftpd::pasv_min_port}:${::vsftpd::pasv_max_port}",
           }
         } elsif $::vsftpd::pasv_min_port or $::vsftpd::pasv_max_port {
-           fail("\$::vsftpd::pasv_min_port ('${::vsftpd::pasv_min_port}') and \$::vsftpd::pasv_max_port ('${::vsftpd::pasv_max_port}') must both be defined (or not defined)")
+          fail("\$::vsftpd::pasv_min_port ('${::vsftpd::pasv_min_port}') and \$::vsftpd::pasv_max_port ('${::vsftpd::pasv_max_port}') must both be defined (or not defined)")
         }
 
         # This feels like a hack.

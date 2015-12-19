@@ -171,7 +171,7 @@ class vsftpd::config (
   if $secure_email_list_enable { validate_bool($secure_email_list_enable) }
   if $session_support { validate_bool($session_support) }
   if $setproctitle_enable { validate_bool($setproctitle_enable) }
-  if $ssl_enable { validate_bool($ssl_enable) }
+  if $_ssl_enable { validate_bool($_ssl_enable) }
   if $ssl_sslv2 { validate_bool($ssl_sslv2) }
   if $ssl_sslv3 { validate_bool($ssl_sslv3) }
   if $ssl_tlsv1 { validate_bool($ssl_tlsv1) }

@@ -38,7 +38,7 @@
 class vsftpd::params {
   if $::operatingsystem in ['RedHat','CentOS'] {
     # Conf Options #
-    $user_list        = ['root','bin','daemon','adm','lp','sync','shutdown','halt','mail','news','uucp',	'operator','games','nobody']
+    $user_list        = ['root','bin','daemon','adm','lp','sync','shutdown','halt','mail','news','uucp','operator','games','nobody']
     $pam_service_name = 'vsftpd'
     $use_fips         = defined('$::fips_enabled') ? { true => str2bool($::fips_enabled), default => hiera('use_fips', false) }
   }

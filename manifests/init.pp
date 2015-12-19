@@ -57,7 +57,7 @@ class vsftpd (
   $client_nets        = defined('$::client_nets') ? { true        => $::client_nets, default        => hiera('client_nets', ['127.0.0.1/32']) },
   $use_fips           =  $::vsftpd::params::use_fips,
   # certs
-  $pki_certs_dir      = "/etc/vsftpd",
+  $pki_certs_dir      = '/etc/vsftpd',
 
   # vsftpd.conf options
   $manage_user        = true,

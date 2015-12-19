@@ -20,7 +20,7 @@ class vsftpd::config::tcpwrappers {
   }
   else {
     notify { 'allow_vsftpd':
-      message => "TCPWrappers not detected, not setting tcpwrappers for $name"
+      message => "TCPWrappers not detected, not setting tcpwrappers for ${name}"
     }
   }
 
