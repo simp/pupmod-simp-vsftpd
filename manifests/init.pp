@@ -111,6 +111,8 @@ class vsftpd (
   if $pasv_max_port { validate_integer($pasv_max_port) }
   if $pasv_min_port { validate_integer($pasv_min_port) }
 
+  compliance_map()
+
   # regardless of the $vsftpd::use_fips parameter, configure vsftpd for FIPS if
   # the system is already running in FIPS mode.
   $_enable_fips = $use_fips or $vsftpd::params::use_fips

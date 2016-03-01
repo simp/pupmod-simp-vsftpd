@@ -11,5 +11,6 @@ fixtures:
     pki: "git://github.com/simp/pupmod-simp-pki"
     stdlib: "git://github.com/simp/puppetlabs-stdlib"
     tcpwrappers: "git://github.com/simp/pupmod-simp-tcpwrappers"
+    compliance: "https://github.com/trevor-vaughan/pupmod-compliance"
   symlinks:
     vsftpd: "#{source_dir}"

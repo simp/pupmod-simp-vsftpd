@@ -1,7 +1,7 @@
 Summary: vsftpd Puppet Module
 Name: pupmod-vsftpd
 Version: 5.0.0
-Release: 1
+Release: 2
 License: Apache License, Version 2.0
 Group: Applications/System
 Source: %{name}-%{version}-%{release}.tar.gz
@@ -17,6 +17,7 @@ Requires: puppetlabs-stdlib >= 4.1.0-0
 Buildarch: noarch
 Requires: simp-bootstrap >= 4.2.0
 Obsoletes: pupmod-vsftpd-test
+Requires: pupmod-onyxpoint-compliance_markup
 
 Prefix: /etc/puppet/environments/simp/modules
 
@@ -58,6 +59,9 @@ fi
 # Post uninstall stuff
 
 %changelog
+* Tue Mar 01 2016 Ralph Wright <ralph.wright@onyxpoint.com> - 5.0.0-2
+- Added compliance function support
+
 * Mon Nov 09 2015 Chris Tessmer <chris.tessmer@onypoint.com> - 5.0.0-1
 - migration to simplib and simpcat (lib/ only)
 

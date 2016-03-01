@@ -207,6 +207,8 @@ class vsftpd::config (
   if $xferlog_file { validate_absolute_path($xferlog_file) }
   validate_absolute_path($ca_certs_file)
 
+  compliance_map()
+
   $_tcp_wrappers       = $::vsftpd::tcp_wrappers
   $_listen_port        = $::vsftpd::listen_port
   $_listen_address     = $::vsftpd::listen_address
