@@ -1,7 +1,7 @@
 Summary: vsftpd Puppet Module
 Name: pupmod-vsftpd
-Version: 5.0.0
-Release: 2
+Version: 5.0.1
+Release: 0
 License: Apache License, Version 2.0
 Group: Applications/System
 Source: %{name}-%{version}-%{release}.tar.gz
@@ -59,6 +59,9 @@ fi
 # Post uninstall stuff
 
 %changelog
+* Wed May 18 2016 Chris Tessmer <chris.tessmer@onypoint.com> - 5.0.1-0
+- Sanitize code for `STRICT_VARIABLES=yes`
+
 * Tue Mar 01 2016 Ralph Wright <ralph.wright@onyxpoint.com> - 5.0.0-2
 - Added compliance function support
 

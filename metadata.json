@@ -1,13 +1,16 @@
 {
-  "name":    "pupmod-simp-vsftpd",
-  "version": "5.0.0",
-  "author":  "simp",
+  "name": "pupmod-simp-vsftpd",
+  "version": "5.0.1",
+  "author": "simp",
   "summary": "Manage vsftpd",
   "license": "Apache-2.0",
-  "source":  "https://github.com/simp/pupmod-simp-vsftpd",
+  "source": "https://github.com/simp/pupmod-simp-vsftpd",
   "project_page": "https://github.com/simp/pupmod-simp-vsftpd",
-  "issues_url":   "https://simp-project.atlassian.net",
-  "tags": [ "simp", "vsftpd" ],
+  "issues_url": "https://simp-project.atlassian.net",
+  "tags": [
+    "simp",
+    "vsftpd"
+  ],
   "dependencies": [
     {
       "name": "simp-simplib",
