@@ -47,6 +47,7 @@ describe 'vsftpd' do
           end
           it { is_expected.to contain_pki__copy('/etc/vsftpd') }
           it { is_expected.to contain_tcpwrappers__allow('vsftpd') }
+          it { is_expected.to contain_class('haveged') }
         end
 
         context 'when installing software with custom ownership' do
@@ -72,6 +73,7 @@ describe 'vsftpd' do
         context 'with SSL disabled' do
           let(:params) {{ :ssl_enable  => false }}
           it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[^ssl_enable=NO]) }
+          it { is_expected.to_not contain_class('haveged') }
         end
 
 
@@ -157,6 +159,20 @@ describe 'vsftpd' do
           let(:params) {{ :use_fips => false }}
           let(:facts) { facts.merge( { :fips_enabled => true } ) }
           it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(%r[^ssl_ciphers=FIPS]) }
+        end
+
+        context 'with use_haveged => false' do
+          let(:params) {{:use_haveged => false}}
+          it { is_expected.to_not contain_class('haveged') }
+        end
+
+        context 'with invalid input' do
+          let(:params) {{:use_haveged => 'invalid_input'}}
+          it 'with use_haveged as a string' do
+            expect {
+              is_expected.to compile
+            }.to raise_error(RSpec::Expectations::ExpectationNotMetError,/invalid_input" is not a boolean/)
+          end
         end
       end
     end

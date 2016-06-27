@@ -1,6 +1,6 @@
 Summary: vsftpd Puppet Module
 Name: pupmod-vsftpd
-Version: 5.0.1
+Version: 5.0.2
 Release: 0
 License: Apache License, Version 2.0
 Group: Applications/System
@@ -59,6 +59,9 @@ fi
 # Post uninstall stuff
 
 %changelog
+* Mon Jun 27 2016 Nick Markowski <nmarkowski@keywcorp.com> - 5.0.2-0
+- Pupmod-haveged included by default to assist with entropy generation.
+
 * Wed May 18 2016 Chris Tessmer <chris.tessmer@onypoint.com> - 5.0.1-0
 - Sanitize code for `STRICT_VARIABLES=yes`
 

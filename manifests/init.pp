@@ -27,6 +27,11 @@
 #   If true, use SIMP's TCP Wrapper management to configure TCP Wrappers to
 #   acommodate <%= metadata.name %>.
 #
+# [*use_haveged*]
+#   Type: Boolean
+#   Default: true
+#   If true, include haveged to assist with entropy generation.
+#
 # [*use_fips*]
 #   Type: Boolean
 #   Default: +false+, or the value of the +fips_enabled+ fact If true,
@@ -56,6 +61,7 @@ class vsftpd (
   $manage_tcpwrappers = defined('$::manage_tcpwrappers') ? { true => $::manage_tcpwrappers, default => hiera('manage_tcpwrappers',false) },
   $client_nets        = defined('$::client_nets') ? { true        => $::client_nets, default        => hiera('client_nets', ['127.0.0.1/32']) },
   $use_fips           =  $::vsftpd::params::use_fips,
+  $use_haveged        = true,
   # certs
   $pki_certs_dir      = '/etc/vsftpd',
 
@@ -108,6 +114,7 @@ class vsftpd (
   validate_string($pki_certs_dir)
   validate_bool($ssl_enable)
   validate_bool($use_fips)
+  validate_bool($use_haveged)
   if $pasv_max_port { validate_integer($pasv_max_port) }
   if $pasv_min_port { validate_integer($pasv_min_port) }
 
@@ -116,6 +123,10 @@ class vsftpd (
   # regardless of the $vsftpd::use_fips parameter, configure vsftpd for FIPS if
   # the system is already running in FIPS mode.
   $_enable_fips = $use_fips or $vsftpd::params::use_fips
+
+  if $use_haveged and $ssl_enable {
+    include '::haveged'
+  }
 
   include '::vsftpd::install'
   include '::vsftpd::config'
