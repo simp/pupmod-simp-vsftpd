@@ -61,7 +61,7 @@ class vsftpd (
   $manage_tcpwrappers = defined('$::manage_tcpwrappers') ? { true => $::manage_tcpwrappers, default => hiera('manage_tcpwrappers',false) },
   $client_nets        = defined('$::client_nets') ? { true        => $::client_nets, default        => hiera('client_nets', ['127.0.0.1/32']) },
   $use_fips           =  $::vsftpd::params::use_fips,
-  $use_haveged        = true,
+  $use_haveged = defined('$::use_haveged') ? { true => getvar('::use_haveged'), default => hiera('use_haveged', true) },
   # certs
   $pki_certs_dir      = '/etc/vsftpd',
 

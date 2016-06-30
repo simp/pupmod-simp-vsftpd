@@ -90,6 +90,12 @@ describe 'An FTP-over-TLS session' do
 
 
   context 'puppet apply' do
+
+    it 'should install epel' do
+      install_package(server, 'epel-release')
+      install_package(client, 'epel-release')
+    end
+
     it 'should configure server without errors' do
       apply_manifest_on(server, server_manifest, :catch_failures => true)
     end

@@ -17,6 +17,10 @@ describe 'vsftpd class' do
 
   context 'default parameters (no pki)' do
 
+    it 'should install epel' do
+      install_package(server, 'epel-release')
+    end
+
     it 'should work with no errors' do
       apply_manifest_on(server, manifest, :catch_failures => true)
     end

@@ -1,12 +1,13 @@
 Summary: vsftpd Puppet Module
 Name: pupmod-vsftpd
-Version: 5.0.2
+Version: 5.0.3
 Release: 0
 License: Apache License, Version 2.0
 Group: Applications/System
 Source: %{name}-%{version}-%{release}.tar.gz
 Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires: pupmod-common >= 4.2.0-0
+Requires: pupmod-haveged >= 0.3.0-0
 Requires: pupmod-simplib >= 1.0.0-0
 Requires: pupmod-iptables >= 4.1.0-3
 Requires: pupmod-pki >= 4.1.0-0
@@ -59,6 +60,9 @@ fi
 # Post uninstall stuff
 
 %changelog
+* Thu Jun 30 2016 Nick Markowski <nmarkowski@keywcorp.com> - 5.0.3-0
+- Use_haveged is now a global catalyst.
+
 * Mon Jun 27 2016 Nick Markowski <nmarkowski@keywcorp.com> - 5.0.2-0
 - Pupmod-haveged included by default to assist with entropy generation.
 

@@ -1,6 +1,6 @@
 {
   "name": "pupmod-simp-vsftpd",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "author": "simp",
   "summary": "Manage vsftpd",
   "license": "Apache-2.0",
@@ -17,7 +17,7 @@
       "version_requirement": ">= 1.0.0"
     },
     {
-      "name": "simp-haveged",
+      "name": "simp/puppet-haveged",
       "version_requirement": ">= 0.3.0 < 1.0.0"
     },
     {
