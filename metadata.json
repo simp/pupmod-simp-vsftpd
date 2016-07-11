@@ -1,6 +1,6 @@
 {
-  "name": "pupmod-simp-vsftpd",
-  "version": "5.0.3",
+  "name": "simp-vsftpd",
+  "version": "5.0.4",
   "author": "simp",
   "summary": "Manage vsftpd",
   "license": "Apache-2.0",
@@ -13,7 +13,7 @@
   ],
   "dependencies": [
     {
-      "name": "simp-simplib",
+      "name": "simp/simplib",
       "version_requirement": ">= 1.0.0"
     },
     {
@@ -21,23 +21,23 @@
       "version_requirement": ">= 0.3.0 < 1.0.0"
     },
     {
-      "name": "simp-pki",
+      "name": "simp/pki",
       "version_requirement": ">= 4.1.0"
     },
     {
-      "name": "simp-stunnel",
+      "name": "simp/stunnel",
       "version_requirement": ">= 4.2.0"
     },
     {
-      "name": "simp-tcpwrappers",
+      "name": "simp/tcpwrappers",
       "version_requirement": ">= 2.1.0"
     },
     {
-      "name": "puppetlabs-stdlib",
+      "name": "puppetlabs/stdlib",
       "version_requirement": ">= 4.1.0"
     },
     {
-      "name": "simp-iptables",
+      "name": "simp/iptables",
       "version_requirement": ">= 4.1.0"
     },
     {
