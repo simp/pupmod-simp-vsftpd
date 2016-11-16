@@ -1,3 +1,6 @@
+* Wed Nov 16 2016 Liz Nemsick <lnemsick.simp@gmail.com> - 5.0.8-0
+- Updated iptables dependency version
+
 * Wed Sep 28 2016 Chris Tessmer <chris.tessmer@onyxpoint.com> - 5.0.5-0
 - Fix Forge `haveged` dependency name
 
