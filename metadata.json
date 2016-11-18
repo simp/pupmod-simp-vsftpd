@@ -1,7 +1,7 @@
 {
   "name": "simp-vsftpd",
   "version": "5.0.8",
-  "author": "simp",
+  "author": "SIMP Team",
   "summary": "Manage vsftpd",
   "license": "Apache-2.0",
   "source": "https://github.com/simp/pupmod-simp-vsftpd",
@@ -35,10 +35,6 @@
     {
       "name": "simp/iptables",
       "version_requirement": ">= 5.0.0 < 6.0.0"
-    },
-    {
-      "name": "simp/compliance_markup",
-      "version_requirement": ">= 1.0.1 < 2.0.0"
     }
   ],
   "operatingsystem_support": [
