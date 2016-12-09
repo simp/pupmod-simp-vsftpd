@@ -20,13 +20,13 @@ describe 'An anonymous (plaintext) FTP session' do
       # Presumably this would already be done on a runnying system.
       include 'iptables'
       iptables::add_tcp_stateful_listen { 'ssh':
-        dports => '22',
-        client_nets => 'any',
+        dports       => '22',
+        trusted_nets => 'any',
       }
       # FTP and its ephemeral ports
       iptables::add_tcp_stateful_listen { 'ephemeral_ports':
-        dports => '32768:61000',
-        client_nets => 'any',
+        dports       => '32768:61000',
+        trusted_nets => 'any',
       }
 
       # A client to test the FTP connection
@@ -42,29 +42,32 @@ describe 'An anonymous (plaintext) FTP session' do
     EOS
   }
 
+  let(:client_hieradata) {{
+    'simp_options::firewall'            => true,
+    'simp_options::trusted_nets'        => ['any']
+  }}
+
   let(:server_manifest) {
     <<-EOS
       # Switch firewall control from firewalld over to iptables in EL7
       # Presumably this would already be done on a runnying system.
       include 'iptables'
       iptables::add_tcp_stateful_listen { 'ssh':
-        dports => '22',
-        client_nets => 'any',
+        dports       => '22',
+        trusted_nets => 'any',
       }
       # FTP and its ephemeral ports
       iptables::add_tcp_stateful_listen { 'ephemeral_ports':
-        dports => '32768:61000',
-        client_nets => 'any',
+        dports       => '32768:61000',
+        trusted_nets => 'any',
       }
 
       # install and start vsftpd without SSL
       class { 'vsftpd':
-        ssl_enable      => false,
-        manage_firewall => true,
-        pasv_enable     => true,
-        pasv_min_port   => 10000,
-        pasv_max_port   => 10100,
-        client_nets     => 'any',
+        ssl_enable    => false,
+        pasv_enable   => true,
+        pasv_min_port => 10000,
+        pasv_max_port => 10100
       }
       ->
       file{ '/var/ftp/pub/TEST.download.#{@msg_uuid[__FILE__]}':
@@ -76,6 +79,10 @@ describe 'An anonymous (plaintext) FTP session' do
     EOS
   }
 
+  let(:server_hieradata) {{
+    'simp_options::firewall'            => true,
+    'simp_options::trusted_nets'        => ['any']
+  }}
 
   context 'basic puppet apply' do
 
@@ -85,6 +92,7 @@ describe 'An anonymous (plaintext) FTP session' do
     end
 
     it 'should configure server without errors' do
+      set_hieradata_on(server, server_hieradata)
       apply_manifest_on(server, server_manifest, :catch_failures => true)
     end
 
@@ -93,6 +101,7 @@ describe 'An anonymous (plaintext) FTP session' do
     end
 
     it 'should configure client without errors' do
+      set_hieradata_on(client, client_hieradata)
       apply_manifest_on(client, client_manifest, :catch_failures => true)
     end
 
@@ -117,7 +126,7 @@ describe 'An anonymous (plaintext) FTP session' do
       on( client, %Q(#{curl_ftp_cmd} -T /root/TEST.upload.#{@msg_uuid[__FILE__]}), :acceptable_exit_codes => [25] )
     end
 
-    ### # NOTE: Commented out because FTP client is rediculous, but keeping in back
+    ### # NOTE: Commented out because FTP client is ridiculous, but keeping in back
     ###         pocket because there's a chance we might want it and it was a PITA
     ###         to set up.  Remove before committing.
     ###  let(:netrc_template) {

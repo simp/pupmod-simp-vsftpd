@@ -1,0 +1,89 @@
+---
+vsftpd::app_pki_cert_source: '/some/cert/source'
+vsftpd::cipher_suite:
+ - 'HIGH'
+vsftpd::ftp_data_port: '7'
+vsftpd::listen_port: '9'
+vsftpd::listen_address: '1.2.3.4'
+vsftpd::listen_ipv4: false
+vsftpd::local_enable: false
+vsftpd::pam_service_name: 'pam_service_name'
+vsftpd::pasv_enable: false
+vsftpd::pasv_max_port: '15'
+vsftpd::pasv_min_port: '14'
+vsftpd::require_ssl_reuse: false
+vsftpd::ssl_enable: true
+vsftpd::tcpwrappers: false
+vsftpd::user_list:
+ - 'foo'
+ - 'bar'
+ - 'baz'
+vsftpd::userlist_deny: false
+vsftpd::userlist_enable: false
+vsftpd::vsftpd_user: 'some_username'
+
+vsftpd::config::allow_anon_ssl           : false
+vsftpd::config::force_anon_data_ssl      : false
+vsftpd::config::force_anon_logins_ssl    : false
+vsftpd::config::force_local_data_ssl     : false
+vsftpd::config::force_local_logins_ssl   : false
+vsftpd::config::ssl_sslv2                : false
+vsftpd::config::ssl_sslv3                : false
+vsftpd::config::ssl_tlsv1                : false
+vsftpd::config::app_pki_cert             : '/some/public/test.pub'
+vsftpd::config::app_pki_key              : '/some/private/test.pem'
+vsftpd::config::app_pki_ca               : '/some/cacerts/cacerts.pem'
+vsftpd::config::validate_cert            : false
+vsftpd::config::anon_mkdir_write_enable  : false
+vsftpd::config::anon_other_write_enable  : false
+vsftpd::config::anon_upload_enable       : false
+vsftpd::config::anon_world_readable_only : false
+vsftpd::config::anonymous_enable         : false
+vsftpd::config::ascii_download_enable    : false
+vsftpd::config::ascii_upload_enable      : false
+vsftpd::config::async_abor_enable        : false
+vsftpd::config::background               : false
+vsftpd::config::check_shell              : false
+vsftpd::config::chmod_enable             : false
+vsftpd::config::chown_uploads            : false
+vsftpd::config::chown_username           : 'some_user'
+vsftpd::config::chroot_list_enable       : false
+vsftpd::config::chroot_local_user        : false
+vsftpd::config::connect_from_port_20     : false
+vsftpd::config::deny_email_enable        : false
+vsftpd::config::dirlist_enable           : false
+vsftpd::config::dirmessage_enable        : false
+vsftpd::config::message_file             : '/some/message/file'
+vsftpd::config::download_enable          : false
+vsftpd::config::dual_log_enable          : false
+vsftpd::config::force_dot_files          : false
+vsftpd::config::guest_enable             : false
+vsftpd::config::hide_ids                 : false
+vsftpd::config::listen_ipv6              : true
+vsftpd::config::lock_upload_files        : false
+vsftpd::config::log_ftp_protocol         : false
+vsftpd::config::ls_recurse_enable        : false
+vsftpd::config::mdtm_write               : false
+vsftpd::config::no_anon_password         : false
+vsftpd::config::no_log_lock              : false
+vsftpd::config::one_process_model        : false
+vsftpd::config::passwd_chroot_enable     : false
+vsftpd::config::pasv_addr_resolve        : false
+vsftpd::config::pasv_promiscuous         : false
+vsftpd::config::port_enable              : false
+vsftpd::config::port_promiscuous         : false
+vsftpd::config::reverse_lookup_enable    : false
+vsftpd::config::run_as_launching_user    : false
+vsftpd::config::secure_email_list_enable : false
+vsftpd::config::session_support          : false
+vsftpd::config::setproctitle_enable      : false
+vsftpd::config::syslog_enable            : false
+vsftpd::config::text_userdb_names        : false
+vsftpd::config::tilde_user_enable        : false
+vsftpd::config::use_localtime            : false
+vsftpd::config::use_sendfile             : false
+vsftpd::config::userlist_log             : false
+vsftpd::config::virtual_use_local_privs  : false
+vsftpd::config::write_enable             : false
+vsftpd::config::xferlog_enable           : false
+vsftpd::config::xferlog_std_format       : false

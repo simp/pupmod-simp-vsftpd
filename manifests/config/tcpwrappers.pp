@@ -11,17 +11,9 @@
 class vsftpd::config::tcpwrappers {
   assert_private()
 
-  if $::vsftpd::tcp_wrappers {
-    include 'tcpwrappers'
+  include '::tcpwrappers'
 
-    tcpwrappers::allow { 'vsftpd':
-      pattern => $::vsftpd::client_nets
-    }
+  tcpwrappers::allow { 'vsftpd':
+    pattern => $::vsftpd::trusted_nets
   }
-  else {
-    notify { 'allow_vsftpd':
-      message => "TCPWrappers not detected, not setting tcpwrappers for ${name}"
-    }
-  }
-
 }

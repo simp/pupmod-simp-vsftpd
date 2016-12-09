@@ -6,15 +6,23 @@
 #
 # == Parameters
 #
-# [*rsa_cert_file*]
+# [*app_pki_cert*]
+#   Corresponds to rsa_cert_file in vsftpd.conf.
 #   If you change this from the default, you will need to ensure that you
 #   manage the file and that vsftpd restarts when the file is updated.
 #
-# [*rsa_private_key_file*]
+# [*app_pki_key*]
+#   Corresponds to rsa_private_key_file in vsftpd.conf.
 #   If you change this from the default, you will need to ensure that you
 #   manage the file and that vsftpd restarts when the file is updated.
 #
-# * The rest of the parmeters can be found on the vsftpd.conf man page *
+# [*app_pki_ca*]
+#   Corresponds to ca_certs_file in vsftpd.conf.
+#   If you change this from the default, you will need to ensure that you
+#   manage the file and that vsftpd restarts when the file is updated.
+#
+#
+# * The rest of the parameters can be found on the vsftpd.conf man page *
 #
 # == Authors
 #
@@ -22,197 +30,127 @@
 # * Nick Markowski <nmarkowski@keywcorp.com>
 #
 class vsftpd::config (
-  $allow_anon_ssl           = undef,
-  $anon_mkdir_write_enable  = undef,
-  $anon_other_write_enable  = undef,
-  $anon_upload_enable       = true,
-  $anon_world_readable_only = undef,
-  $anonymous_enable         = true,
-  $ascii_download_enable    = undef,
-  $ascii_upload_enable      = undef,
-  $async_abor_enable        = undef,
-  $background               = undef,
-  $check_shell              = undef,
-  $chmod_enable             = undef,
-  $chown_uploads            = undef,
-  $chroot_list_enable       = undef,
-  $chroot_local_user        = undef,
-  $connect_from_port_20     = true,
-  $deny_email_enable        = undef,
-  $dirlist_enable           = undef,
-  $dirmessage_enable        = true,
-  $download_enable          = undef,
-  $dual_log_enable          = undef,
-  $force_dot_files          = undef,
-  $force_anon_data_ssl      = undef,
-  $force_anon_logins_ssl    = undef,
-  $force_local_data_ssl     = true,
-  $force_local_logins_ssl   = true,
-  $guest_enable             = undef,
-  $hide_ids                 = undef,
-  $listen_ipv6              = undef,
-  $lock_upload_files        = undef,
-  $log_ftp_protocol         = undef,
-  $ls_recurse_enable        = undef,
-  $mdtm_write               = undef,
-  $no_anon_password         = undef,
-  $no_log_lock              = undef,
-  $one_process_model        = undef,
-  $passwd_chroot_enable     = undef,
-  $pasv_addr_resolve        = undef,
-  $pasv_promiscuous         = undef,
-  $port_enable              = undef,
-  $port_promiscuous         = undef,
-  $reverse_lookup_enable    = undef,
-  $run_as_launching_user    = undef,
-  $secure_email_list_enable = undef,
-  $session_support          = undef,
-  $setproctitle_enable      = undef,
-  $ssl_sslv2                = false,
-  $ssl_sslv3                = false,
-  $ssl_tlsv1                = true,
-  $syslog_enable            = true,
-  $text_userdb_names        = undef,
-  $tilde_user_enable        = undef,
-  $use_localtime            = undef,
-  $use_sendfile             = undef,
-  $userlist_log             = true,
-  $virtual_use_local_privs  = undef,
-  $write_enable             = true,
-  $xferlog_enable           = true,
-  $xferlog_std_format       = true,
-  $accept_timeout           = undef,
-  $anon_max_rate            = undef,
-  $anon_umask               = undef,
-  $connect_timeout          = undef,
-  $data_connection_timeout  = undef,
-  $delay_failed_login       = undef,
-  $delay_successful_login   = undef,
-  $file_open_mode           = undef,
-  $idle_session_timeout     = undef,
-  $local_max_rate           = undef,
-  $local_umask              = '022',
-  $max_clients              = undef,
-  $max_login_fails          = undef,
-  $max_per_ip               = undef,
-  $trans_chunk_size         = undef,
-  $anon_root                = undef,
-  $banned_email_file        = undef,
-  $banner_file              = '/etc/issue.net',
-  $chown_username           = undef,
-  $chroot_list_file         = undef,
-  $cmds_allowed             = undef,
-  $deny_file                = undef,
-  $dsa_cert_file            = undef,
-  $dsa_private_key_file     = undef,
-  $email_password_file      = undef,
-  $hide_file                = undef,
-  $listen_address6          = undef,
-  $local_root               = undef,
-  $message_file             = undef,
-  $nopriv_user              = undef,
-  $pasv_address             = undef,
-  $rsa_cert_file            = "${::vsftpd::pki_certs_dir}/pki/public/${::fqdn}.pub",
-  $rsa_private_key_file     = "${::vsftpd::pki_certs_dir}/pki/private/${::fqdn}.pem",
-  $ca_certs_file            = "${::vsftpd::pki_certs_dir}/pki/cacerts/cacerts.pem",
-  $validate_cert            = $::vsftpd::validate_cert,
-  $secure_chroot_dir        = undef,
-  $ssl_ciphers              = ['HIGH'],
-  $user_config_dir          = undef,
-  $user_sub_token           = undef,
-  $vsftpd_log_file          = undef,
-  $xferlog_file             = undef,
+  Optional[Boolean] $allow_anon_ssl                          = undef,
+  Optional[Boolean] $anon_mkdir_write_enable                 = undef,
+  Optional[Boolean] $anon_other_write_enable                 = undef,
+  Boolean $anon_upload_enable                                = true,
+  Optional[Boolean] $anon_world_readable_only                = undef,
+  Boolean $anonymous_enable                                  = true,
+  Optional[Boolean] $ascii_download_enable                   = undef,
+  Optional[Boolean] $ascii_upload_enable                     = undef,
+  Optional[Boolean] $async_abor_enable                       = undef,
+  Optional[Boolean] $background                              = undef,
+  Optional[Boolean] $check_shell                             = undef,
+  Optional[Boolean] $chmod_enable                            = undef,
+  Optional[Boolean] $chown_uploads                           = undef,
+  Optional[Boolean] $chroot_list_enable                      = undef,
+  Optional[Boolean] $chroot_local_user                       = undef,
+  Boolean $connect_from_port_20                              = true,
+  Optional[Boolean] $deny_email_enable                       = undef,
+  Optional[Boolean] $dirlist_enable                          = undef,
+  Boolean $dirmessage_enable                                 = true,
+  Optional[Boolean] $download_enable                         = undef,
+  Optional[Boolean] $dual_log_enable                         = undef,
+  Optional[Boolean] $force_dot_files                         = undef,
+  Optional[Boolean] $force_anon_data_ssl                     = undef,
+  Optional[Boolean] $force_anon_logins_ssl                   = undef,
+  Boolean $force_local_data_ssl                              = true,
+  Boolean $force_local_logins_ssl                            = true,
+  Optional[Boolean] $guest_enable                            = undef,
+  Optional[Boolean] $hide_ids                                = undef,
+  Optional[Boolean] $listen_ipv6                             = undef,
+  Optional[Boolean] $lock_upload_files                       = undef,
+  Optional[Boolean] $log_ftp_protocol                        = undef,
+  Optional[Boolean] $ls_recurse_enable                       = undef,
+  Optional[Boolean] $mdtm_write                              = undef,
+  Optional[Boolean] $no_anon_password                        = undef,
+  Optional[Boolean] $no_log_lock                             = undef,
+  Optional[Boolean] $one_process_model                       = undef,
+  Optional[Boolean] $passwd_chroot_enable                    = undef,
+  Optional[Boolean] $pasv_addr_resolve                       = undef,
+  Optional[Boolean] $pasv_promiscuous                        = undef,
+  Optional[Boolean] $port_enable                             = undef,
+  Optional[Boolean] $port_promiscuous                        = undef,
+  Optional[Boolean] $reverse_lookup_enable                   = undef,
+  Optional[Boolean] $run_as_launching_user                   = undef,
+  Optional[Boolean] $secure_email_list_enable                = undef,
+  Optional[Boolean] $session_support                         = undef,
+  Optional[Boolean] $setproctitle_enable                     = undef,
+  Boolean $ssl_sslv2                                         = false,
+  Boolean $ssl_sslv3                                         = false,
+  Boolean $ssl_tlsv1                                         = true,
+  Boolean $syslog_enable                                     = true,
+  Optional[Boolean] $text_userdb_names                       = undef,
+  Optional[Boolean] $tilde_user_enable                       = undef,
+  Optional[Boolean] $use_localtime                           = undef,
+  Optional[Boolean] $use_sendfile                            = undef,
+  Stdlib::Absolutepath $userlist_file                        = '/etc/vsftpd/user_list',
+  Boolean $userlist_log                                      = true,
+  Optional[Boolean] $virtual_use_local_privs                 = undef,
+  Boolean $write_enable                                      = true,
+  Boolean $xferlog_enable                                    = true,
+  Boolean $xferlog_std_format                                = true,
+  Optional[Stdlib::Compat::Integer] $accept_timeout          = undef,
+  Optional[Stdlib::Compat::Integer] $anon_max_rate           = undef,
+  Optional[String]                  $anon_umask              = undef,
+  Optional[Stdlib::Compat::Integer] $connect_timeout         = undef,
+  Optional[Stdlib::Compat::Integer] $data_connection_timeout = undef,
+  Optional[Stdlib::Compat::Integer] $delay_failed_login      = undef,
+  Optional[Stdlib::Compat::Integer] $delay_successful_login  = undef,
+  Optional[String] $file_open_mode                           = undef,
+  Optional[Stdlib::Compat::Integer] $idle_session_timeout    = undef,
+  Optional[Stdlib::Compat::Integer] $local_max_rate          = undef,
+  String $local_umask                                        = '022',
+  Optional[Stdlib::Compat::Integer] $max_clients             = undef,
+  Optional[Stdlib::Compat::Integer] $max_login_fails         = undef,
+  Optional[Stdlib::Compat::Integer] $max_per_ip              = undef,
+  Optional[Stdlib::Compat::Integer] $trans_chunk_size        = undef,
+  Optional[String] $anon_root                                = undef,
+  Optional[Stdlib::Absolutepath] $banned_email_file          = undef,
+  Stdlib::Absolutepath $banner_file                          = '/etc/issue.net',
+  Optional[String] $chown_username                           = undef,
+  Optional[Stdlib::Absolutepath] $chroot_list_file           = undef,
+  Optional[Array[String]] $cmds_allowed                      = undef,
+  Optional[String] $deny_file                                = undef, # can contain regex
+  Optional[Stdlib::Absolutepath] $dsa_cert_file              = undef,
+  Optional[Stdlib::Absolutepath] $dsa_private_key_file       = undef,
+  Optional[Stdlib::Absolutepath]  $email_password_file       = undef,
+  Optional[String] $hide_file                                = undef, # can contain regex
+  Optional[String] $listen_address6                          = undef,
+  Optional[Stdlib::Absolutepath] $local_root                 = undef,
+  Optional[Stdlib::Absolutepath] $message_file               = undef,
+  Optional[String] $nopriv_user                              = undef,
+  Optional[String] $pasv_address                             = undef,
+  Stdlib::Absolutepath $app_pki_cert                         = "${::vsftpd::app_pki_cert_source}/pki/public/${::fqdn}.pub",
+  Stdlib::Absolutepath $app_pki_key                          = "${::vsftpd::app_pki_cert_source}/pki/private/${::fqdn}.pem",
+  Stdlib::Absolutepath $app_pki_ca                           = "${::vsftpd::app_pki_cert_source}/pki/cacerts/cacerts.pem",
+  Boolean $validate_cert                                     = $::vsftpd::validate_cert,
+  Optional[Stdlib::Absolutepath] $secure_chroot_dir          = undef,
+  Optional[Stdlib::Absolutepath] $user_config_dir            = undef,
+  Optional[String] $user_sub_token                           = undef,
+  Optional[Stdlib::Absolutepath] $vsftpd_log_file            = undef,
+  Optional[Stdlib::Absolutepath] $xferlog_file               = undef,
 ) {
-  include '::vsftpd'
+  assert_private()
 
-  if $allow_anon_ssl { validate_bool($allow_anon_ssl) }
-  if $anon_mkdir_write_enable { validate_bool($anon_mkdir_write_enable) }
-  if $anon_other_write_enable { validate_bool($anon_other_write_enable) }
-  if $anon_upload_enable { validate_bool($anon_upload_enable) }
-  if $anon_world_readable_only { validate_bool($anon_world_readable_only) }
-  if $anonymous_enable { validate_bool($anonymous_enable) }
-  if $ascii_download_enable { validate_bool($ascii_download_enable) }
-  if $ascii_upload_enable { validate_bool($ascii_upload_enable) }
-  if $async_abor_enable { validate_bool($async_abor_enable) }
-  if $background { validate_bool($background ) }
-  if $check_shell { validate_bool($check_shell) }
-  if $chmod_enable { validate_bool($chmod_enable) }
-  if $chown_uploads { validate_bool($chown_uploads) }
-  if $chroot_list_enable { validate_bool($chroot_list_enable ) }
-  if $chroot_local_user { validate_bool($chroot_local_user) }
-  if $connect_from_port_20 { validate_bool($connect_from_port_20) }
-  if $deny_email_enable { validate_bool($deny_email_enable) }
-  if $dirlist_enable { validate_bool($dirlist_enable) }
-  if $dirmessage_enable { validate_bool($dirmessage_enable) }
-  if $download_enable { validate_bool($download_enable) }
-  if $dual_log_enable { validate_bool($dual_log_enable) }
-  if $force_dot_files { validate_bool($force_dot_files) }
-  if $force_anon_data_ssl { validate_bool($force_anon_data_ssl) }
-  if $force_anon_logins_ssl { validate_bool($force_anon_logins_ssl) }
-  if $force_local_data_ssl { validate_bool($force_local_data_ssl) }
-  if $force_local_logins_ssl { validate_bool($force_local_logins_ssl) }
-  if $guest_enable { validate_bool($guest_enable) }
-  if $hide_ids { validate_bool($hide_ids) }
-  if $listen_ipv6 { validate_bool($listen_ipv6) }
-  if $lock_upload_files { validate_bool($lock_upload_files) }
-  if $log_ftp_protocol { validate_bool($log_ftp_protocol) }
-  if $ls_recurse_enable { validate_bool($ls_recurse_enable) }
-  if $mdtm_write { validate_bool($mdtm_write) }
-  if $no_anon_password { validate_bool($no_anon_password) }
-  if $no_log_lock { validate_bool($no_log_lock) }
-  if $one_process_model { validate_bool($one_process_model) }
-  if $passwd_chroot_enable { validate_bool($passwd_chroot_enable) }
-  if $pasv_addr_resolve { validate_bool($pasv_addr_resolve) }
-  if $pasv_promiscuous { validate_bool($pasv_promiscuous) }
-  if $port_enable { validate_bool($port_enable) }
-  if $port_promiscuous { validate_bool($port_promiscuous) }
-  if $reverse_lookup_enable { validate_bool($reverse_lookup_enable) }
-  if $run_as_launching_user { validate_bool($run_as_launching_user) }
-  if $secure_email_list_enable { validate_bool($secure_email_list_enable) }
-  if $session_support { validate_bool($session_support) }
-  if $setproctitle_enable { validate_bool($setproctitle_enable) }
-  if $ssl_sslv2 { validate_bool($ssl_sslv2) }
-  if $ssl_sslv3 { validate_bool($ssl_sslv3) }
-  if $ssl_tlsv1 { validate_bool($ssl_tlsv1) }
-  if $syslog_enable { validate_bool($syslog_enable ) }
-  if $text_userdb_names { validate_bool($text_userdb_names) }
-  if $tilde_user_enable { validate_bool($tilde_user_enable ) }
-  if $use_localtime { validate_bool($use_localtime) }
-  if $use_sendfile { validate_bool($use_sendfile ) }
-  if $userlist_log { validate_bool($userlist_log) }
-  if $virtual_use_local_privs { validate_bool($virtual_use_local_privs) }
-  if $write_enable { validate_bool($write_enable) }
-  if $xferlog_enable { validate_bool($xferlog_enable) }
-  if $xferlog_std_format { validate_bool($xferlog_std_format) }
-  if $accept_timeout { validate_integer($accept_timeout) }
-  if $anon_max_rate { validate_integer($anon_max_rate) }
   if $anon_umask { validate_umask($anon_umask) }
-  if $connect_timeout { validate_integer($connect_timeout) }
-  if $data_connection_timeout { validate_integer($data_connection_timeout) }
-  if $delay_failed_login { validate_integer($delay_failed_login) }
-  if $delay_successful_login { validate_integer($delay_successful_login) }
-  if $file_open_mode { validate_integer($file_open_mode) }
-  if $idle_session_timeout { validate_integer($idle_session_timeout) }
-  if $local_max_rate { validate_integer($local_max_rate) }
+  if $file_open_mode { validate_umask($file_open_mode) }
   if $local_umask { validate_umask($local_umask) }
-  if $max_clients { validate_integer($max_clients) }
-  if $max_login_fails { validate_integer($max_login_fails) }
-  if $max_per_ip { validate_integer($max_per_ip) }
-  if $trans_chunk_size { validate_integer($trans_chunk_size) }
-  if $ssl_ciphers { validate_array($ssl_ciphers) }
-  if $user_config_dir  { validate_absolute_path($user_config_dir) }
-  if $user_sub_token { validate_string($user_sub_token) }
-  if $vsftpd_log_file { validate_absolute_path($vsftpd_log_file) }
-  if $xferlog_file { validate_absolute_path($xferlog_file) }
-  validate_absolute_path($ca_certs_file)
+  if $listen_address6 { validate_net_list($listen_address6) }
+  if $pasv_address { validate_net_list($pasv_address) }
+  #TODO Validate content of $cmds_allowed, which is a list of FTP commands
 
+  if ($::vsftpd::listen_ipv4 and $listen_ipv6) {
+    fail('$::vsftpd::listen_ipv4 and $::vsftpd::config::listen_ipv6 are mutually exculsive')
+  }
 
-  $_tcp_wrappers       = $::vsftpd::tcp_wrappers
+  $_tcp_wrappers       = $::vsftpd::tcpwrappers
   $_listen_port        = $::vsftpd::listen_port
   $_listen_address     = $::vsftpd::listen_address
   $_ftp_data_port      = $::vsftpd::ftp_data_port
   $_pasv_enable        = $::vsftpd::pasv_enable
   $_listen_ipv4        = $::vsftpd::listen_ipv4
+  $_ipv6_enabled       = $facts['ipv6_enabled']
   $_vsftpd_group       = $::vsftpd::vsftpd_group
   $_ftp_username       = $::vsftpd::vsftpd_user
   $_user_list          = $::vsftpd::user_list
@@ -225,7 +163,8 @@ class vsftpd::config (
   $_pam_service_name   = $::vsftpd::pam_service_name
   $_ssl_enable         = $::vsftpd::ssl_enable
   $_require_ssl_reuse  = $::vsftpd::require_ssl_reuse
-  $_ssl_ciphers        = $::vsftpd::_enable_fips ? { true => ['FIPS'], default => $ssl_ciphers }
+  $_ssl_ciphers        = $::vsftpd::cipher_suite
+
   file { '/etc/vsftpd':
     ensure   => 'directory',
     owner    => 'root',
@@ -246,7 +185,7 @@ class vsftpd::config (
     require => Package['vsftpd']
   }
 
-  file { '/etc/vsftpd/user_list':
+  file { $userlist_file:
     owner   => 'root',
     group   => $_vsftpd_group,
     mode    => '0640',

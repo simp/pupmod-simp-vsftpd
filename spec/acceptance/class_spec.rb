@@ -9,8 +9,8 @@ describe 'vsftpd class' do
   let(:manifest) {
     <<-EOS
       class { 'vsftpd':
-         manage_pki    => false,
-         pki_certs_dir => '/etc/pki/simp-testing',
+         pki                 => false,
+         app_pki_cert_source => '/etc/pki/simp-testing',
       }
     EOS
   }

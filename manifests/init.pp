@@ -6,47 +6,61 @@
 # materials.
 #
 # == Parameters
-# [*client_nets*]
+# [*trusted_nets*]
 #   Type: Array of Strings
-#   Default: +['127.0.0.1/32']+
 #   A whitelist of subnets (in CIDR notation) permitted access.
 #
-# [*manage_firewall*]
+# [*firewall*]
 #   Type: Boolean
-#   Default: +false+
-#   If true, manage firewall rules to acommodate <%= metadata.name %>.
+#   If true, use SIMP's ::iptables to manage firewall rules to accommodate <%= metadata.name %>.
 #
-# [*manage_pki*]
+# [*pki*]
 #   Type: Boolean
-#   Default: +false+
-#   If true, manage PKI/PKE configuration for <%= metadata.name %>.
+#   If true, use SIMP's ::pki to manage PKI/PKE configuration for <%= metadata.name %>.
 #
-# [*manage_tcpwrappers*]
+# [*tcpwrappers*]
 #   Type: Boolean
-#   Default: +false+
-#   If true, use SIMP's TCP Wrapper management to configure TCP Wrappers to
-#   acommodate <%= metadata.name %>.
+#   If true, use SIMP's ::tcpwrappers to configure TCP Wrappers to
+#   accommodate <%= metadata.name %> and set 'tcp_wrappers' value in
+#   vsftpd.conf to true.
 #
-# [*use_haveged*]
+# [*haveged*]
 #   Type: Boolean
-#   Default: true
-#   If true, include haveged to assist with entropy generation.
+#   If true, include ::haveged to assist with entropy generation.
 #
-# [*use_fips*]
-#   Type: Boolean
-#   Default: +false+, or the value of the +fips_enabled+ fact If true,
-#   configure vsftpd to run in FIPS mode.  Note that even if this parameter is
-#   false, vsftpd will be configured to be FIPS-compliant if the system is
-#   running in FIPS mode.
+# [*cipher_suite*]
+#   Type: Array of strings
+#   OpenSSL cipher suite to use.
+#   If you are not using this with ::simp_options and the server is in FIPS
+#   mode, you need to set this to a FIPS-compliant cipher suite, (e.g.,
+#   ['FIPS', '!LOW']).
+#   Corresponds to ssl_ciphers in vsftpd.conf.
+#
+# [*vsfptd_user*]
+#   Set the user for the vsftpd service.
+#
+# [*vsftpd_group*]
+#   Set the group for the vsftpd service and files.
+#
+# [*manage_user*]
+#   Manage vsftpd user.
+#   Defaults to true.
+#
+# [*vsftpd_uid*]
+#   Integer.  UID of the vsftpd user.
+#   Defaults to 14.
+#
+# [*vsftpd_gid*]
+#   Integer. GID of the vsftpd group.
+#   Defaults to 50.
+#
+# [*manage_group*]
+#   Manage vsftpd group.
+#   Defaults to true.
+#
 #
 # One thing to note is that local users are forced to SSL for security
 # reasons.
-#
-# == Example
-#
-#  vsftpd { 'default':
-#    client_nets => [ '10.0.0.0/8', '192.168.0.14' ]
-#  }
 #
 # == Authors
 #
@@ -56,74 +70,43 @@
 #
 class vsftpd (
   # SIMP options
-  $manage_firewall    = defined('$::manage_firewall') ? { true    => $::manage_firewall, default    => hiera('manage_firewall',false) },
-  $manage_pki         = defined('$::manage_pki') ? { true         => $::manage_pki, default         => hiera('manage_pki',false) },
-  $manage_tcpwrappers = defined('$::manage_tcpwrappers') ? { true => $::manage_tcpwrappers, default => hiera('manage_tcpwrappers',false) },
-  $client_nets        = defined('$::client_nets') ? { true        => $::client_nets, default        => hiera('client_nets', ['127.0.0.1/32']) },
-  $use_fips           =  $::vsftpd::params::use_fips,
-  $use_haveged = defined('$::use_haveged') ? { true => getvar('::use_haveged'), default => hiera('use_haveged', true) },
+  Boolean $firewall                                = simplib::lookup('simp_options::firewall', { 'default_value' => false }),
+  Boolean $pki                                     = simplib::lookup('simp_options::pki', { 'default_value' => false }),
+  Boolean $tcpwrappers                             = simplib::lookup('simp_options::tcpwrappers', { 'default_value' => false }),
+  Array[String] $trusted_nets                      = simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1', '::1'] }),
+  Boolean $haveged                                 = simplib::lookup('simp_options::haveged', { 'default_value' => false }),
+  Array[String] $cipher_suite                      = simplib::lookup('simp_options::openssl::cipher_suite', { 'default_value' => ['DEFAULT', '!MEDIUM'] }),
+
   # certs
-  $pki_certs_dir      = '/etc/vsftpd',
+  Stdlib::Absolutepath $app_pki_cert_source        = '/etc/vsftpd',
 
   # vsftpd.conf options
-  $manage_user        = true,
-  $manage_group       = true,
-  $ftp_data_port      = '20',
-  $listen_address     = undef,
-  $listen_ipv4        = true,
-  $listen_port        = '21',
-  $local_enable       = true,
-  $pasv_enable        = true,
-  $pasv_max_port      = undef,
-  $pasv_min_port      = undef,
-  $ssl_enable         = true,
-  $require_ssl_reuse  = true,
-  $tcp_wrappers       = true,
-  $userlist_deny      = true,
-  $userlist_enable    = true,
-  $user_list          = $::vsftpd::params::user_list,
-  $pam_service_name   = $::vsftpd::params::pam_service_name,
-  $validate_cert      = true,
-  $vsftpd_gid         = '50',
-  $vsftpd_group       = 'ftp',
-  $vsftpd_uid         = '14',
-  $vsftpd_user        = 'ftp',
+  Boolean $manage_user                             = true,
+  Boolean $manage_group                            = true,
+  Stdlib::Compat::Integer $ftp_data_port           = 20,
+  Optional[String] $listen_address                 = undef,
+  Boolean $listen_ipv4                             = true, # listen config item in vsftpd.conf
+  Stdlib::Compat::Integer $listen_port             = 21,
+  Boolean $local_enable                            = true,
+  Boolean $pasv_enable                             = true,
+  Optional[Stdlib::Compat::Integer] $pasv_max_port = undef,
+  Optional[Stdlib::Compat::Integer] $pasv_min_port = undef,
+  Boolean $ssl_enable                              = true,
+  Boolean $require_ssl_reuse                       = true,
+  Boolean $userlist_deny                           = true,
+  Boolean $userlist_enable                         = true,
+  Array[String] $user_list                         = $::vsftpd::params::user_list,
+  String $pam_service_name                         = $::vsftpd::params::pam_service_name,
+  Boolean $validate_cert                           = true,
+  Stdlib::Compat::Integer $vsftpd_gid              = '50',
+  String $vsftpd_group                             = 'ftp',
+  Stdlib::Compat::Integer $vsftpd_uid              = '14',
+  String $vsftpd_user                              = 'ftp',
 ) inherits ::vsftpd::params {
 
-  validate_string($vsftpd_user)
-  validate_string($vsftpd_group)
-  validate_integer($vsftpd_uid)
-  validate_integer($vsftpd_gid)
-  validate_bool($manage_user)
-  validate_bool($manage_group)
-  validate_bool($manage_firewall)
-  validate_net_list($client_nets)
-  validate_integer($ftp_data_port)
-  validate_bool($listen_ipv4)
-  validate_integer($listen_port)
-  validate_bool($pasv_enable)
-  validate_bool($tcp_wrappers)
-  validate_array($user_list)
-  validate_bool($local_enable)
-  validate_bool($userlist_enable)
-  validate_bool($userlist_deny)
-  validate_string($pam_service_name)
-  validate_bool($manage_pki)
-  validate_bool($require_ssl_reuse)
-  validate_bool($manage_tcpwrappers)
-  validate_string($pki_certs_dir)
-  validate_bool($ssl_enable)
-  validate_bool($use_fips)
-  validate_bool($use_haveged)
-  if $pasv_max_port { validate_integer($pasv_max_port) }
-  if $pasv_min_port { validate_integer($pasv_min_port) }
+  validate_net_list($trusted_nets)
 
-
-  # regardless of the $vsftpd::use_fips parameter, configure vsftpd for FIPS if
-  # the system is already running in FIPS mode.
-  $_enable_fips = $use_fips or $vsftpd::params::use_fips
-
-  if $use_haveged and $ssl_enable {
+  if $haveged and $ssl_enable {
     include '::haveged'
   }
 
@@ -135,17 +118,17 @@ class vsftpd (
   Class['::vsftpd::service'] ->
   Class['::vsftpd']
 
-  if $manage_firewall {
+  if $firewall {
     include '::vsftpd::config::firewall'
     Class['::vsftpd::config::firewall'] ->
     Class['::vsftpd::service']
   }
-  if $manage_pki {
+  if $pki {
     include '::vsftpd::config::pki'
     Class['::vsftpd::config::pki'] ->
     Class['::vsftpd::service']
   }
-  if $manage_tcpwrappers {
+  if $tcpwrappers {
     include '::vsftpd::config::tcpwrappers'
     Class['::vsftpd::config::tcpwrappers'] ->
     Class['::vsftpd::service']
