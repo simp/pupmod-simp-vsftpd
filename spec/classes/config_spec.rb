@@ -326,6 +326,7 @@ EOM
 
           it { is_expected.to_not compile.with_all_deps }
         end
+
       end
     end
   end
