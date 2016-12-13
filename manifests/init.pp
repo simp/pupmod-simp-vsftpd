@@ -78,7 +78,7 @@ class vsftpd (
   Array[String] $cipher_suite                      = simplib::lookup('simp_options::openssl::cipher_suite', { 'default_value' => ['DEFAULT', '!MEDIUM'] }),
 
   # certs
-  Stdlib::Absolutepath $app_pki_cert_source        = '/etc/vsftpd',
+  Stdlib::Absolutepath $app_pki_dir                = '/etc/vsftpd',
 
   # vsftpd.conf options
   Boolean $manage_user                             = true,
