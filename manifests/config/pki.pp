@@ -1,7 +1,7 @@
 #
 # == Class vsftpd::pki
 #
-#  Manages certs in /etc/vsftpd.
+#  Manages certs in $::vsftpd::app_pki_dir.
 #
 # == Authors
 #
@@ -11,7 +11,8 @@
 class vsftpd::config::pki {
   assert_private()
 
-  pki::copy { $::vsftpd::pki_certs_dir:
+  include '::pki'
+  pki::copy { $::vsftpd::app_pki_dir:
     group  => $::vsftpd::vsftpd_group,
     notify => Service['vsftpd']
   }

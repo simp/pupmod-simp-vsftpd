@@ -1,0 +1,3 @@
+---
+vsftpd::listen_ipv4:         true
+vsftpd::config::listen_ipv6: true

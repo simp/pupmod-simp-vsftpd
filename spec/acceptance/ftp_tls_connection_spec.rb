@@ -21,12 +21,12 @@ describe 'An FTP-over-TLS session' do
       include 'iptables'
       iptables::add_tcp_stateful_listen { 'ssh':
         dports => '22',
-        client_nets => 'any',
+        trusted_nets => 'any',
       }
       # ephemeral ports for FTP's "active mode"
       iptables::add_tcp_stateful_listen { 'ephemeral_ports':
         dports => '32768:61000',
-        client_nets => 'any',
+        trusted_nets => 'any',
       }
 
       file{ '/root/TEST.upload.#{@msg_uuid[__FILE__]}':
@@ -41,15 +41,20 @@ describe 'An FTP-over-TLS session' do
       package{ 'curl': ensure => present }
     EOS
   }
+ 
+  let(:client_hieradata) {{
+    'simp_options::firewall'            => true,
+    'simp_options::trusted_nets'        => ['any']
+  }}
 
   let(:server_manifest) {
     <<-EOS
       # Switch firewall control from firewalld over to iptables in EL7
-      # Presumably this would already be done on a runnying system.
+      # Presumably this would already be done on a running system.
       include 'iptables'
       iptables::add_tcp_stateful_listen { 'ssh':
         dports => '22',
-        client_nets => 'any',
+        trusted_nets => 'any',
       }
 
       user{ 'foo':
@@ -75,19 +80,24 @@ describe 'An FTP-over-TLS session' do
 
       # install and start vsftpd with SSL
       class { 'vsftpd':
-        ssl_enable        => true,
-        pki_certs_dir     => '/etc/pki/simp-testing',
-        local_enable      => true,
-        manage_firewall   => true,
-        pasv_enable       => true,
-        pasv_min_port     => 10000,
-        pasv_max_port     => 10100,
-        client_nets       => 'any',
-        require_ssl_reuse => false, # NOTE: curl doesn't support SSL reuse
+        ssl_enable          => true,
+        app_pki_cert_source => '/etc/pki/simp-testing',
+        local_enable        => true,
+        pasv_enable         => true,
+        pasv_min_port       => 10000,
+        pasv_max_port       => 10100,
+        require_ssl_reuse   => false, # NOTE: curl doesn't support SSL reuse
       }
     EOS
   }
 
+    let(:server_hieradata) {{
+    'simp_options::firewall'     => true,
+    'simp_options::pki'          => true,
+    'simp_options::trusted_nets' => ['any'],
+    'simp_options::auditd'       => false,
+    'enable_auditing'            => false, # TODO remove this once pki module is ported over
+  }}
 
   context 'puppet apply' do
 
@@ -97,6 +107,7 @@ describe 'An FTP-over-TLS session' do
     end
 
     it 'should configure server without errors' do
+      set_hieradata_on(server, server_hieradata)
       apply_manifest_on(server, server_manifest, :catch_failures => true)
     end
 
@@ -105,6 +116,7 @@ describe 'An FTP-over-TLS session' do
     end
 
     it 'should configure client without errors' do
+      set_hieradata_on(client, client_hieradata)
       apply_manifest_on(client, client_manifest, :catch_failures => true)
     end
 
@@ -128,6 +140,8 @@ describe 'An FTP-over-TLS session' do
     end
 
     it 'should successfully download a file using FTP-over-SSL' do
+      # selinux policy by default does not allow ftp in home directories
+      on( server, 'setsebool -P ftp_home_dir=1' )
       on( client, "#{curl_ftp_cmd}/TEST.download.#{@msg_uuid[__FILE__]}", :acceptable_exit_codes => [0] )
     end
 

@@ -4,19 +4,19 @@
 }
 -%>
 <% if @_ssl_enable then -%>
-<%   if @allow_anon_ssl then -%>
+<%   unless @allow_anon_ssl.nil? then -%>
 allow_anon_ssl=<%= bool_translate[@allow_anon_ssl] %>
 <%   end -%>
-<%   if @force_anon_data_ssl then -%>
+<%   unless @force_anon_data_ssl.nil? then -%>
 force_anon_data_ssl=<%= bool_translate[@force_anon_data_ssl] %>
 <%   end -%>
-<%   if @force_anon_logins_ssl then -%>
+<%   unless @force_anon_logins_ssl.nil? then -%>
 force_anon_logins_ssl=<%= bool_translate[@force_anon_logins_ssl] %>
 <%   end -%>
-<%   if @force_local_data_ssl then -%>
+<%   unless @force_local_data_ssl.nil? then -%>
 force_local_data_ssl=<%= bool_translate[@force_local_data_ssl] %>
 <%   end -%>
-<%   if @force_local_logins_ssl then -%>
+<%   unless @force_local_logins_ssl.nil? then -%>
 force_local_logins_ssl=<%= bool_translate[@force_local_logins_ssl] %>
 <%   end -%>
 ssl_sslv2=<%= bool_translate[@ssl_sslv2] %>
@@ -29,175 +29,175 @@ dsa_cert_file=<%= @dsa_cert_file %>
 <%   if @dsa_private_key_file then -%>
 dsa_private_key_file=<%= @dsa_private_key_file %>
 <%   end -%>
-rsa_cert_file=<%= @rsa_cert_file %>
-rsa_private_key_file=<%= @rsa_private_key_file %>
-ca_certs_file=<%= @ca_certs_file %>
+rsa_cert_file=<%= @app_pki_cert %>
+rsa_private_key_file=<%= @app_pki_key %>
+ca_certs_file=<%= @app_pki_ca %>
 validate_cert=<%= bool_translate[@validate_cert] %>
 <% end -%>
-<% if @anon_mkdir_write_enable then -%>
+<% unless @anon_mkdir_write_enable.nil? then -%>
 anon_mkdir_write_enable=<%= bool_translate[@anon_mkdir_write_enable] %>
 <% end -%>
-<% if @anon_other_write_enable then -%>
+<% unless @anon_other_write_enable.nil? then -%>
 anon_other_write_enable=<%= bool_translate[@anon_other_write_enable] %>
 <% end -%>
-<% if @anon_upload_enable then -%>
+<% unless @anon_upload_enable.nil? then -%>
 anon_upload_enable=<%= bool_translate[@anon_upload_enable] %>
 <% end -%>
-<% if @anon_world_readable_only then -%>
+<% unless @anon_world_readable_only.nil? then -%>
 anon_world_readable_only=<%= bool_translate[@anon_world_readable_only] %>
 <% end -%>
-<% if @anonymous_enable then -%>
+<% unless @anonymous_enable.nil? then -%>
 anonymous_enable=<%= bool_translate[@anonymous_enable] %>
 <% end -%>
-<% if @ascii_download_enable then -%>
+<% unless @ascii_download_enable.nil? then -%>
 ascii_download_enable=<%= bool_translate[@ascii_download_enable] %>
 <% end -%>
-<% if @ascii_upload_enable then -%>
+<% unless @ascii_upload_enable.nil? then -%>
 ascii_upload_enable=<%= bool_translate[@ascii_upload_enable] %>
 <% end -%>
-<% if @async_abor_enable then -%>
+<% unless @async_abor_enable.nil? then -%>
 async_abor_enable=<%= bool_translate[@async_abor_enable] %>
 <% end -%>
-<% if @background then -%>
+<% unless @background.nil? then -%>
 background=<%= bool_translate[@background] %>
 <% end -%>
-<% if @check_shell then -%>
+<% unless @check_shell.nil? then -%>
 check_shell=<%= bool_translate[@check_shell] %>
 <% end -%>
-<% if @chmod_enable then -%>
+<% unless @chmod_enable.nil? then -%>
 chmod_enable=<%= bool_translate[@chmod_enable] %>
 <% end -%>
-<% if @chown_uploads then -%>
+<% unless @chown_uploads.nil? then -%>
 chown_uploads=<%= bool_translate[@chown_uploads] %>
-<%   if @chown_username then -%>
+<%   if @chown_uploads and @chown_username then -%>
 chown_username=<%= @chown_username %>
 <%   end -%>
 <% end -%>
-<% if @chroot_list_enable then -%>
+<% unless @chroot_list_enable.nil? then -%>
 chroot_list_enable=<%= bool_translate[@chroot_list_enable] %>
 <% end -%>
-<% if @chroot_local_user then -%>
+<% unless @chroot_local_user.nil? then -%>
 chroot_local_user=<%= bool_translate[@chroot_local_user] %>
 <% end -%>
-<% if @connect_from_port_20 then -%>
+<% unless @connect_from_port_20.nil? then -%>
 connect_from_port_20=<%= bool_translate[@connect_from_port_20] %>
 <% end -%>
-<% if @deny_email_enable then -%>
+<% unless @deny_email_enable.nil? then -%>
 deny_email_enable=<%= bool_translate[@deny_email_enable] %>
 <% end -%>
-<% if @dirlist_enable then -%>
+<% unless @dirlist_enable.nil? then -%>
 dirlist_enable=<%= bool_translate[@dirlist_enable] %>
 <% end -%>
-<% if @dirmessage_enable then -%>
+<% unless @dirmessage_enable.nil? then -%>
 dirmessage_enable=<%= bool_translate[@dirmessage_enable] %>
-<%   if @message_file then -%>
+<%   if @dirmessage_enable and @message_file then -%>
 message_file=<%= @message_file %>
 <%   end -%>
 <% end -%>
-<% if @download_enable then -%>
+<% unless @download_enable.nil? then -%>
 download_enable=<%= bool_translate[@download_enable] %>
 <% end -%>
-<% if @dual_log_enable then -%>
+<% unless @dual_log_enable.nil? then -%>
 dual_log_enable=<%= bool_translate[@dual_log_enable] %>
 <% end -%>
-<% if @force_dot_files then -%>
-force_dot_files=<%= bool_traslate[@force_dot_files] %>
+<% unless @force_dot_files.nil? then -%>
+force_dot_files=<%= bool_translate[@force_dot_files] %>
 <% end -%>
-<% if @guest_enable then -%>
+<% unless @guest_enable.nil? then -%>
 guest_enable=<%= bool_translate[@guest_enable] %>
 <% end -%>
-<% if @hide_ids then -%>
+<% unless @hide_ids.nil? then -%>
 hide_ids=<%= bool_translate[@hide_ids] %>
 <% end -%>
-<% if @listen_ipv6 && @ipv6_enabled.eql?('true') then -%>
+<% if @listen_ipv6 && @_ipv6_enabled then -%>
 listen_ipv6=<%= bool_translate[@listen_ipv6] %>
-<% elsif @listen_ipv4 then -%>
+<% elsif !@_listen_ipv4.nil? then -%>
 listen=<%= bool_translate[@_listen_ipv4] %>
 <% end -%>
 local_enable=<%= bool_translate[@_local_enable] %>
-<% if @lock_upload_files then -%>
+<% unless @lock_upload_files.nil? then -%>
 lock_upload_files=<%= bool_translate[@lock_upload_files] %>
 <% end -%>
-<% if @log_ftp_protocol then -%>
+<% unless @log_ftp_protocol.nil? then -%>
 log_ftp_protocol=<%= bool_translate[@log_ftp_protocol] %>
 <% end -%>
-<% if @ls_recurse_enable then -%>
+<% unless @ls_recurse_enable.nil? then -%>
 ls_recurse_enable=<%= bool_translate[@ls_recurse_enable] %>
 <% end -%>
-<% if @mdtm_write then -%>
+<% unless @mdtm_write.nil? then -%>
 mdtm_write=<%= bool_translate[@mdtm_write] %>
 <% end -%>
-<% if @no_anon_password then -%>
+<% unless @no_anon_password.nil? then -%>
 no_anon_password=<%= bool_translate[@no_anon_password] %>
 <% end -%>
-<% if @no_log_lock then -%>
+<% unless @no_log_lock.nil? then -%>
 no_log_lock=<%= bool_translate[@no_log_lock] %>
 <% end -%>
-<% if @one_process_model then -%>
+<% unless @one_process_model.nil? then -%>
 one_process_model=<%= bool_translate[@one_process_model] %>
 <% end -%>
-<% if @passwd_chroot_enable then -%>
+<% unless @passwd_chroot_enable.nil? then -%>
 passwd_chroot_enable=<%= bool_translate[@passwd_chroot_enable] %>
 <% end -%>
-<% if @pasv_addr_resolve then -%>
+<% unless @pasv_addr_resolve.nil? then -%>
 pasv_addr_resolve=<%= bool_translate[@pasv_addr_resolve] %>
 <% end -%>
 pasv_enable=<%= bool_translate[@_pasv_enable] %>
-<% if @pasv_promiscuous then -%>
+<% unless @pasv_promiscuous.nil? then -%>
 pasv_promiscuous=<%= bool_translate[@pasv_promiscuous] %>
 <% end -%>
-<% if @port_enable then -%>
+<% unless @port_enable.nil? then -%>
 port_enable=<%= bool_translate[@port_enable] %>
 <% end -%>
-<% if @port_promiscuous then -%>
+<% unless @port_promiscuous.nil? then -%>
 port_promiscuous=<%= bool_translate[@port_promiscuous] %>
 <% end -%>
-<% if @reverse_lookup_enable then -%>
+<% unless @reverse_lookup_enable.nil? then -%>
 reverse_lookup_enable=<%= bool_translate[@reverse_lookup_enable] %>
 <% end -%>
-<% if @run_as_launching_user then -%>
+<% unless @run_as_launching_user.nil? then -%>
 run_as_launching_user=<%= bool_translate[@run_as_launching_user] %>
 <% end -%>
-<% if @secure_email_list_enable then -%>
+<% unless @secure_email_list_enable.nil? then -%>
 secure_email_list_enable=<%= bool_translate[@secure_email_list_enable] %>
 <% end -%>
-<% if @session_support then -%>
+<% unless @session_support.nil? then -%>
 session_support=<%= bool_translate[@session_support] %>
 <% end -%>
-<% if @setproctitle_enable then -%>
+<% unless @setproctitle_enable.nil? then -%>
 setproctitle_enable=<%= bool_translate[@setproctitle_enable] %>
 <% end -%>
 ssl_enable=<%= bool_translate[@_ssl_enable] %>
 require_ssl_reuse=<%= bool_translate[@_require_ssl_reuse] %>
 syslog_enable=<%= bool_translate[@syslog_enable] %>
 tcp_wrappers=<%= bool_translate[@_tcp_wrappers] %>
-<% if @text_userdb_names then -%>
+<% unless @text_userdb_names.nil? then -%>
 text_userdb_names=<%= bool_translate[@text_userdb_names] %>
 <% end -%>
-<% if @tilde_user_enable then -%>
+<% unless @tilde_user_enable.nil? then -%>
 tilde_user_enable=<%= bool_translate[@tilde_user_enable] %>
 <% end -%>
-<% if @use_localtime then -%>
+<% unless @use_localtime.nil? then -%>
 use_localtime=<%= bool_translate[@use_localtime] %>
 <% end -%>
-<% if @use_sendfile then -%>
+<% unless @use_sendfile.nil? then -%>
 use_sendfile=<%= bool_translate[@use_sendfile] %>
 <% end -%>
 userlist_deny=<%= bool_translate[@_userlist_deny] %>
 userlist_enable=<%= bool_translate[@_userlist_enable] %>
-<% if @userlist_log then -%>
+<% unless @userlist_log.nil? then -%>
 userlist_log=<%= bool_translate[@userlist_log] %>
 <% end -%>
-<% if @virtual_use_local_privs then -%>
+<% unless @virtual_use_local_privs.nil? then -%>
 virtual_use_local_privs=<%= bool_translate[@virtual_use_local_privs] %>
 <% end -%>
-<% if @write_enable then -%>
+<% unless @write_enable.nil? then -%>
 write_enable=<%= bool_translate[@write_enable] %>
 <% end -%>
-<% if @xferlog_enable then -%>
+<% unless @xferlog_enable.nil? then -%>
 xferlog_enable=<%= bool_translate[@xferlog_enable] %>
 <% end -%>
-<% if @xferlog_std_format then -%>
+<% unless @xferlog_std_format.nil? then -%>
 xferlog_std_format=<%= bool_translate[@xferlog_std_format] %>
 <% end -%>
 <% if @accept_timeout then -%>
@@ -268,7 +268,7 @@ banner_file=<%= @banner_file %>
 chroot_list_file=<%= @chroot_list_file %>
 <% end -%>
 <% if @cmds_allowed then -%>
-cmds_allowed=<%= @cmds_allowed %>
+cmds_allowed=<%= @cmds_allowed.join(',') %>
 <% end -%>
 <% if @deny_file then -%>
 deny_file=<%= @deny_file %>
