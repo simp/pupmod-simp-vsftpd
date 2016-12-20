@@ -1,3 +1,6 @@
+* Tue Dec 20 2016 Nick Miller <nick.miller@onyxpoint.com> 7.0.0-0
+- Added management of the /etc/ftpusers file
+
 * Mon Dec 12 2016 Liz Nemsick <lnemsick.simp@gmail.com> - 7.0.0-0
 - Use simp_options module for global catalysts
 - Fixed bug whereby manifest would fail to compile if the force_dot_files
