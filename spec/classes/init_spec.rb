@@ -28,6 +28,10 @@ describe 'vsftpd' do
           it { is_expected.to contain_package('vsftpd').that_requires('Group[ftp]') }
           it { is_expected.to contain_package('vsftpd').that_requires('User[ftp]') }
           it { is_expected.to contain_service('vsftpd').with(:ensure => 'running') }
+          it { is_expected.to create_file('/etc/ftpusers') }
+          it { is_expected.to create_ftpusers('/etc/ftpusers').with({
+            :min_id => '500'
+          }) }
         end
 
         context 'with haveged enabled' do
@@ -47,7 +51,7 @@ describe 'vsftpd' do
         context 'when customizing install' do
           context 'when not managing vsftpd group' do
             let(:params) {{ :manage_group => false }}
-     
+
             it { is_expected.to contain_user('ftp') }
             it { is_expected.to_not contain_group('ftp') }
             it { is_expected.to_not contain_package('vsftpd').that_requires('Group[ftp]') }
