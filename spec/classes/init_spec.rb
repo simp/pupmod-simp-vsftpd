@@ -132,6 +132,7 @@ describe 'vsftpd' do
           it { is_expected.to contain_pki__copy('vsftpd').with(
            :group => 'ftp'
           ) }
+          it { is_expected.to contain_file('/etc/pki/simp_apps/vsftpd/x509')}
         end
 
         context 'with tcpwrappers enabled' do
