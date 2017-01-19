@@ -93,6 +93,8 @@ describe 'An anonymous (plaintext) FTP session' do
 
     it 'should configure server without errors' do
       set_hieradata_on(server, server_hieradata)
+      apply_manifest_on(server, server_manifest, :catch_failures => false)
+      # Our exec 'hack' takes an extra run.
       apply_manifest_on(server, server_manifest, :catch_failures => true)
     end
 
