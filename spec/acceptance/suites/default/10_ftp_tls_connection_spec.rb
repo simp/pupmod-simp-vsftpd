@@ -140,7 +140,12 @@ describe 'An FTP-over-TLS session' do
 
     it 'should successfully download a file using FTP-over-SSL' do
       # selinux policy by default does not allow ftp in home directories
-      on( server, 'setsebool -P ftp_home_dir=1' )
+      bools = Hash[on( server, 'getsebool -a' ).stdout.split("\n").map{|x| x.split(/\s+-->\s+/)}]
+
+      if bools.keys.include?('ftp_home_dir')
+        on( server, 'setsebool -P ftp_home_dir=1' )
+      end
+
       on( client, "#{curl_ftp_cmd}/TEST.download.#{@msg_uuid[__FILE__]}", :acceptable_exit_codes => [0] )
     end
 
