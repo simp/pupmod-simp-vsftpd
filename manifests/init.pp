@@ -9,7 +9,17 @@
 #   If true, use SIMP's ::iptables to manage firewall rules to accommodate <%= metadata.name %>.
 #
 # @param pki
-#   If true, use SIMP's ::pki to manage PKI/PKE configuration for <%= metadata.name %>.
+#   * If 'simp', include SIMP's pki module and use pki::copy to manage
+#     application certs in /etc/pki/simp_apps/vsftpd/x509
+#   * If true, do *not* include SIMP's pki module, but still use pki::copy
+#     to manage certs in /etc/pki/simp_apps/vsftpd/x509
+#   * If false, do not include SIMP's pki module and do not use pki::copy
+#     to manage certs.  You will need to appropriately assign a subset of:
+#     * app_pki_dir
+#     * app_pki_key
+#     * app_pki_cert
+#     * app_pki_ca
+#     * app_pki_ca_dir
 #
 # @param tcpwrappers
 #   If true, use SIMP's ::tcpwrappers to configure TCP Wrappers to
@@ -55,26 +65,23 @@
 class vsftpd (
   # SIMP options
   Boolean                            $firewall          = simplib::lookup('simp_options::firewall', { 'default_value' => false }),
-  Boolean                            $pki               = simplib::lookup('simp_options::pki', { 'default_value' => false }),
+  Variant[Enum['simp'],Boolean]      $pki               = simplib::lookup('simp_options::pki', { 'default_value' => false }),
   Boolean                            $tcpwrappers       = simplib::lookup('simp_options::tcpwrappers', { 'default_value' => false }),
   Array[String]                      $trusted_nets      = simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1','::1'] }),
   Boolean                            $haveged           = simplib::lookup('simp_options::haveged', { 'default_value' => false }),
   Array[String]                      $cipher_suite      = simplib::lookup('simp_options::openssl::cipher_suite', { 'default_value' => ['DEFAULT','!MEDIUM'] }),
 
-  # certs
-  Stdlib::Absolutepath               $app_pki_dir       = '/etc/vsftpd',
-
   # vsftpd.conf options
   Boolean                            $manage_user       = true,
   Boolean                            $manage_group      = true,
-  Stdlib::Compat::Integer            $ftp_data_port     = 20,
+  Simplib::Port                      $ftp_data_port     = 20,
   Optional[String]                   $listen_address    = undef,
   Boolean                            $listen_ipv4       = true, # listen config item in vsftpd.conf
-  Stdlib::Compat::Integer            $listen_port       = 21,
+  Simplib::Port                      $listen_port       = 21,
   Boolean                            $local_enable      = true,
   Boolean                            $pasv_enable       = true,
-  Optional[Stdlib::Compat::Integer]  $pasv_max_port     = undef,
-  Optional[Stdlib::Compat::Integer]  $pasv_min_port     = undef,
+  Optional[Simplib::Port]            $pasv_max_port     = undef,
+  Optional[Simplib::Port]            $pasv_min_port     = undef,
   Boolean                            $ssl_enable        = true,
   Boolean                            $require_ssl_reuse = true,
   Boolean                            $userlist_deny     = true,
@@ -82,9 +89,9 @@ class vsftpd (
   Array[String]                      $user_list         = $::vsftpd::params::user_list,
   String                             $pam_service_name  = $::vsftpd::params::pam_service_name,
   Boolean                            $validate_cert     = true,
-  Stdlib::Compat::Integer            $vsftpd_gid        = '50',
+  Integer                            $vsftpd_gid        = 50,
   String                             $vsftpd_group      = 'ftp',
-  Stdlib::Compat::Integer            $vsftpd_uid        = '14',
+  Integer                            $vsftpd_uid        = 14,
   String                             $vsftpd_user       = 'ftp',
 ) inherits ::vsftpd::params {
 
@@ -105,11 +112,6 @@ class vsftpd (
   if $firewall {
     include '::vsftpd::config::firewall'
     Class['::vsftpd::config::firewall'] ->
-    Class['::vsftpd::service']
-  }
-  if $pki {
-    include '::vsftpd::config::pki'
-    Class['::vsftpd::config::pki'] ->
     Class['::vsftpd::service']
   }
   if $tcpwrappers {

@@ -21,19 +21,19 @@ class vsftpd::config::firewall {
   if $::vsftpd::listen_ipv4 {
     include '::iptables'
 
-    iptables::add_tcp_stateful_listen { 'allow_vsftpd_data_port':
+    iptables::listen::tcp_stateful { 'allow_vsftpd_data_port':
       trusted_nets => $::vsftpd::trusted_nets,
       dports       => $::vsftpd::ftp_data_port
     }
 
-    iptables::add_tcp_stateful_listen { 'allow_vsftpd_listen_port':
+    iptables::listen::tcp_stateful { 'allow_vsftpd_listen_port':
       trusted_nets => $::vsftpd::trusted_nets,
       dports       => $::vsftpd::listen_port
     }
 
     if $::vsftpd::pasv_enable {
       if $::vsftpd::pasv_min_port and $::vsftpd::pasv_max_port {
-        iptables::add_tcp_stateful_listen { 'allow_vsftpd_pasv_ports':
+        iptables::listen::tcp_stateful { 'allow_vsftpd_pasv_ports':
           trusted_nets => $::vsftpd::trusted_nets,
           dports       => "${::vsftpd::pasv_min_port}:${::vsftpd::pasv_max_port}",
         }

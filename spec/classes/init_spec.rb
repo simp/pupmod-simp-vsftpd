@@ -20,7 +20,7 @@ describe 'vsftpd' do
           it { is_expected.to contain_class('vsftpd::service') }
 
           it { is_expected.to_not contain_class('vsftpd::config::firewall') }
-          it { is_expected.to_not contain_class('vsftpd::config::pki') }
+          it { is_expected.to_not contain_pki__copy('vsftpd') }
           it { is_expected.to_not contain_class('vsftpd::config::tcpwrappers') }
 
           it { is_expected.to contain_user('ftp') }
@@ -84,9 +84,9 @@ describe 'vsftpd' do
             it { is_expected.to compile.with_all_deps }
             it { is_expected.to contain_class('vsftpd::config::firewall') }
             it { is_expected.to contain_class('iptables') }
-            it { is_expected.to contain_iptables__add_tcp_stateful_listen('allow_vsftpd_data_port').with(:dports => '20') }
-            it { is_expected.to contain_iptables__add_tcp_stateful_listen('allow_vsftpd_listen_port').with(:dports => '21') }
-            it { is_expected.to_not contain_iptables__add_tcp_stateful_listen('allow_vsftpd_pasv_ports') }
+            it { is_expected.to contain_iptables__listen__tcp_stateful('allow_vsftpd_data_port').with(:dports => '20') }
+            it { is_expected.to contain_iptables__listen__tcp_stateful('allow_vsftpd_listen_port').with(:dports => '21') }
+            it { is_expected.to_not contain_iptables__listen__tcp_stateful('allow_vsftpd_pasv_ports') }
             it { is_expected.to contain_exec('check_conntrack_ftp') }
             it { is_expected.to contain_exec('nf_conntrack_ftp') }
           end
@@ -98,7 +98,7 @@ describe 'vsftpd' do
               :pasv_max_port   => 10100
             }}
             it { is_expected.to compile.with_all_deps }
-            it { is_expected.to contain_iptables__add_tcp_stateful_listen('allow_vsftpd_pasv_ports').with_dports(%r[^10000:10100]) }
+            it { is_expected.to contain_iptables__listen__tcp_stateful('allow_vsftpd_pasv_ports').with_dports(%r[^10000:10100]) }
           end
 
           context 'only pasv_min_port defined' do
@@ -126,13 +126,13 @@ describe 'vsftpd' do
         end
 
         context 'with pki enabled' do
-          let(:params) {{ :pki => true }}
+          let(:params) {{ :pki => 'simp' }}
           it { is_expected.to compile.with_all_deps }
-          it { is_expected.to contain_class('vsftpd::config::pki') }
           it { is_expected.to contain_class('pki') }
-          it { is_expected.to contain_pki__copy('/etc/vsftpd').with(
+          it { is_expected.to contain_pki__copy('vsftpd').with(
            :group => 'ftp'
           ) }
+          it { is_expected.to contain_file('/etc/pki/simp_apps/vsftpd/x509')}
         end
 
         context 'with tcpwrappers enabled' do

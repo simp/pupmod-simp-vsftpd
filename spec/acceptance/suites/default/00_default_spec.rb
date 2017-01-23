@@ -6,12 +6,12 @@ describe 'vsftpd class' do
   let(:client){ only_host_with_role( hosts, 'client' ) }
   let(:server){ only_host_with_role( hosts, 'server' ) }
 
-  let(:manifest) {
+  let(:manifest) { "include 'vsftpd'"}
+
+  let(:hieradata) {
     <<-EOS
-      class { 'vsftpd':
-         pki                 => false,
-         app_pki_cert_source => '/etc/pki/simp-testing',
-      }
+      simp_options::pki: false
+      vsftpd::config::app_pki_dir: /etc/pki/simp-testing/pki
     EOS
   }
 
@@ -22,6 +22,9 @@ describe 'vsftpd class' do
     end
 
     it 'should work with no errors' do
+      set_hieradata_on(server, hieradata)
+      apply_manifest_on(server, manifest, :catch_failures => true)
+      # /etc/ftpusers has a permission and context change
       apply_manifest_on(server, manifest, :catch_failures => true)
     end
 

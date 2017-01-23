@@ -8,6 +8,9 @@ fixtures:
     augeasproviders_grub:
       repo: https://github.com/simp/augeasproviders_grub
       branch: simp-master
+    concat:
+      repo: "https://github.com/simp/puppetlabs-concat"
+      branch: 'simp-master'
     haveged:
       repo: https://github.com/simp/puppet-haveged
       branch: simp-master

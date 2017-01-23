@@ -2,15 +2,15 @@
 vsftpd::app_pki_cert_source: '/some/cert/source'
 vsftpd::cipher_suite:
  - 'HIGH'
-vsftpd::ftp_data_port: '7'
-vsftpd::listen_port: '9'
+vsftpd::ftp_data_port: 7
+vsftpd::listen_port: 9
 vsftpd::listen_address: '1.2.3.4'
 vsftpd::listen_ipv4: true
 vsftpd::local_enable: true
 vsftpd::pam_service_name: 'pam_service_name'
 vsftpd::pasv_enable: true
-vsftpd::pasv_max_port: '15'
-vsftpd::pasv_min_port: '14'
+vsftpd::pasv_max_port: 15
+vsftpd::pasv_min_port: 14
 vsftpd::require_ssl_reuse: true
 vsftpd::ssl_enable: true
 vsftpd::tcpwrappers: true
@@ -89,21 +89,21 @@ vsftpd::config::virtual_use_local_privs  : true
 vsftpd::config::write_enable             : true
 vsftpd::config::xferlog_enable           : true
 vsftpd::config::xferlog_std_format       : true
-vsftpd::config::accept_timeout           : '1'
-vsftpd::config::anon_max_rate            : '2'
+vsftpd::config::accept_timeout           : 1
+vsftpd::config::anon_max_rate            : 2
 vsftpd::config::anon_umask               : '070'
-vsftpd::config::connect_timeout          : '3'
-vsftpd::config::data_connection_timeout  : '4'
-vsftpd::config::delay_failed_login       : '5'
-vsftpd::config::delay_successful_login   : '6'
+vsftpd::config::connect_timeout          : 3
+vsftpd::config::data_connection_timeout  : 4
+vsftpd::config::delay_failed_login       : 5
+vsftpd::config::delay_successful_login   : 6
 vsftpd::config::file_open_mode           : '0644'
-vsftpd::config::idle_session_timeout     : '8'
-vsftpd::config::local_max_rate           : '10'
+vsftpd::config::idle_session_timeout     : 8
+vsftpd::config::local_max_rate           : 10
 vsftpd::config::local_umask              : '002'
-vsftpd::config::max_clients              : '11'
-vsftpd::config::max_login_fails          : '12'
-vsftpd::config::max_per_ip               : '13'
-vsftpd::config::trans_chunk_size         : '16'
+vsftpd::config::max_clients              : 11
+vsftpd::config::max_login_fails          : 12
+vsftpd::config::max_per_ip               : 13
+vsftpd::config::trans_chunk_size         : 16
 vsftpd::config::anon_root                : '/some/dir'
 vsftpd::config::banned_email_file        : '/some/banned/email/file'
 vsftpd::config::banner_file              : '/some/banner/file'

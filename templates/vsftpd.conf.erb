@@ -201,59 +201,59 @@ xferlog_enable=<%= bool_translate[@xferlog_enable] %>
 xferlog_std_format=<%= bool_translate[@xferlog_std_format] %>
 <% end -%>
 <% if @accept_timeout then -%>
-accept_timeout=<%= @accept_timeout %>
+accept_timeout=<%= @accept_timeout.to_s %>
 <% end -%>
 <% if @anon_max_rate then -%>
-anon_max_rate=<%= @anon_max_rate %>
+anon_max_rate=<%= @anon_max_rate.to_s %>
 <% end -%>
 <% if @anon_umask then -%>
 anon_umask=<%= @anon_umask %>
 <% end -%>
 <% if @connect_timeout then -%>
-connect_timeout=<%= @connect_timeout %>
+connect_timeout=<%= @connect_timeout.to_s %>
 <% end -%>
 <% if @data_connection_timeout then -%>
-data_connection_timeout=<%= @data_connection_timeout %>
+data_connection_timeout=<%= @data_connection_timeout.to_s %>
 <% end -%>
 <% if @delay_failed_login then -%>
-delay_failed_login=<%= @delay_failed_login %>
+delay_failed_login=<%= @delay_failed_login.to_s %>
 <% end -%>
 <% if @delay_successful_login then -%>
-delay_successful_login=<%= @delay_successful_login %>
+delay_successful_login=<%= @delay_successful_login.to_s %>
 <% end -%>
 <% if @file_open_mode then -%>
 file_open_mode=<%= @file_open_mode %>
 <% end -%>
-ftp_data_port=<%= @_ftp_data_port %>
+ftp_data_port=<%= @_ftp_data_port.to_s %>
 <% if @idle_session_timeout then -%>
-idle_session_timeout=<%= @idle_session_timeout %>
+idle_session_timeout=<%= @idle_session_timeout.to_s %>
 <% end -%>
 <% if @_listen_port then -%>
-listen_port=<%= @_listen_port %>
+listen_port=<%= @_listen_port.to_s %>
 <% end -%>
 <% if @local_max_rate then -%>
-local_max_rate=<%= @local_max_rate %>
+local_max_rate=<%= @local_max_rate.to_s %>
 <% end -%>
 <% if @local_umask then -%>
 local_umask=<%= @local_umask %>
 <% end -%>
 <% if @max_clients then -%>
-max_clients=<%= @max_clients %>
+max_clients=<%= @max_clients.to_s %>
 <% end -%>
 <% if @max_login_fails then -%>
-max_login_fails=<%= @max_login_fails %>
+max_login_fails=<%= @max_login_fails.to_s %>
 <% end -%>
 <% if @max_per_ip then -%>
-max_per_ip=<%= @max_per_ip %>
+max_per_ip=<%= @max_per_ip.to_s %>
 <% end -%>
 <% if @_pasv_max_port then -%>
-pasv_max_port=<%= @_pasv_max_port %>
+pasv_max_port=<%= @_pasv_max_port.to_s %>
 <% end -%>
 <% if @_pasv_min_port then -%>
-pasv_min_port=<%= @_pasv_min_port %>
+pasv_min_port=<%= @_pasv_min_port.to_s %>
 <% end -%>
 <% if @trans_chunk_size then -%>
-trans_chunk_size=<%= @trans_chunk_size %>
+trans_chunk_size=<%= @trans_chunk_size.to_s %>
 <% end -%>
 <% if @anon_root then -%>
 anon_root=<%= @anon_root %>

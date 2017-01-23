@@ -19,14 +19,14 @@ describe 'An anonymous (plaintext) FTP session' do
       # Switch firewall control from firewalld over to iptables in EL7
       # Presumably this would already be done on a runnying system.
       include 'iptables'
-      iptables::add_tcp_stateful_listen { 'ssh':
-        dports       => '22',
-        trusted_nets => 'any',
+      iptables::listen::tcp_stateful { 'ssh':
+        dports       => 22,
+        trusted_nets => ['any'],
       }
       # FTP and its ephemeral ports
-      iptables::add_tcp_stateful_listen { 'ephemeral_ports':
+      iptables::listen::tcp_stateful { 'ephemeral_ports':
         dports       => '32768:61000',
-        trusted_nets => 'any',
+        trusted_nets => ['any'],
       }
 
       # A client to test the FTP connection
@@ -52,14 +52,14 @@ describe 'An anonymous (plaintext) FTP session' do
       # Switch firewall control from firewalld over to iptables in EL7
       # Presumably this would already be done on a runnying system.
       include 'iptables'
-      iptables::add_tcp_stateful_listen { 'ssh':
-        dports       => '22',
-        trusted_nets => 'any',
+      iptables::listen::tcp_stateful { 'ssh':
+        dports       => 22,
+        trusted_nets => ['any'],
       }
       # FTP and its ephemeral ports
-      iptables::add_tcp_stateful_listen { 'ephemeral_ports':
+      iptables::listen::tcp_stateful { 'ephemeral_ports':
         dports       => '32768:61000',
-        trusted_nets => 'any',
+        trusted_nets => ['any'],
       }
 
       # install and start vsftpd without SSL
@@ -93,6 +93,8 @@ describe 'An anonymous (plaintext) FTP session' do
 
     it 'should configure server without errors' do
       set_hieradata_on(server, server_hieradata)
+      apply_manifest_on(server, server_manifest, :catch_failures => false)
+      # Our exec 'hack' takes an extra run.
       apply_manifest_on(server, server_manifest, :catch_failures => true)
     end
 

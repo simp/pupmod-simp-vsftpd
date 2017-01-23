@@ -2,15 +2,15 @@
 vsftpd::app_pki_cert_source: '/some/cert/source'
 vsftpd::cipher_suite:
  - 'HIGH'
-vsftpd::ftp_data_port: '7'
-vsftpd::listen_port: '9'
+vsftpd::ftp_data_port: 7
+vsftpd::listen_port: 9
 vsftpd::listen_address: '1.2.3.4'
 vsftpd::listen_ipv4: false
 vsftpd::local_enable: false
 vsftpd::pam_service_name: 'pam_service_name'
 vsftpd::pasv_enable: false
-vsftpd::pasv_max_port: '15'
-vsftpd::pasv_min_port: '14'
+vsftpd::pasv_max_port: 15
+vsftpd::pasv_min_port: 14
 vsftpd::require_ssl_reuse: false
 vsftpd::ssl_enable: true
 vsftpd::tcpwrappers: false

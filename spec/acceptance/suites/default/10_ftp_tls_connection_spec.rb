@@ -19,14 +19,14 @@ describe 'An FTP-over-TLS session' do
       # Switch firewall control from firewalld over to iptables in EL7
       # Presumably this would already be done on a runnying system.
       include 'iptables'
-      iptables::add_tcp_stateful_listen { 'ssh':
-        dports => '22',
-        trusted_nets => 'any',
+      iptables::listen::tcp_stateful { 'ssh':
+        dports => 22,
+        trusted_nets => ['any'],
       }
       # ephemeral ports for FTP's "active mode"
-      iptables::add_tcp_stateful_listen { 'ephemeral_ports':
+      iptables::listen::tcp_stateful { 'ephemeral_ports':
         dports => '32768:61000',
-        trusted_nets => 'any',
+        trusted_nets => ['any'],
       }
 
       file{ '/root/TEST.upload.#{@msg_uuid[__FILE__]}':
@@ -41,7 +41,7 @@ describe 'An FTP-over-TLS session' do
       package{ 'curl': ensure => present }
     EOS
   }
- 
+
   let(:client_hieradata) {{
     'simp_options::firewall'            => true,
     'simp_options::trusted_nets'        => ['any']
@@ -52,9 +52,9 @@ describe 'An FTP-over-TLS session' do
       # Switch firewall control from firewalld over to iptables in EL7
       # Presumably this would already be done on a running system.
       include 'iptables'
-      iptables::add_tcp_stateful_listen { 'ssh':
-        dports => '22',
-        trusted_nets => 'any',
+      iptables::listen::tcp_stateful { 'ssh':
+        dports => 22,
+        trusted_nets => ['any'],
       }
 
       user{ 'foo':
@@ -77,11 +77,9 @@ describe 'An FTP-over-TLS session' do
         owner   => 'foo',
       }
 
-
       # install and start vsftpd with SSL
       class { 'vsftpd':
         ssl_enable          => true,
-        app_pki_cert_source => '/etc/pki/simp-testing',
         local_enable        => true,
         pasv_enable         => true,
         pasv_min_port       => 10000,
@@ -94,6 +92,7 @@ describe 'An FTP-over-TLS session' do
     let(:server_hieradata) {{
     'simp_options::firewall'     => true,
     'simp_options::pki'          => true,
+    'simp_options::pki::source'  => '/etc/pki/simp-testing/pki',
     'simp_options::trusted_nets' => ['any'],
     'simp_options::auditd'       => false,
     'enable_auditing'            => false, # TODO remove this once pki module is ported over
@@ -141,7 +140,12 @@ describe 'An FTP-over-TLS session' do
 
     it 'should successfully download a file using FTP-over-SSL' do
       # selinux policy by default does not allow ftp in home directories
-      on( server, 'setsebool -P ftp_home_dir=1' )
+      bools = Hash[on( server, 'getsebool -a' ).stdout.split("\n").map{|x| x.split(/\s+-->\s+/)}]
+
+      if bools.keys.include?('ftp_home_dir')
+        on( server, 'setsebool -P ftp_home_dir=1' )
+      end
+
       on( client, "#{curl_ftp_cmd}/TEST.download.#{@msg_uuid[__FILE__]}", :acceptable_exit_codes => [0] )
     end
 
