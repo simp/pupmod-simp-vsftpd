@@ -10,19 +10,14 @@ describe 'vsftpd class' do
 
   let(:hieradata) {
     <<-EOS
-      simp_options::pki: false
-      vsftpd::config::app_pki_dir: /etc/pki/simp-testing/pki
+     simp_options::pki: true
+     simp_options::pki::source: '/etc/pki/simp-testing/pki'
     EOS
   }
 
   context 'setup' do
     it 'should install epel' do
       install_package(server, 'epel-release')
-    end
-
-    it 'should change ownership of PKI files' do
-      # vsftpd won't start without this
-      on(server, 'chown -R root:ftp /etc/pki/simp-testing/pki')
     end
   end
 
