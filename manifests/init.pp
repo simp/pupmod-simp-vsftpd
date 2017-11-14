@@ -58,16 +58,14 @@
 # One thing to note is that local users are forced to SSL for security
 # reasons.
 #
-# @author Trevor Vaughan <tvaughan@onyxpoint.com>
-# @author Nick Markowski <nmarkowski@keywcorp.com>
-# @author Chris Tessmer <chris.tessmer@onyxpoint.com>
+# @author https://github.com/simp/pupmod-simp-vsftpd/graphs/contributors
 #
 class vsftpd (
   # SIMP options
   Boolean                            $firewall          = simplib::lookup('simp_options::firewall', { 'default_value' => false }),
   Variant[Enum['simp'],Boolean]      $pki               = simplib::lookup('simp_options::pki', { 'default_value' => false }),
   Boolean                            $tcpwrappers       = simplib::lookup('simp_options::tcpwrappers', { 'default_value' => false }),
-  Array[String]                      $trusted_nets      = simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1','::1'] }),
+  Simplib::Netlist                   $trusted_nets      = simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1','::1'] }),
   Boolean                            $haveged           = simplib::lookup('simp_options::haveged', { 'default_value' => false }),
   Array[String]                      $cipher_suite      = simplib::lookup('simp_options::openssl::cipher_suite', { 'default_value' => ['DEFAULT','!MEDIUM'] }),
 
@@ -75,7 +73,7 @@ class vsftpd (
   Boolean                            $manage_user       = true,
   Boolean                            $manage_group      = true,
   Simplib::Port                      $ftp_data_port     = 20,
-  Optional[String]                   $listen_address    = undef,
+  Optional[Simplib::IP::V4]          $listen_address    = undef,
   Boolean                            $listen_ipv4       = true, # listen config item in vsftpd.conf
   Simplib::Port                      $listen_port       = 21,
   Boolean                            $local_enable      = true,
@@ -94,8 +92,6 @@ class vsftpd (
   Integer                            $vsftpd_uid        = 14,
   String                             $vsftpd_user       = 'ftp',
 ) inherits ::vsftpd::params {
-
-  validate_net_list($trusted_nets)
 
   if $haveged and $ssl_enable {
     include '::haveged'

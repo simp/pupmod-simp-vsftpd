@@ -30,6 +30,8 @@ vsftpd::config::force_local_logins_ssl   : true
 vsftpd::config::ssl_sslv2                : true
 vsftpd::config::ssl_sslv3                : true
 vsftpd::config::ssl_tlsv1                : true
+vsftpd::config::ssl_tlsv1_1              : true
+vsftpd::config::ssl_tlsv1_2              : true
 vsftpd::config::dsa_cert_file            : '/some/private/test_dsa.pem'
 vsftpd::config::dsa_private_key_file     : '/some/private/test.dsa'
 vsftpd::config::app_pki_cert             : '/some/public/test.pub'

@@ -30,6 +30,8 @@ vsftpd::config::force_local_logins_ssl   : false
 vsftpd::config::ssl_sslv2                : false
 vsftpd::config::ssl_sslv3                : false
 vsftpd::config::ssl_tlsv1                : false
+vsftpd::config::ssl_tlsv1_1              : false
+vsftpd::config::ssl_tlsv1_2              : false
 vsftpd::config::app_pki_cert             : '/some/public/test.pub'
 vsftpd::config::app_pki_key              : '/some/private/test.pem'
 vsftpd::config::app_pki_ca               : '/some/cacerts/cacerts.pem'

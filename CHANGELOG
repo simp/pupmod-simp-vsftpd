@@ -1,4 +1,10 @@
-* Tue Nov 14 2017 Liz Nemsick <lnemsick.simp@gmail.com> - 7.0.2-0
+* Wed Nov 15 2017 Liz Nemsick <lnemsick.simp@gmail.com> - 7.1.0-0
+- By default, use TLS 1.2 instead of TLS 1.0.
+- Eliminate the use of deprecated validate_net_list() through
+  better strongly-typed parameters for IP addresses and hosts.
+- Add CentOS 6 acceptance tests.
+
+* Tue Nov 14 2017 Liz Nemsick <lnemsick.simp@gmail.com> - 7.1.0-0
 - Update acceptance test to work on server with selinux enforcing
 
 * Thu Jul 06 2017 Liz Nemsick <lnemsick.simp@gmail.com> - 7.0.1-0
