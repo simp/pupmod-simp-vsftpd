@@ -17,7 +17,7 @@ describe 'An FTP-over-TLS session' do
   let(:client_manifest) {
     <<-EOS
       # Switch firewall control from firewalld over to iptables in EL7
-      # Presumably this would already be done on a runnying system.
+      # Presumably this would already be done on a running system.
       include 'iptables'
       iptables::listen::tcp_stateful { 'ssh':
         dports => 22,
@@ -95,7 +95,6 @@ describe 'An FTP-over-TLS session' do
     'simp_options::pki::source'  => '/etc/pki/simp-testing/pki',
     'simp_options::trusted_nets' => ['any'],
     'simp_options::auditd'       => false,
-    'enable_auditing'            => false, # TODO remove this once pki module is ported over
   }}
 
   context 'puppet apply' do

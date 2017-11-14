@@ -15,11 +15,18 @@ describe 'vsftpd class' do
     EOS
   }
 
-  context 'default parameters (no pki)' do
-
+  context 'setup' do
     it 'should install epel' do
       install_package(server, 'epel-release')
     end
+
+    it 'should change ownership of PKI files' do
+      # vsftpd won't start without this
+      on(server, 'chown -R root:ftp /etc/pki/simp-testing/pki')
+    end
+  end
+
+  context 'default parameters (pki file management not provided by SIMP)' do
 
     it 'should work with no errors' do
       set_hieradata_on(server, hieradata)
