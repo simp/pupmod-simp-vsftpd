@@ -10,16 +10,18 @@ describe 'vsftpd class' do
 
   let(:hieradata) {
     <<-EOS
-      simp_options::pki: false
-      vsftpd::config::app_pki_dir: /etc/pki/simp-testing/pki
+     simp_options::pki: true
+     simp_options::pki::source: '/etc/pki/simp-testing/pki'
     EOS
   }
 
-  context 'default parameters (no pki)' do
-
+  context 'setup' do
     it 'should install epel' do
       install_package(server, 'epel-release')
     end
+  end
+
+  context 'default parameters (pki file management not provided by SIMP)' do
 
     it 'should work with no errors' do
       set_hieradata_on(server, hieradata)
