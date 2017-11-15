@@ -1,17 +1,27 @@
 HOSTS:
-  server:
+  server7:
     roles:
-      - server
+      - server7
       - default
-      - master
     platform:   el-7-x86_64
     box:        centos/7
     hypervisor: vagrant
-  client:
+  client7:
     roles:
-      - client
-      - agent
+      - client7
     platform:   el-7-x86_64
+    box:        centos/7
+    hypervisor: vagrant
+  server6:
+    roles:
+      - server6
+    platform:   el-6-x86_64
+    box:        centos/7
+    hypervisor: vagrant
+  client6:
+    roles:
+      - client6
+    platform:   el-6-x86_64
     box:        centos/7
     hypervisor: vagrant
 CONFIG:

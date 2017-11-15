@@ -22,6 +22,8 @@ force_local_logins_ssl=<%= bool_translate[@force_local_logins_ssl] %>
 ssl_sslv2=<%= bool_translate[@ssl_sslv2] %>
 ssl_sslv3=<%= bool_translate[@ssl_sslv3] %>
 ssl_tlsv1=<%= bool_translate[@ssl_tlsv1] %>
+ssl_tlsv1_1=<%= bool_translate[@ssl_tlsv1_1] %>
+ssl_tlsv1_2=<%= bool_translate[@ssl_tlsv1_2] %>
 ssl_ciphers=<%= Array(@_ssl_ciphers).join(":") %>
 <%   if @dsa_cert_file then -%>
 dsa_cert_file=<%= @dsa_cert_file %>

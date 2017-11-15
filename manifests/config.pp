@@ -36,8 +36,7 @@
 #
 # * The rest of the parameters can be found on the vsftpd.conf man page *
 #
-# @author Trevor Vaughan <tvaughan@onyxpoint.com>
-# @author Nick Markowski <nmarkowski@keywcorp.com>
+# @author https://github.com/simp/pupmod-simp-vsftpd/graphs/contributors
 #
 class vsftpd::config (
   Optional[Boolean]               $allow_anon_ssl           = undef,
@@ -88,7 +87,9 @@ class vsftpd::config (
   Optional[Boolean]               $setproctitle_enable      = undef,
   Boolean                         $ssl_sslv2                = false,
   Boolean                         $ssl_sslv3                = false,
-  Boolean                         $ssl_tlsv1                = true,
+  Boolean                         $ssl_tlsv1                = false,
+  Boolean                         $ssl_tlsv1_1              = false,
+  Boolean                         $ssl_tlsv1_2              = true,
   Boolean                         $syslog_enable            = true,
   Optional[Boolean]               $text_userdb_names        = undef,
   Optional[Boolean]               $tilde_user_enable        = undef,
@@ -126,11 +127,11 @@ class vsftpd::config (
   Optional[Stdlib::Absolutepath]  $dsa_private_key_file     = undef,
   Optional[Stdlib::Absolutepath]  $email_password_file      = undef,
   Optional[String]                $hide_file                = undef, # can contain regex
-  Optional[String]                $listen_address6          = undef,
+  Optional[Simplib::IP::V6]       $listen_address6          = undef,
   Optional[Stdlib::Absolutepath]  $local_root               = undef,
   Optional[Stdlib::Absolutepath]  $message_file             = undef,
   Optional[String]                $nopriv_user              = undef,
-  Optional[String]                $pasv_address             = undef,
+  Optional[Simplib::Host]         $pasv_address             = undef,
   Stdlib::Absolutepath            $app_pki_external_source  = simplib::lookup('simp_options::pki::source', { 'default_value' => '/etc/pki/simp/x509' }),
   Stdlib::Absolutepath            $app_pki_dir              = '/etc/pki/simp_apps/vsftpd/x509',
   Stdlib::Absolutepath            $app_pki_cert             = "${app_pki_dir}/public/${::fqdn}.pub",
@@ -145,9 +146,6 @@ class vsftpd::config (
   String                          $min_uid                  = '500'
 ) {
   assert_private()
-
-  if $listen_address6 { validate_net_list($listen_address6) }
-  if $pasv_address    { validate_net_list($pasv_address) }
 
   if ($::vsftpd::listen_ipv4 and $listen_ipv6) {
     fail('$::vsftpd::listen_ipv4 and $::vsftpd::config::listen_ipv6 are mutually exculsive')
