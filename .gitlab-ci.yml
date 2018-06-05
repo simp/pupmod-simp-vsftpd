@@ -22,11 +22,15 @@
 
 .setup_bundler_env: &setup_bundler_env
   before_script:
-    - '(find .vendor | wc -l) || :'
-    - bundle check || gem install bundler --no-rdoc --no-ri
-    - rm -f Gemfile.lock
-    - rm -rf pkg/
-    - bundle install --no-binstubs --jobs $(nproc) --path=.vendor "${FLAGS[@]}"
+    - 'echo Files in cache: $(find .vendor | wc -l) || :'
+    - 'export GEM_HOME=.vendor/gem_install'
+    - 'export BUNDLE_CACHE_PATH=.vendor/bundler'
+    - 'declare GEM_BUNDLER_VER=(-v ''~> ${BUNDLER_VERSION:-1.16.0}'')'
+    - declare GEM_INSTALL=(gem install --no-document)
+    - declare BUNDLER_INSTALL=(bundle install --no-binstubs --jobs $(nproc) --path=.vendor "${FLAGS[@]}")
+    - gem list -ie "${GEM_BUNDLE_VER[@]}" --silent bundler || "${GEM_INSTALL[@]}" --local "${GEM_BUNDLE_VER[@]}" bundler || "${GEM_INSTALL[@]}" "${GEM_BUNDLE_VER[@]}" bundler
+    - 'rm -rf pkg/ || :'
+    - bundle check || rm -f Gemfile.lock && ("${BUNDLER_INSTALL[@]}" --local || "${BUNDLER_INSTALL[@]}")
 
 .validation_checks: &validation_checks
   script:
@@ -190,7 +194,7 @@ acceptance-default:
   <<: *cache_bundler
   <<: *setup_bundler_env
   variables:
-    PUPPET_VERSION: '4.10'
+    PUPPET_VERSION: '~> 4.10.0'
   script:
     - bundle exec rake beaker:suites[default]
 
@@ -201,7 +205,7 @@ acceptance-fips-default:
   <<: *cache_bundler
   <<: *setup_bundler_env
   variables:
-    PUPPET_VERSION: '4.10'
+    PUPPET_VERSION: '~> 4.10.0'
     BEAKER_fips: 'yes'
   script:
     - bundle exec rake beaker:suites[default]
