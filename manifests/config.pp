@@ -132,7 +132,7 @@ class vsftpd::config (
   Optional[Stdlib::Absolutepath]  $message_file             = undef,
   Optional[String]                $nopriv_user              = undef,
   Optional[Simplib::Host]         $pasv_address             = undef,
-  Stdlib::Absolutepath            $app_pki_external_source  = simplib::lookup('simp_options::pki::source', { 'default_value' => '/etc/pki/simp/x509' }),
+  String                          $app_pki_external_source  = simplib::lookup('simp_options::pki::source', { 'default_value' => '/etc/pki/simp/x509' }),
   Stdlib::Absolutepath            $app_pki_dir              = '/etc/pki/simp_apps/vsftpd/x509',
   Stdlib::Absolutepath            $app_pki_cert             = "${app_pki_dir}/public/${::fqdn}.pub",
   Stdlib::Absolutepath            $app_pki_key              = "${app_pki_dir}/private/${::fqdn}.pem",

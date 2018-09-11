@@ -1,3 +1,7 @@
+* Tue Sep 11 2018 Nicholas Markowski <nicholas.markowski@onyxpoint.com> - 7.1.1-0
+- Updated $app_pki_external_source to accept any string. This matches the
+  functionality of pki::copy.
+
 * Wed Nov 15 2017 Liz Nemsick <lnemsick.simp@gmail.com> - 7.1.0-0
 - By default, use TLS 1.2 instead of TLS 1.0.
 - Eliminate the use of deprecated validate_net_list() through
