@@ -1,12 +1,6 @@
-#
-# == Class vsftpd::config::tcpwrappers
-#
 # Sets up tcpwrappers for vsfptd.
 #
-# == Authors
-#
-# * Trevor Vaughan <tvaughan@onyxpoint.com>
-# * Nick Markowski <nmarkowski@keywcorp.com>
+# @author https://github.com/simp/pupmod-simp-vsftpd/graphs/contributors
 #
 class vsftpd::config::tcpwrappers {
   assert_private()

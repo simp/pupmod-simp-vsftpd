@@ -1,11 +1,6 @@
-# == Class vsftpd::service
-#
 # Ensures the vsftpd service is running.
 #
-# == Authors
-#
-# * Trevor Vaughan <tvaughan@onyxpoint.com>
-# * Nick Markowski <nmarkowski@keywcorp.com>
+# @author https://github.com/simp/pupmod-simp-vsftpd/graphs/contributors
 #
 class vsftpd::service {
   assert_private()

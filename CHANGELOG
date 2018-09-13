@@ -1,3 +1,9 @@
+* Thu Sep 13 2018 Nick Miller <Nick.miller@onyxpoint.com> - 7.1.1-0
+- Add support for Puppet 5 and OEL
+- Add reference.md
+- Move user/group management to it's own manifest, allowing for easier
+  ordering
+
 * Tue Sep 11 2018 Nicholas Markowski <nicholas.markowski@onyxpoint.com> - 7.1.1-0
 - Updated $app_pki_external_source to accept any string. This matches the
   functionality of pki::copy.

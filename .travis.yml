@@ -25,23 +25,22 @@ before_install:
   - rm -f Gemfile.lock
 
 jobs:
-  allow_failures:
-    - env: STRICT_VARIABLES=yes TRUSTED_NODE_DATA=yes PUPPET_VERSION="~> 5.0"
-
   include:
     - stage: check
-      rvm: 2.4.1
+      rvm: 2.4.4
+      env: STRICT_VARIABLES=yes TRUSTED_NODE_DATA=yes PUPPET_VERSION="~> 5"
       script:
         - bundle exec rake check:dot_underscore
         - bundle exec rake check:test_file
         - bundle exec rake pkg:check_version
-        - bundle exec rake pkg:compare_latest_tag
-        - bundle exec rake lint
         - bundle exec rake metadata_lint
+        - bundle exec rake pkg:compare_latest_tag
+        - bundle exec rake pkg:create_tag_changelog
+        - bundle exec rake lint
         - bundle exec puppet module build
 
     - stage: spec
-      rvm: 2.4.1
+      rvm: 2.4.4
       env: STRICT_VARIABLES=yes TRUSTED_NODE_DATA=yes PUPPET_VERSION="~> 5.0"
       script:
         - bundle exec rake spec
@@ -65,7 +64,7 @@ jobs:
         - bundle exec rake spec
 
     - stage: deploy
-      rvm: 2.4.1
+      rvm: 2.4.4
       script:
         - true
       before_deploy:
@@ -85,5 +84,5 @@ jobs:
             secure: "gkSEKWsoqcoIQqmfeKWj4J4rquy8ZdYB2NXqIX5zivSm5vGxeVCym3+wFNJJIykxCwvHKj8my9nz2a3wxYSTNWdOA5QYDKk77obTdE1MvlNWv8EixLlqVpI6fi0vm/BJcOmW5ru9ldSI+PVa26EJZZ5u3iShb1aJYaT3O+gaqwSgME6dEBb+n9btNdM2IjVuZPbGvVLL1iXoLFcBs127/Pu2nHYDIPqGBbaSnyMV2zMplFKz7ZWQr3yGKYOkAegfMg/WsFbaU1Q/9BNIqw4gqjtNjFArwvfZ9qxF9e/bHSRkGLGoABWW8+T9Trwt1nEoY92DFtuxk5j5JRmPPTceAFE4sLreWi3ZqOpKs9A/JLyWnzpEx7OdXW4BckqgPuXNPWSAfk11+1RkV5s/6d875ms856MZqI7U6PGY0LlQW8OiiGn+VBvRxvU2qHBKUzENxlK/IVTSX7rskHaiozXS9QyVwofc8kzchaGLXwi5gprtNpWOBTzrezyGugLVviIaJ9seX/YdiG62GgULFveD3BOUbu0JQS/2VbUjTetWeGWYBTYRQP1m+UiVkOr7x/Q3qHPmdwAglp/a08NVFL2H+LHqUD+SESutVDfbL5xHffbu5utYGgHA0TX+GhxIMOcSpVoByesv7K36CmdFHk8TvKwVmoWxPS0lVf/6am+oKAU="
           on:
             tags: true
-            rvm: 2.1.9
+            rvm: 2.4.4
             condition: '($SKIP_FORGE_PUBLISH != true)'
