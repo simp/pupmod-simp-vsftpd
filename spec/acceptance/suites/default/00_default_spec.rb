@@ -20,6 +20,14 @@ test_name 'vsftpd class'
       it 'should install epel' do
         install_package(server, 'epel-release')
       end
+      [client,server].each do |host|
+        it 'should update openssl to get TLS1.2 if needed' do
+          # update packages so we can use TLS1.2 to connect to github
+          if host.host_hash[:box] =~ /oel/ and os_major_version == '6'
+            on(host,'yum upgrade -y git curl openssl nss')
+          end
+        end
+      end
     end
 
     context 'default parameters with SIMP pki' do
