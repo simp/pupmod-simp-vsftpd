@@ -55,12 +55,12 @@ test_name 'ftp tls connection'
         include 'iptables'
         iptables::listen::tcp_stateful { 'ssh':
           dports => 22,
-          trusted_nets => ['any'],
+          trusted_nets => ['0.0.0.0/0'],
         }
 
         user{ 'foo':
-          password => '$1$UR6BGI5k$GMXMBABoo0SI5LHnkYdfb0', # foo
-          home     => '/home/foo',
+          password   => '$1$MpLw9Ljh$wCbneeNVSYQt8L3slbjrs.', # H35zUl5mA4Fiiy3KT
+          home       => '/home/foo',
           managehome => true,
         }
 
@@ -80,12 +80,12 @@ test_name 'ftp tls connection'
 
         # install and start vsftpd with SSL
         class { 'vsftpd':
-          ssl_enable          => true,
-          local_enable        => true,
-          pasv_enable         => true,
-          pasv_min_port       => 10000,
-          pasv_max_port       => 10100,
-          require_ssl_reuse   => false, # NOTE: curl doesn't support SSL reuse
+          ssl_enable        => true,
+          local_enable      => true,
+          pasv_enable       => true,
+          pasv_min_port     => 10000,
+          pasv_max_port     => 10100,
+          require_ssl_reuse => false, # NOTE: curl doesn't support SSL reuse
         }
       EOS
     }
@@ -94,7 +94,7 @@ test_name 'ftp tls connection'
       'simp_options::firewall'     => true,
       'simp_options::pki'          => true,
       'simp_options::pki::source'  => '/etc/pki/simp-testing/pki',
-      'simp_options::trusted_nets' => ['any'],
+      'simp_options::trusted_nets' => ['0.0.0.0/0'],
       'simp_options::auditd'       => false,
       'enable_auditing'            => false, # TODO remove this once pki module is ported over
     }}
