@@ -2,7 +2,12 @@ require 'spec_helper_acceptance'
 
 test_name 'ftp tls connection'
 
-['6', '7'].each do |os_major_version|
+# FIXME: EL6 support is broken with a bug in curl 7.19.X that drops
+# ftp-ssl connections. Look into different client usage in the
+# future.
+#['6', '7'].each do |os_major_version|
+['7'].each do |os_major_version|
+
   describe "An FTP-over-TLS session for CentOS #{os_major_version}" do
     before(:all) do
       # Ensure that our test doesn't match messages from other tests
@@ -126,6 +131,7 @@ test_name 'ftp tls connection'
     end
 
     context 'connection' do
+
       let(:curl_ftp_cmd) {
         'curl --verbose --cacert /etc/pki/simp-testing/pki/cacerts/cacerts.pem ' +
         "--key /etc/pki//simp-testing/pki/private/#{client_fqdn}.pem " +

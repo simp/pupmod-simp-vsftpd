@@ -20,19 +20,6 @@ test_name 'vsftpd class'
       it 'should install epel' do
         install_package(server, 'epel-release')
       end
-      it 'should update openssl to get TLS1.2 if needed' do
-        [client,server].each do |host|
-          if host.host_hash[:box] =~ /oel/
-            # update packages so we can use TLS1.2 to connect to github
-            on(host,'yum upgrade -y git curl openssl nss') if os_major_version == '6'
-            # force selinux on
-            on(host,'yum install -y selinux-policy selinux-policy-targeted policycoreutils')
-            on(host,"sed -i 's/disabled/enforcing/g' /etc/selinux/config /etc/selinux/config")
-            host.reboot
-            # on(host,'setenforce Enforcing')
-          end
-        end
-      end
     end
 
     context 'default parameters with SIMP pki' do

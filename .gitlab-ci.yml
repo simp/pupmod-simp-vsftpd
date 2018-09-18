@@ -198,7 +198,7 @@ default:
   <<: *cache_bundler
   <<: *setup_bundler_env
   variables:
-    PUPPET_VERSION: '~> 4.10.0'
+    PUPPET_VERSION: '~> 4.10'
   script:
     - bundle exec rake spec_clean
     - bundle exec rake beaker:suites[default]
@@ -210,7 +210,7 @@ default-puppet5:
   <<: *cache_bundler
   <<: *setup_bundler_env
   variables:
-    PUPPET_VERSION: '~> 5.3'
+    PUPPET_VERSION: '~> 5.5'
     PUPPET_BEAKER_COLLECTION: 'puppet5'
   script:
     - bundle exec rake spec_clean
@@ -224,48 +224,63 @@ default-fips:
   <<: *setup_bundler_env
   <<: *only_with_SIMP_FULL_MATRIX
   variables:
-    PUPPET_VERSION: '~> 4.10.0'
+    PUPPET_VERSION: '~> 4.10'
     BEAKER_fips: 'yes'
   script:
     - bundle exec rake spec_clean
     - bundle exec rake beaker:suites[default]
 
-# default-oel:
-#   stage: acceptance
-#   tags:
-#     - beaker
-#   <<: *cache_bundler
-#   <<: *setup_bundler_env
-#   variables:
-#     PUPPET_VERSION: '~> 4.10.0'
-#   script:
-#     - bundle exec rake spec_clean
-#     - bundle exec rake beaker:suites[default,oel]
-#
-# default-oel-puppet5:
-#   stage: acceptance
-#   tags:
-#     - beaker
-#   <<: *cache_bundler
-#   <<: *setup_bundler_env
-#   <<: *only_with_SIMP_FULL_MATRIX
-#   variables:
-#     PUPPET_VERSION: '~> 5.3'
-#     PUPPET_BEAKER_COLLECTION: 'puppet5'
-#   script:
-#     - bundle exec rake spec_clean
-#     - bundle exec rake beaker:suites[default,oel]
-#
-# default-oel-fips:
-#   stage: acceptance
-#   tags:
-#     - beaker
-#   <<: *cache_bundler
-#   <<: *setup_bundler_env
-#   <<: *only_with_SIMP_FULL_MATRIX
-#   variables:
-#     PUPPET_VERSION: '~> 4.10.0'
-#     BEAKER_fips: 'yes'
-#   script:
-#     - bundle exec rake spec_clean
-#     - bundle exec rake beaker:suites[default,oel]
+default-oel:
+  stage: acceptance
+  tags:
+    - beaker
+  <<: *cache_bundler
+  <<: *setup_bundler_env
+  variables:
+    PUPPET_VERSION: '~> 4.10'
+  script:
+    - bundle exec rake spec_clean
+    - bundle exec rake beaker:suites[default,oel]
+
+default-oel-puppet5:
+  stage: acceptance
+  tags:
+    - beaker
+  <<: *cache_bundler
+  <<: *setup_bundler_env
+  <<: *only_with_SIMP_FULL_MATRIX
+  variables:
+    PUPPET_VERSION: '~> 5.5'
+    PUPPET_BEAKER_COLLECTION: 'puppet5'
+  script:
+    - bundle exec rake spec_clean
+    - bundle exec rake beaker:suites[default,oel]
+
+default-oel-fips:
+  stage: acceptance
+  tags:
+    - beaker
+  <<: *cache_bundler
+  <<: *setup_bundler_env
+  <<: *only_with_SIMP_FULL_MATRIX
+  variables:
+    PUPPET_VERSION: '~> 4.10'
+    BEAKER_fips: 'yes'
+  script:
+    - bundle exec rake spec_clean
+    - bundle exec rake beaker:suites[default,oel]
+
+default-oel-puppet5-fips:
+  stage: acceptance
+  tags:
+    - beaker
+  <<: *cache_bundler
+  <<: *setup_bundler_env
+  <<: *only_with_SIMP_FULL_MATRIX
+  variables:
+    BEAKER_fips: 'yes'
+    PUPPET_VERSION: '~> 5.5'
+    PUPPET_BEAKER_COLLECTION: 'puppet5'
+  script:
+    - bundle exec rake spec_clean
+    - bundle exec rake beaker:suites[default,oel]

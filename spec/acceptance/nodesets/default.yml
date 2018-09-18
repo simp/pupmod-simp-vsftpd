@@ -23,13 +23,13 @@ HOSTS:
     roles:
       - server6
     platform: el-6-x86_64
-    box: centos/7
+    box: centos/6
     hypervisor: <%= hypervisor %>
   client6:
     roles:
       - client6
     platform: el-6-x86_64
-    box: centos/7
+    box: centos/6
     hypervisor: <%= hypervisor %>
 CONFIG:
   log_level: verbose
