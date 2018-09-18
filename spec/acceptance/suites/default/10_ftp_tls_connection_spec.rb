@@ -44,8 +44,8 @@ test_name 'ftp tls connection'
     }
 
     let(:client_hieradata) {{
-      'simp_options::firewall'            => true,
-      'simp_options::trusted_nets'        => ['any']
+      'simp_options::firewall'     => true,
+      'simp_options::trusted_nets' => ['any']
     }}
 
     let(:server_manifest) {
@@ -90,7 +90,7 @@ test_name 'ftp tls connection'
       EOS
     }
 
-      let(:server_hieradata) {{
+    let(:server_hieradata) {{
       'simp_options::firewall'     => true,
       'simp_options::pki'          => true,
       'simp_options::pki::source'  => '/etc/pki/simp-testing/pki',
@@ -130,9 +130,9 @@ test_name 'ftp tls connection'
         'curl --verbose --cacert /etc/pki/simp-testing/pki/cacerts/cacerts.pem ' +
         "--key /etc/pki//simp-testing/pki/private/#{client_fqdn}.pem " +
         "--cert /etc/pki/simp-testing/pki/public/#{client_fqdn}.pub " +
-        "--ftp-ssl ftp://foo:foo@#{server_fqdn}"
+        "--ftp-ssl ftp://foo:H35zUl5mA4Fiiy3KT@#{server_fqdn}"
         # ^^ these arguments are deprecated in modern curl, but EL6 needs them.
-        # In the future, '--ssl --ss-reqd' should replace '--ftp-ssl' here
+        # In the future, '--ssl --ssl-reqd' should replace '--ftp-ssl' here
       }
 
       it 'should successfully log in a user using FTP-over-SSL' do
