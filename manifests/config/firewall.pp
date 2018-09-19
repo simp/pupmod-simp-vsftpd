@@ -1,6 +1,3 @@
-#
-# == Class vsftpd::config::firewall
-#
 # This class sets up the appropriate IPtables rules based on the value of
 # $fw_rules.
 #
@@ -9,10 +6,7 @@
 #
 # Localhost is always listed as a host that is allowed to access the system.
 #
-# == Authors
-#
-# * Trevor Vaughan <tvaughan@onyxpoint.com>
-# * Nick Markowski <nmarkowski@keywcorp.com>
+# @author https://github.com/simp/pupmod-simp-vsftpd/graphs/contributors
 #
 class vsftpd::config::firewall {
   assert_private()

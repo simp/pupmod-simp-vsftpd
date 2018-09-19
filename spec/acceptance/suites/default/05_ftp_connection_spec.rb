@@ -44,8 +44,8 @@ test_name 'ftp connection'
     }
 
     let(:client_hieradata) {{
-      'simp_options::firewall'            => true,
-      'simp_options::trusted_nets'        => ['any']
+      'simp_options::firewall'     => true,
+      'simp_options::trusted_nets' => ['any']
     }}
 
     let(:server_manifest) {
@@ -81,8 +81,8 @@ test_name 'ftp connection'
     }
 
     let(:server_hieradata) {{
-      'simp_options::firewall'            => true,
-      'simp_options::trusted_nets'        => ['any']
+      'simp_options::firewall'     => true,
+      'simp_options::trusted_nets' => ['any']
     }}
 
     context 'basic puppet apply' do

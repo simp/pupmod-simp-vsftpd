@@ -14,7 +14,7 @@
 .cache_bundler: &cache_bundler
   cache:
     untracked: true
-    # An attempt at caching between runs (ala Travis CI)
+    # A broad attempt at caching between runs (ala Travis CI)
     key: "${CI_PROJECT_NAMESPACE}__bundler"
     paths:
       - '.vendor'
@@ -47,6 +47,13 @@
   script:
     - bundle exec rake spec
 
+# To avoid running a prohibitive number of tests every commit,
+# don't set this env var in your gitlab instance
+.only_with_SIMP_FULL_MATRIX: &only_with_SIMP_FULL_MATRIX
+  only:
+    variables:
+      - $SIMP_FULL_MATRIX
+
 stages:
   - validation
   - unit
@@ -56,7 +63,7 @@ stages:
 # Puppet 4.7 for PE 2016.4 LTS Support (EOL: 2018-10-21)
 # See: https://puppet.com/misc/puppet-enterprise-lifecycle
 # --------------------------------------
-pup4.7-validation:
+pup4_7-validation:
   stage: validation
   tags:
     - docker
@@ -67,7 +74,7 @@ pup4.7-validation:
   <<: *setup_bundler_env
   <<: *validation_checks
 
-pup4.7-unit:
+pup4_7-unit:
   stage: unit
   tags:
     - docker
@@ -81,7 +88,7 @@ pup4.7-unit:
 
 # Puppet 4.8 for SIMP 6.0 + 6.1 support
 # --------------------------------------
-pup4.8-validation:
+pup4_8-validation:
   stage: validation
   tags:
     - docker
@@ -92,7 +99,7 @@ pup4.8-validation:
   <<: *setup_bundler_env
   <<: *validation_checks
 
-pup4.8-unit:
+pup4_8-unit:
   stage: unit
   tags:
     - docker
@@ -107,7 +114,7 @@ pup4.8-unit:
 # Puppet 4.10 for PE 2017.2 support (EOL:2018-02-21)
 # See: https://puppet.com/misc/puppet-enterprise-lifecycle
 # --------------------------------------
-pup4.10-validation:
+pup4_10-validation:
   stage: validation
   tags:
     - docker
@@ -118,7 +125,7 @@ pup4.10-validation:
   <<: *setup_bundler_env
   <<: *validation_checks
 
-pup4.10-unit:
+pup4_10-unit:
   stage: unit
   tags:
     - docker
@@ -133,7 +140,7 @@ pup4.10-unit:
 # Puppet 5.3 for PE 2017.3 support (EOL: 2018-07)
 # See: https://puppet.com/misc/puppet-enterprise-lifecycle
 # --------------------------------------
-pup5.3-validation:
+pup5_3-validation:
   stage: validation
   tags:
     - docker
@@ -144,7 +151,7 @@ pup5.3-validation:
   <<: *setup_bundler_env
   <<: *validation_checks
 
-pup5.3-unit:
+pup5_3-unit:
   stage: unit
   tags:
     - docker
@@ -154,12 +161,11 @@ pup5.3-unit:
   <<: *cache_bundler
   <<: *setup_bundler_env
   <<: *spec_tests
-  allow_failure: true
 
 
 # Keep an eye on the latest puppet 5
 # ----------------------------------
-pup5.latest-validation:
+pup5_latest-validation:
   stage: validation
   tags:
     - docker
@@ -169,9 +175,8 @@ pup5.latest-validation:
   <<: *cache_bundler
   <<: *setup_bundler_env
   <<: *validation_checks
-  allow_failure: true
 
-pup5.latest-unit:
+pup5_latest-unit:
   stage: unit
   tags:
     - docker
@@ -181,31 +186,101 @@ pup5.latest-unit:
   <<: *cache_bundler
   <<: *setup_bundler_env
   <<: *spec_tests
-  allow_failure: true
 
 
 
 # Acceptance tests
 # ==============================================================================
-acceptance-default:
+default:
   stage: acceptance
   tags:
     - beaker
   <<: *cache_bundler
   <<: *setup_bundler_env
   variables:
-    PUPPET_VERSION: '~> 4.10.0'
+    PUPPET_VERSION: '~> 4.10'
   script:
+    - bundle exec rake spec_clean
     - bundle exec rake beaker:suites[default]
 
-acceptance-fips-default:
+default-puppet5:
   stage: acceptance
   tags:
     - beaker
   <<: *cache_bundler
   <<: *setup_bundler_env
   variables:
-    PUPPET_VERSION: '~> 4.10.0'
+    PUPPET_VERSION: '~> 5.5'
+    PUPPET_BEAKER_COLLECTION: 'puppet5'
+  script:
+    - bundle exec rake spec_clean
+    - bundle exec rake beaker:suites[default]
+
+default-fips:
+  stage: acceptance
+  tags:
+    - beaker
+  <<: *cache_bundler
+  <<: *setup_bundler_env
+  <<: *only_with_SIMP_FULL_MATRIX
+  variables:
+    PUPPET_VERSION: '~> 4.10'
     BEAKER_fips: 'yes'
   script:
+    - bundle exec rake spec_clean
     - bundle exec rake beaker:suites[default]
+
+default-oel:
+  stage: acceptance
+  tags:
+    - beaker
+  <<: *cache_bundler
+  <<: *setup_bundler_env
+  variables:
+    PUPPET_VERSION: '~> 4.10'
+  script:
+    - bundle exec rake spec_clean
+    - bundle exec rake beaker:suites[default,oel]
+
+default-oel-puppet5:
+  stage: acceptance
+  tags:
+    - beaker
+  <<: *cache_bundler
+  <<: *setup_bundler_env
+  <<: *only_with_SIMP_FULL_MATRIX
+  variables:
+    PUPPET_VERSION: '~> 5.5'
+    PUPPET_BEAKER_COLLECTION: 'puppet5'
+  script:
+    - bundle exec rake spec_clean
+    - bundle exec rake beaker:suites[default,oel]
+
+default-oel-fips:
+  stage: acceptance
+  tags:
+    - beaker
+  <<: *cache_bundler
+  <<: *setup_bundler_env
+  <<: *only_with_SIMP_FULL_MATRIX
+  variables:
+    PUPPET_VERSION: '~> 4.10'
+    BEAKER_fips: 'yes'
+  script:
+    - bundle exec rake spec_clean
+    - bundle exec rake beaker:suites[default,oel]
+
+default-oel-puppet5-fips:
+  stage: acceptance
+  tags:
+    - beaker
+  <<: *cache_bundler
+  <<: *setup_bundler_env
+  <<: *only_with_SIMP_FULL_MATRIX
+  variables:
+    BEAKER_fips: 'yes'
+    PUPPET_VERSION: '~> 5.5'
+    PUPPET_BEAKER_COLLECTION: 'puppet5'
+  script:
+    - bundle exec rake spec_clean
+    - bundle exec rake beaker:suites[default,oel]

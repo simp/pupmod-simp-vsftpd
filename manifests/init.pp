@@ -84,35 +84,36 @@ class vsftpd (
   Boolean                            $require_ssl_reuse = true,
   Boolean                            $userlist_deny     = true,
   Boolean                            $userlist_enable   = true,
-  Array[String]                      $user_list         = $::vsftpd::params::user_list,
-  String                             $pam_service_name  = $::vsftpd::params::pam_service_name,
+  Array[String]                      $user_list         = ['root','bin','daemon','adm','lp','sync','shutdown','halt','mail','news','uucp','operator','games','nobody'],
+  String                             $pam_service_name  = 'vsftpd',
   Boolean                            $validate_cert     = true,
   Integer                            $vsftpd_gid        = 50,
   String                             $vsftpd_group      = 'ftp',
   Integer                            $vsftpd_uid        = 14,
   String                             $vsftpd_user       = 'ftp',
-) inherits ::vsftpd::params {
+) {
 
   if $haveged and $ssl_enable {
-    include '::haveged'
+    include 'haveged'
   }
 
-  include '::vsftpd::install'
-  include '::vsftpd::config'
-  include '::vsftpd::service'
-  Class['::vsftpd::install'] ->
-  Class['::vsftpd::config'] ~>
-  Class['::vsftpd::service'] ->
-  Class['::vsftpd']
+  include 'vsftpd::users'
+  include 'vsftpd::install'
+  include 'vsftpd::config'
+  include 'vsftpd::service'
+
+  Class['vsftpd::users']
+  -> Class['vsftpd::install']
+  -> Class['vsftpd::config']
+  ~> Class['vsftpd::service']
+  -> Class['vsftpd']
 
   if $firewall {
-    include '::vsftpd::config::firewall'
-    Class['::vsftpd::config::firewall'] ->
-    Class['::vsftpd::service']
+    include 'vsftpd::config::firewall'
+    Class['vsftpd::config::firewall'] -> Class['vsftpd::service']
   }
   if $tcpwrappers {
-    include '::vsftpd::config::tcpwrappers'
-    Class['::vsftpd::config::tcpwrappers'] ->
-    Class['::vsftpd::service']
+    include 'vsftpd::config::tcpwrappers'
+    Class['vsftpd::config::tcpwrappers'] -> Class['vsftpd::service']
   }
 }

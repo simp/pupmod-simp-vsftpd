@@ -2,7 +2,12 @@ require 'spec_helper_acceptance'
 
 test_name 'ftp tls connection'
 
-['6', '7'].each do |os_major_version|
+# FIXME: EL6 support is broken with a bug in curl 7.19.X that drops
+# ftp-ssl connections. Look into different client usage in the
+# future.
+#['6', '7'].each do |os_major_version|
+['7'].each do |os_major_version|
+
   describe "An FTP-over-TLS session for CentOS #{os_major_version}" do
     before(:all) do
       # Ensure that our test doesn't match messages from other tests
@@ -44,8 +49,8 @@ test_name 'ftp tls connection'
     }
 
     let(:client_hieradata) {{
-      'simp_options::firewall'            => true,
-      'simp_options::trusted_nets'        => ['any']
+      'simp_options::firewall'     => true,
+      'simp_options::trusted_nets' => ['any']
     }}
 
     let(:server_manifest) {
@@ -55,12 +60,12 @@ test_name 'ftp tls connection'
         include 'iptables'
         iptables::listen::tcp_stateful { 'ssh':
           dports => 22,
-          trusted_nets => ['any'],
+          trusted_nets => ['0.0.0.0/0'],
         }
 
         user{ 'foo':
-          password => '$1$UR6BGI5k$GMXMBABoo0SI5LHnkYdfb0', # foo
-          home     => '/home/foo',
+          password   => '$1$MpLw9Ljh$wCbneeNVSYQt8L3slbjrs.', # H35zUl5mA4Fiiy3KT
+          home       => '/home/foo',
           managehome => true,
         }
 
@@ -80,21 +85,21 @@ test_name 'ftp tls connection'
 
         # install and start vsftpd with SSL
         class { 'vsftpd':
-          ssl_enable          => true,
-          local_enable        => true,
-          pasv_enable         => true,
-          pasv_min_port       => 10000,
-          pasv_max_port       => 10100,
-          require_ssl_reuse   => false, # NOTE: curl doesn't support SSL reuse
+          ssl_enable        => true,
+          local_enable      => true,
+          pasv_enable       => true,
+          pasv_min_port     => 10000,
+          pasv_max_port     => 10100,
+          require_ssl_reuse => false, # NOTE: curl doesn't support SSL reuse
         }
       EOS
     }
 
-      let(:server_hieradata) {{
+    let(:server_hieradata) {{
       'simp_options::firewall'     => true,
       'simp_options::pki'          => true,
       'simp_options::pki::source'  => '/etc/pki/simp-testing/pki',
-      'simp_options::trusted_nets' => ['any'],
+      'simp_options::trusted_nets' => ['0.0.0.0/0'],
       'simp_options::auditd'       => false,
       'enable_auditing'            => false, # TODO remove this once pki module is ported over
     }}
@@ -126,13 +131,14 @@ test_name 'ftp tls connection'
     end
 
     context 'connection' do
+
       let(:curl_ftp_cmd) {
         'curl --verbose --cacert /etc/pki/simp-testing/pki/cacerts/cacerts.pem ' +
         "--key /etc/pki//simp-testing/pki/private/#{client_fqdn}.pem " +
         "--cert /etc/pki/simp-testing/pki/public/#{client_fqdn}.pub " +
-        "--ftp-ssl ftp://foo:foo@#{server_fqdn}"
+        "--ftp-ssl ftp://foo:H35zUl5mA4Fiiy3KT@#{server_fqdn}"
         # ^^ these arguments are deprecated in modern curl, but EL6 needs them.
-        # In the future, '--ssl --ss-reqd' should replace '--ftp-ssl' here
+        # In the future, '--ssl --ssl-reqd' should replace '--ftp-ssl' here
       }
 
       it 'should successfully log in a user using FTP-over-SSL' do

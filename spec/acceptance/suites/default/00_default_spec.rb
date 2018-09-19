@@ -11,8 +11,8 @@ test_name 'vsftpd class'
 
     let(:hieradata) {
       <<-EOS
-       simp_options::pki: true
-       simp_options::pki::source: '/etc/pki/simp-testing/pki'
+        simp_options::pki: true
+        simp_options::pki::source: '/etc/pki/simp-testing/pki'
       EOS
     }
 
