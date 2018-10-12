@@ -1,11 +1,14 @@
-* Thu Sep 13 2018 Nick Miller <Nick.miller@onyxpoint.com> - 7.1.1-0
+* Thu Sep 13 2018 Nick Miller <Nick.miller@onyxpoint.com> - 7.2.0-0
 - Add support for Puppet 5
 - Add reference.md
 - Move user/group management to it's own manifest, allowing for easier
   ordering
+- Added $package_ensure parameter
+  - Changed the package from 'latest' to 'installed'
+  - It will also respect `simp_options::package_ensure`
 - Add some OEL content but not declaring support for it yet
 
-* Tue Sep 11 2018 Nicholas Markowski <nicholas.markowski@onyxpoint.com> - 7.1.1-0
+* Tue Sep 11 2018 Nicholas Markowski <nicholas.markowski@onyxpoint.com> - 7.2.0-0
 - Updated $app_pki_external_source to accept any string. This matches the
   functionality of pki::copy.
 
