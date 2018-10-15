@@ -7,7 +7,7 @@ class vsftpd::install {
   assert_private()
 
   package { 'vsftpd':
-    ensure  => 'latest'
+    ensure  => $vsftpd::package_ensure
   }
 
 }

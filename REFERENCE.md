@@ -11,6 +11,7 @@
 * [`vsftpd::config::tcpwrappers`](#vsftpdconfigtcpwrappers): Sets up tcpwrappers for vsfptd.
 * [`vsftpd::install`](#vsftpdinstall): Installs vsftpd and optionally manages the vsftpd group and user.
 * [`vsftpd::service`](#vsftpdservice): Ensures the vsftpd service is running.
+* [`vsftpd::users`](#vsftpdusers): Manages the vsftpd group and user.
 
 ## Classes
 
@@ -90,6 +91,14 @@ mode, you need to set this to a FIPS-compliant cipher suite, (e.g.,
 Corresponds to ssl_ciphers in vsftpd.conf.
 
 Default value: simplib::lookup('simp_options::openssl::cipher_suite', { 'default_value' => ['DEFAULT','!MEDIUM'] })
+
+##### `package_ensure`
+
+Data type: `String`
+
+The ensure status of the vsftpd package
+
+Default value: simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' })
 
 ##### `vsfptd_user`
 
@@ -1155,4 +1164,8 @@ and user.
 ### vsftpd::service
 
 Ensures the vsftpd service is running.
+
+### vsftpd::users
+
+Manages the vsftpd group and user.
 

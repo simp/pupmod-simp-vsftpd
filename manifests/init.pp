@@ -36,6 +36,8 @@
 #   ['FIPS', '!LOW']).
 #   Corresponds to ssl_ciphers in vsftpd.conf.
 #
+# @param package_ensure The ensure status of the vsftpd package
+#
 # @param vsfptd_user
 #   Set the user for the vsftpd service.
 #
@@ -62,35 +64,36 @@
 #
 class vsftpd (
   # SIMP options
-  Boolean                            $firewall          = simplib::lookup('simp_options::firewall', { 'default_value' => false }),
-  Variant[Enum['simp'],Boolean]      $pki               = simplib::lookup('simp_options::pki', { 'default_value' => false }),
-  Boolean                            $tcpwrappers       = simplib::lookup('simp_options::tcpwrappers', { 'default_value' => false }),
-  Simplib::Netlist                   $trusted_nets      = simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1','::1'] }),
-  Boolean                            $haveged           = simplib::lookup('simp_options::haveged', { 'default_value' => false }),
-  Array[String]                      $cipher_suite      = simplib::lookup('simp_options::openssl::cipher_suite', { 'default_value' => ['DEFAULT','!MEDIUM'] }),
+  Boolean                       $firewall          = simplib::lookup('simp_options::firewall', { 'default_value' => false }),
+  Variant[Enum['simp'],Boolean] $pki               = simplib::lookup('simp_options::pki', { 'default_value' => false }),
+  Boolean                       $tcpwrappers       = simplib::lookup('simp_options::tcpwrappers', { 'default_value' => false }),
+  Simplib::Netlist              $trusted_nets      = simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1','::1'] }),
+  Boolean                       $haveged           = simplib::lookup('simp_options::haveged', { 'default_value' => false }),
+  Array[String]                 $cipher_suite      = simplib::lookup('simp_options::openssl::cipher_suite', { 'default_value' => ['DEFAULT','!MEDIUM'] }),
+  String                        $package_ensure    = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
 
   # vsftpd.conf options
-  Boolean                            $manage_user       = true,
-  Boolean                            $manage_group      = true,
-  Simplib::Port                      $ftp_data_port     = 20,
-  Optional[Simplib::IP::V4]          $listen_address    = undef,
-  Boolean                            $listen_ipv4       = true, # listen config item in vsftpd.conf
-  Simplib::Port                      $listen_port       = 21,
-  Boolean                            $local_enable      = true,
-  Boolean                            $pasv_enable       = true,
-  Optional[Simplib::Port]            $pasv_max_port     = undef,
-  Optional[Simplib::Port]            $pasv_min_port     = undef,
-  Boolean                            $ssl_enable        = true,
-  Boolean                            $require_ssl_reuse = true,
-  Boolean                            $userlist_deny     = true,
-  Boolean                            $userlist_enable   = true,
-  Array[String]                      $user_list         = ['root','bin','daemon','adm','lp','sync','shutdown','halt','mail','news','uucp','operator','games','nobody'],
-  String                             $pam_service_name  = 'vsftpd',
-  Boolean                            $validate_cert     = true,
-  Integer                            $vsftpd_gid        = 50,
-  String                             $vsftpd_group      = 'ftp',
-  Integer                            $vsftpd_uid        = 14,
-  String                             $vsftpd_user       = 'ftp',
+  Boolean                       $manage_user       = true,
+  Boolean                       $manage_group      = true,
+  Simplib::Port                 $ftp_data_port     = 20,
+  Optional[Simplib::IP::V4]     $listen_address    = undef,
+  Boolean                       $listen_ipv4       = true, # listen config item in vsftpd.conf
+  Simplib::Port                 $listen_port       = 21,
+  Boolean                       $local_enable      = true,
+  Boolean                       $pasv_enable       = true,
+  Optional[Simplib::Port]       $pasv_max_port     = undef,
+  Optional[Simplib::Port]       $pasv_min_port     = undef,
+  Boolean                       $ssl_enable        = true,
+  Boolean                       $require_ssl_reuse = true,
+  Boolean                       $userlist_deny     = true,
+  Boolean                       $userlist_enable   = true,
+  Array[String]                 $user_list         = ['root','bin','daemon','adm','lp','sync','shutdown','halt','mail','news','uucp','operator','games','nobody'],
+  String                        $pam_service_name  = 'vsftpd',
+  Boolean                       $validate_cert     = true,
+  Integer                       $vsftpd_gid        = 50,
+  String                        $vsftpd_group      = 'ftp',
+  Integer                       $vsftpd_uid        = 14,
+  String                        $vsftpd_user       = 'ftp',
 ) {
 
   if $haveged and $ssl_enable {
