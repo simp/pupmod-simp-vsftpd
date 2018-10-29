@@ -63,7 +63,7 @@ stages:
   - acceptance
   - deploy
 
-# Puppet 4.10 for  2016.4.15  support (EOL:2018-12)
+# Puppet 4.10 for 2016.4.15  support (EOL:2018-12)
 # See: https://puppet.com/misc/puppet-enterprise-lifecycle
 # --------------------------------------
 pup4_10-validation:
@@ -168,7 +168,7 @@ default-puppet5:
     - bundle exec rake spec_clean
     - bundle exec rake beaker:suites[default]
 
-default-puppet-5-fips:
+default-puppet5-fips:
   stage: acceptance
   tags:
     - beaker
