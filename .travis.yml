@@ -1,22 +1,30 @@
 # The testing matrix considers ruby/puppet versions supported by SIMP and PE:
 #
-# https://puppet.com/docs/pe/latest/overview/component_versions_in_recent_pe_releases.html
+# https://puppet.com/docs/pe/2018.1/component_versions_in_recent_pe_releases.html
 # https://puppet.com/misc/puppet-enterprise-lifecycle
-# https://puppet.com/docs/pe/latest/overview/getting_support_for_pe.html
+# https://puppet.com/docs/pe/2018.1/overview/getting_support_for_pe.html
 # ------------------------------------------------------------------------------
 # Release       Puppet   Ruby   EOL
-# PE 2016.4.15  4.10.12  2.1.9  2018-12 (LTS)
-# SIMP 6.0      4.8.2    2.1.9  TBD
-# SIMP 6.1      4.10.6   2.1.9  TBD
-# SIMP 6.2      4.10.12  2.1.9  TBD
-# SIMP 6.3      5.5.7    2.4.4  TBD***
-# PE 2018.1     5.5.6    2.4.4  2020-05 (LTS)***
+# SIMP 6.2      4.10     2.1.9  TBD
+# PE 2016.4     4.10     2.1.9  2018-12-31 (LTS)
+# PE 2017.3     5.3      2.4.4  2018-12-31
+# SIMP 6.3      5.5      2.4.4  TBD***
+# PE 2018.1     5.5      2.4.4  2020-05 (LTS)***
+# PE 2019.0     6.0      2.5.1  2019-08-31^^^
 #
 # *** = Modules created for SIMP 6.3+ are not required to support Puppet < 5.5
+# ^^^ = SIMP doesn't support 6 yet; tests are info-only and allowed to fail
+
 ---
 language: ruby
 cache: bundler
 sudo: false
+
+stages:
+  - check
+  - spec
+  - name: deploy
+    if: 'fork = false AND tag = true'
 
 bundler_args: --without development system_tests --path .vendor
 
@@ -31,11 +39,17 @@ addons:
 before_install:
   - rm -f Gemfile.lock
 
+global:
+  - STRICT_VARIABLES=yes
+
 jobs:
+  allow_failures:
+    - name: 'Latest Puppet 6.x (allowed to fail)'
+
   include:
     - stage: check
       rvm: 2.4.4
-      env: STRICT_VARIABLES=yes TRUSTED_NODE_DATA=yes PUPPET_VERSION="~> 5.0"
+      env: PUPPET_VERSION="~> 5.5"
       script:
         - bundle exec rake check:dot_underscore
         - bundle exec rake check:test_file
@@ -45,28 +59,43 @@ jobs:
         - bundle exec rake pkg:create_tag_changelog
         - bundle exec rake lint
         - bundle exec puppet module build
-
     - stage: spec
-      rvm: 2.4.4
-      env: STRICT_VARIABLES=yes TRUSTED_NODE_DATA=yes PUPPET_VERSION="~> 5.5.6"
-      script:
-        - bundle exec rake spec
-
-    - stage: spec
-      rvm: 2.4.4
-      env: STRICT_VARIABLES=yes TRUSTED_NODE_DATA=yes PUPPET_VERSION="~> 5.0"
-      script:
-        - bundle exec rake spec
-
-    - stage: spec
+      name: 'Puppet 4.10 (SIMP 6.2, PE 2016.4)'
       rvm: 2.1.9
-      env: STRICT_VARIABLES=yes TRUSTED_NODE_DATA=yes PUPPET_VERSION="~> 4.10.4"
+      env: PUPPET_VERSION="~> 4.10.0"
+      script:
+        - bundle exec rake spec
+
+    - stage: spec
+      name: 'Puppet 5.3 (PE 2017.3)'
+      rvm: 2.4.4
+      env: PUPPET_VERSION="~> 5.3.0"
+      script:
+        - bundle exec rake spec
+
+    - stage: spec
+      rvm: 2.4.4
+      name: 'Puppet 5.5 (SIMP 6.3, PE 2018.1)'
+      env: PUPPET_VERSION="~> 5.5.0"
+      script:
+        - bundle exec rake spec
+
+    - stage: spec
+      name: 'Latest Puppet 5.x'
+      rvm: 2.4.4
+      env: PUPPET_VERSION="~> 5.0"
+      script:
+        - bundle exec rake spec
+
+    - stage: spec
+      name: 'Latest Puppet 6.x (allowed to fail)'
+      rvm: 2.5.1
+      env: PUPPET_VERSION="~>6.0"
       script:
         - bundle exec rake spec
 
     - stage: deploy
       rvm: 2.4.4
-      if: 'fork = false AND tag = true'
       script:
         - true
       before_deploy:
@@ -86,5 +115,4 @@ jobs:
             secure: "gkSEKWsoqcoIQqmfeKWj4J4rquy8ZdYB2NXqIX5zivSm5vGxeVCym3+wFNJJIykxCwvHKj8my9nz2a3wxYSTNWdOA5QYDKk77obTdE1MvlNWv8EixLlqVpI6fi0vm/BJcOmW5ru9ldSI+PVa26EJZZ5u3iShb1aJYaT3O+gaqwSgME6dEBb+n9btNdM2IjVuZPbGvVLL1iXoLFcBs127/Pu2nHYDIPqGBbaSnyMV2zMplFKz7ZWQr3yGKYOkAegfMg/WsFbaU1Q/9BNIqw4gqjtNjFArwvfZ9qxF9e/bHSRkGLGoABWW8+T9Trwt1nEoY92DFtuxk5j5JRmPPTceAFE4sLreWi3ZqOpKs9A/JLyWnzpEx7OdXW4BckqgPuXNPWSAfk11+1RkV5s/6d875ms856MZqI7U6PGY0LlQW8OiiGn+VBvRxvU2qHBKUzENxlK/IVTSX7rskHaiozXS9QyVwofc8kzchaGLXwi5gprtNpWOBTzrezyGugLVviIaJ9seX/YdiG62GgULFveD3BOUbu0JQS/2VbUjTetWeGWYBTYRQP1m+UiVkOr7x/Q3qHPmdwAglp/a08NVFL2H+LHqUD+SESutVDfbL5xHffbu5utYGgHA0TX+GhxIMOcSpVoByesv7K36CmdFHk8TvKwVmoWxPS0lVf/6am+oKAU="
           on:
             tags: true
-            rvm: 2.4.4
             condition: '($SKIP_FORGE_PUBLISH != true)'
