@@ -2,6 +2,7 @@
 .yardoc
 dist/
 pkg/
+spec/acceptance/
 spec/fixtures/
 spec/rp_env/
 !/spec/hieradata/default.yaml
