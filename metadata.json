@@ -1,6 +1,6 @@
 {
   "name": "simp-vsftpd",
-  "version": "7.2.1",
+  "version": "7.2.2",
   "author": "SIMP Team",
   "summary": "Manage vsftpd",
   "license": "Apache-2.0",
