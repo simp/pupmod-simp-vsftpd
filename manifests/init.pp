@@ -113,7 +113,7 @@ class vsftpd (
 
   if $firewall {
     include 'vsftpd::config::firewall'
-    Class['vsftpd::config::firewall'] -> Class['vsftpd::service']
+    Class['vsftpd::service'] -> Class['vsftpd::config::firewall']
   }
   if $tcpwrappers {
     include 'vsftpd::config::tcpwrappers'
