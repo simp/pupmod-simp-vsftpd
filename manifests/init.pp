@@ -116,6 +116,5 @@ class vsftpd (
   }
   if $tcpwrappers {
     include 'vsftpd::config::tcpwrappers'
-    Class['vsftpd::config::tcpwrappers'] -> Class['vsftpd::service']
   }
 }
