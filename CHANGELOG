@@ -1,18 +1,23 @@
+* Wed Apr 10 2019 Joseph Sharkey <shark.bruhaha@gmail.com> - 7.2.1-0
+- Fixed ordering issue between the kernel module loading for 
+  iptables and the service being started
+- Updated tests in support of puppet6, and removed puppet4 support
+
 * Mon Oct 29 2018 Liz Nemsick <lnemsick.simp@gmail.com> - 7.2.1-0
-- Fix a bad URL in the README.md
+- Fixed a bad URL in the README.md
 
 * Mon Oct 29 2018 Liz Nemsick <lnemsick.simp@gmail.com> - 7.2.0-0
-- Update badges and contribution guide URL in README.md
+- Updated badges and contribution guide URL in README.md
 
 * Thu Sep 13 2018 Nick Miller <Nick.miller@onyxpoint.com> - 7.2.0-0
-- Add support for Puppet 5
-- Add reference.md
-- Move user/group management to it's own manifest, allowing for easier
+- Added support for Puppet 5
+- Added reference.md
+- Moved user/group management to it's own manifest, allowing for easier
   ordering
 - Added $package_ensure parameter
   - Changed the package from 'latest' to 'installed'
   - It will also respect `simp_options::package_ensure`
-- Add some OEL content but not declaring support for it yet
+- Added some OEL content but not declaring support for it yet
 
 * Tue Sep 11 2018 Nicholas Markowski <nicholas.markowski@onyxpoint.com> - 7.2.0-0
 - Updated $app_pki_external_source to accept any string. This matches the
@@ -20,15 +25,15 @@
 
 * Wed Nov 15 2017 Liz Nemsick <lnemsick.simp@gmail.com> - 7.1.0-0
 - By default, use TLS 1.2 instead of TLS 1.0.
-- Eliminate the use of deprecated validate_net_list() through
+- Eliminated the use of deprecated validate_net_list() through
   better strongly-typed parameters for IP addresses and hosts.
-- Add CentOS 6 acceptance tests.
+- Added CentOS 6 acceptance tests.
 
 * Tue Nov 14 2017 Liz Nemsick <lnemsick.simp@gmail.com> - 7.1.0-0
-- Update acceptance test to work on server with selinux enforcing
+- Updated acceptance test to work on server with selinux enforcing
 
 * Thu Jul 06 2017 Liz Nemsick <lnemsick.simp@gmail.com> - 7.0.1-0
-- Confine puppet version in metadata.json
+- Confined puppet version in metadata.json
 
 * Mon Jan 09 2017 Nick Markowski <nmarkowski@keywcorp.com> - 7.0.0-0
 - New pki scheme
