@@ -5,295 +5,6 @@ checks:
     settings:
       parameter: vsftpd::cipher_suite
       value:
-      - DEFAULT
-    type: puppet-class-parameter
-    controls:
-      nist_800_53_rev4:SC-8: true
-      nist_800_53_rev4:SC-8:1: true
-      nist_800_53_rev4:SC-8:2: true
-      nist_800_53_rev4:SC-23: true
-    identifiers:
-      nist_800_53_rev4:
-      - SC-8
-      - SC-8:1
-      - SC-8:2
-      - SC-23
-  oval:com.puppet.forge.simp.vsftpd.config.banner_file:
-    settings:
-      parameter: vsftpd::config::banner_file
-      value: "/etc/issue.net"
-    type: puppet-class-parameter
-    controls:
-      nist_800_53_rev4:AC-8: true
-      disa_stig: true
-      RHEL-07-010030: true
-      SRG-OS-000023-GPOS-00006: true
-      SRG-OS-000024-GPOS-00007: true
-      cci:CCI-000048: true
-    identifiers:
-      nist_800_53_rev4:
-      - AC-8
-      disa_stig:
-      - RHEL-07-010030
-      - SRG-OS-000023-GPOS-00006
-      - SRG-OS-000024-GPOS-00007
-      - CCI-000048
-  oval:com.puppet.forge.simp.vsftpd.config.force_local_data_ssl:
-    settings:
-      parameter: vsftpd::config::force_local_data_ssl
-      value: true
-    type: puppet-class-parameter
-    controls:
-      nist_800_53_rev4:SC-8: true
-      nist_800_53_rev4:SC-8:1: true
-      nist_800_53_rev4:SC-8:2: true
-      nist_800_53_rev4:SC-23: true
-      disa_stig: true
-      RHEL-07-040030: true
-      SRG-OS-000066-GPOS-00034: true
-      cci:CCI-000185: true
-    identifiers:
-      nist_800_53_rev4:
-      - SC-8
-      - SC-8:1
-      - SC-8:2
-      - SC-23
-      disa_stig:
-      - RHEL-07-040030
-      - SRG-OS-000066-GPOS-00034
-      - CCI-000185
-  oval:com.puppet.forge.simp.vsftpd.config.force_local_logins_ssl:
-    settings:
-      parameter: vsftpd::config::force_local_logins_ssl
-      value: true
-    type: puppet-class-parameter
-    controls:
-      nist_800_53_rev4:SC-8: true
-      nist_800_53_rev4:SC-8:1: true
-      nist_800_53_rev4:SC-8:2: true
-      nist_800_53_rev4:SC-23: true
-      disa_stig: true
-      RHEL-07-040030: true
-      SRG-OS-000066-GPOS-00034: true
-      cci:CCI-000185: true
-    identifiers:
-      nist_800_53_rev4:
-      - SC-8
-      - SC-8:1
-      - SC-8:2
-      - SC-23
-      disa_stig:
-      - RHEL-07-040030
-      - SRG-OS-000066-GPOS-00034
-      - CCI-000185
-  oval:com.puppet.forge.simp.vsftpd.config.local_umask:
-    settings:
-      parameter: vsftpd::config::local_umask
-      value: '0022'
-    type: puppet-class-parameter
-    controls:
-      nist_800_53_rev4:AC-2: true
-      nist_800_53_rev4:AC-2:4: true
-      nist_800_53_rev4:AC-6: true
-    identifiers:
-      nist_800_53_rev4:
-      - AC-2
-      - AC-2:4
-      - AC-6
-  oval:com.puppet.forge.simp.vsftpd.config.ssl_tlsv1:
-    settings:
-      parameter: vsftpd::config::ssl_tlsv1
-      value: true
-    type: puppet-class-parameter
-    controls:
-      nist_800_53_rev4:SC-8: true
-      nist_800_53_rev4:SC-8:1: true
-      nist_800_53_rev4:SC-8:2: true
-      nist_800_53_rev4:SC-23: true
-      disa_stig: true
-      RHEL-07-040030: true
-      SRG-OS-000066-GPOS-00034: true
-      cci:CCI-000185: true
-    identifiers:
-      nist_800_53_rev4:
-      - SC-8
-      - SC-8:1
-      - SC-8:2
-      - SC-23
-      disa_stig:
-      - RHEL-07-040030
-      - SRG-OS-000066-GPOS-00034
-      - CCI-000185
-  oval:com.puppet.forge.simp.vsftpd.config.syslog_enable:
-    settings:
-      parameter: vsftpd::config::syslog_enable
-      value: true
-    type: puppet-class-parameter
-    controls:
-      nist_800_53_rev4:AU-3:2: true
-      nist_800_53_rev4:AU-4:1: true
-      nist_800_53_rev4:AU-9: true
-    identifiers:
-      nist_800_53_rev4:
-      - AU-3:2
-      - AU-4:1
-      - AU-9
-  oval:com.puppet.forge.simp.vsftpd.manage_group:
-    settings:
-      parameter: vsftpd::manage_group
-      value: true
-    type: puppet-class-parameter
-    controls:
-      nist_800_53_rev4:AC-6: true
-      nist_800_53_rev4:IA-2: true
-      disa_stig: true
-      RHEL-07-020410: true
-      SRG-OS-000480-GPOS-00227: true
-      cci:CCI-000366: true
-    identifiers:
-      nist_800_53_rev4:
-      - AC-6
-      - IA-2
-      disa_stig:
-      - RHEL-07-020410
-      - SRG-OS-000480-GPOS-00227
-      - CCI-000366
-  oval:com.puppet.forge.simp.vsftpd.manage_user:
-    settings:
-      parameter: vsftpd::manage_user
-      value: true
-    type: puppet-class-parameter
-    controls:
-      nist_800_53_rev4:AC-6: true
-      nist_800_53_rev4:IA-2: true
-      disa_stig: true
-      RHEL-07-040490: true
-      SRG-OS-000480-GPOS-00227: true
-      cci:CCI-000366: true
-    identifiers:
-      nist_800_53_rev4:
-      - AC-6
-      - IA-2
-      disa_stig:
-      - RHEL-07-040490
-      - SRG-OS-000480-GPOS-00227
-      - CCI-000366
-  oval:com.puppet.forge.simp.vsftpd.require_ssl_reuse:
-    settings:
-      parameter: vsftpd::require_ssl_reuse
-      value: true
-    type: puppet-class-parameter
-    controls:
-      nist_800_53_rev4:SC-8: true
-      nist_800_53_rev4:SC-8:1: true
-      nist_800_53_rev4:SC-8:2: true
-      nist_800_53_rev4:SC-23: true
-      disa_stig: true
-      RHEL-07-040030: true
-      SRG-OS-000066-GPOS-00034: true
-      cci:CCI-000185: true
-    identifiers:
-      nist_800_53_rev4:
-      - SC-8
-      - SC-8:1
-      - SC-8:2
-      - SC-23
-      disa_stig:
-      - RHEL-07-040030
-      - SRG-OS-000066-GPOS-00034
-      - CCI-000185
-  oval:com.puppet.forge.simp.vsftpd.ssl_enable:
-    settings:
-      parameter: vsftpd::ssl_enable
-      value: true
-    type: puppet-class-parameter
-    controls:
-      nist_800_53_rev4:SC-8: true
-      nist_800_53_rev4:SC-8:1: true
-      nist_800_53_rev4:SC-8:2: true
-      nist_800_53_rev4:SC-23: true
-      disa_stig: true
-      RHEL-07-040030: true
-      SRG-OS-000066-GPOS-00034: true
-      cci:CCI-000185: true
-    identifiers:
-      nist_800_53_rev4:
-      - SC-8
-      - SC-8:1
-      - SC-8:2
-      - SC-23
-      disa_stig:
-      - RHEL-07-040030
-      - SRG-OS-000066-GPOS-00034
-      - CCI-000185
-  oval:com.puppet.forge.simp.vsftpd.userlist_enable:
-    settings:
-      parameter: vsftpd::userlist_enable
-      value: true
-    type: puppet-class-parameter
-    controls:
-      nist_800_53_rev4:AC-6: true
-      nist_800_53_rev4:IA-2: true
-      disa_stig: true
-      RHEL-07-040030: true
-      SRG-OS-000066-GPOS-00034: true
-      cci:CCI-000185: true
-    identifiers:
-      nist_800_53_rev4:
-      - AC-6
-      - IA-2
-      disa_stig:
-      - RHEL-07-040030
-      - SRG-OS-000066-GPOS-00034
-      - CCI-000185
-  oval:com.puppet.forge.simp.vsftpd.validate_cert:
-    settings:
-      parameter: vsftpd::validate_cert
-      value: true
-    type: puppet-class-parameter
-    controls:
-      nist_800_53_rev4:SC-8: true
-      nist_800_53_rev4:SC-8:1: true
-      nist_800_53_rev4:SC-8:2: true
-      nist_800_53_rev4:SC-23: true
-      disa_stig: true
-      RHEL-07-040030: true
-      SRG-OS-000066-GPOS-00034: true
-      cci:CCI-000185: true
-    identifiers:
-      nist_800_53_rev4:
-      - SC-8
-      - SC-8:1
-      - SC-8:2
-      - SC-23
-      disa_stig:
-      - RHEL-07-040030
-      - SRG-OS-000066-GPOS-00034
-      - CCI-000185
-  oval:com.puppet.forge.simp.vsftpd.vsftpd_user:
-    settings:
-      parameter: vsftpd::vsftpd_user
-      value: ftp
-    type: puppet-class-parameter
-    controls:
-      nist_800_53_rev4:AC-6: true
-      nist_800_53_rev4:IA-2: true
-      disa_stig: true
-      RHEL-07-020400: true
-      SRG-OS-000480-GPOS-00227: true
-      cci:CCI-000366: true
-    identifiers:
-      nist_800_53_rev4:
-      - AC-6
-      - IA-2
-      disa_stig:
-      - RHEL-07-020400
-      - SRG-OS-000480-GPOS-00227
-      - CCI-000366
-  oval:com.puppet.forge.simp.vsftpd.cipher_suite:
-    settings:
-      parameter: vsftpd::cipher_suite
-      value:
       - HIGH
     type: puppet-class-parameter
     controls:
@@ -309,6 +20,117 @@ checks:
     confine:
       osfamily: RedHat
       operatingsystemmajrelease: '7'
+  oval:com.puppet.forge.simp.vsftpd.config.banner_file:
+    settings:
+      parameter: vsftpd::config::banner_file
+      value: "/etc/issue.net"
+    type: puppet-class-parameter
+    controls:
+      nist_800_53:rev4: true
+      nist_800_53:rev4:AC-8: true
+      disa_stig: true
+      RHEL-07-010030: true
+      SRG-OS-000023-GPOS-00006: true
+      SRG-OS-000024-GPOS-00007: true
+      cci:CCI-000048: true
+    identifiers:
+      nist_800_53:rev4:
+      - AC-8
+      disa_stig:
+      - RHEL-07-010030
+      - SRG-OS-000023-GPOS-00006
+      - SRG-OS-000024-GPOS-00007
+      - CCI-000048
+  oval:com.puppet.forge.simp.vsftpd.config.force_local_data_ssl:
+    settings:
+      parameter: vsftpd::config::force_local_data_ssl
+      value: true
+    type: puppet-class-parameter
+    controls:
+      nist_800_53:rev4: true
+      nist_800_53:rev4:SC-8: true
+      nist_800_53:rev4:SC-8:1: true
+      nist_800_53:rev4:SC-8:2: true
+      nist_800_53:rev4:SC-23: true
+      disa_stig: true
+      RHEL-07-040030: true
+      SRG-OS-000066-GPOS-00034: true
+      cci:CCI-000185: true
+    identifiers:
+      nist_800_53:rev4:
+      - SC-8
+      - SC-8:1
+      - SC-8:2
+      - SC-23
+      disa_stig:
+      - RHEL-07-040030
+      - SRG-OS-000066-GPOS-00034
+      - CCI-000185
+  oval:com.puppet.forge.simp.vsftpd.config.force_local_logins_ssl:
+    settings:
+      parameter: vsftpd::config::force_local_logins_ssl
+      value: true
+    type: puppet-class-parameter
+    controls:
+      nist_800_53:rev4: true
+      nist_800_53:rev4:SC-8: true
+      nist_800_53:rev4:SC-8:1: true
+      nist_800_53:rev4:SC-8:2: true
+      nist_800_53:rev4:SC-23: true
+      disa_stig: true
+      RHEL-07-040030: true
+      SRG-OS-000066-GPOS-00034: true
+      cci:CCI-000185: true
+    identifiers:
+      nist_800_53:rev4:
+      - SC-8
+      - SC-8:1
+      - SC-8:2
+      - SC-23
+      disa_stig:
+      - RHEL-07-040030
+      - SRG-OS-000066-GPOS-00034
+      - CCI-000185
+  oval:com.puppet.forge.simp.vsftpd.config.local_umask:
+    settings:
+      parameter: vsftpd::config::local_umask
+      value: '0022'
+    type: puppet-class-parameter
+    controls:
+      nist_800_53:rev4: true
+      nist_800_53:rev4:AC-2: true
+      nist_800_53:rev4:AC-2:4: true
+      nist_800_53:rev4:AC-6: true
+    identifiers:
+      nist_800_53:rev4:
+      - AC-2
+      - AC-2:4
+      - AC-6
+  oval:com.puppet.forge.simp.vsftpd.config.ssl_tlsv1:
+    settings:
+      parameter: vsftpd::config::ssl_tlsv1
+      value: true
+    type: puppet-class-parameter
+    controls:
+      nist_800_53:rev4: true
+      nist_800_53:rev4:SC-8: true
+      nist_800_53:rev4:SC-8:1: true
+      nist_800_53:rev4:SC-8:2: true
+      nist_800_53:rev4:SC-23: true
+      disa_stig: true
+      RHEL-07-040030: true
+      SRG-OS-000066-GPOS-00034: true
+      cci:CCI-000185: true
+    identifiers:
+      nist_800_53:rev4:
+      - SC-8
+      - SC-8:1
+      - SC-8:2
+      - SC-23
+      disa_stig:
+      - RHEL-07-040030
+      - SRG-OS-000066-GPOS-00034
+      - CCI-000185
   oval:com.puppet.forge.simp.vsftpd.config.syslog_enable:
     settings:
       parameter: vsftpd::config::syslog_enable
@@ -333,3 +155,162 @@ checks:
     confine:
       osfamily: RedHat
       operatingsystemmajrelease: '7'
+  oval:com.puppet.forge.simp.vsftpd.manage_group:
+    settings:
+      parameter: vsftpd::manage_group
+      value: true
+    type: puppet-class-parameter
+    controls:
+      nist_800_53:rev4: true
+      nist_800_53:rev4:AC-6: true
+      nist_800_53:rev4:IA-2: true
+      disa_stig: true
+      RHEL-07-020410: true
+      SRG-OS-000480-GPOS-00227: true
+      cci:CCI-000366: true
+    identifiers:
+      nist_800_53:rev4:
+      - AC-6
+      - IA-2
+      disa_stig:
+      - RHEL-07-020410
+      - SRG-OS-000480-GPOS-00227
+      - CCI-000366
+  oval:com.puppet.forge.simp.vsftpd.manage_user:
+    settings:
+      parameter: vsftpd::manage_user
+      value: true
+    type: puppet-class-parameter
+    controls:
+      nist_800_53:rev4: true
+      nist_800_53:rev4:AC-6: true
+      nist_800_53:rev4:IA-2: true
+      disa_stig: true
+      RHEL-07-040490: true
+      SRG-OS-000480-GPOS-00227: true
+      cci:CCI-000366: true
+    identifiers:
+      nist_800_53:rev4:
+      - AC-6
+      - IA-2
+      disa_stig:
+      - RHEL-07-040490
+      - SRG-OS-000480-GPOS-00227
+      - CCI-000366
+  oval:com.puppet.forge.simp.vsftpd.require_ssl_reuse:
+    settings:
+      parameter: vsftpd::require_ssl_reuse
+      value: true
+    type: puppet-class-parameter
+    controls:
+      nist_800_53:rev4: true
+      nist_800_53:rev4:SC-8: true
+      nist_800_53:rev4:SC-8:1: true
+      nist_800_53:rev4:SC-8:2: true
+      nist_800_53:rev4:SC-23: true
+      disa_stig: true
+      RHEL-07-040030: true
+      SRG-OS-000066-GPOS-00034: true
+      cci:CCI-000185: true
+    identifiers:
+      nist_800_53:rev4:
+      - SC-8
+      - SC-8:1
+      - SC-8:2
+      - SC-23
+      disa_stig:
+      - RHEL-07-040030
+      - SRG-OS-000066-GPOS-00034
+      - CCI-000185
+  oval:com.puppet.forge.simp.vsftpd.ssl_enable:
+    settings:
+      parameter: vsftpd::ssl_enable
+      value: true
+    type: puppet-class-parameter
+    controls:
+      nist_800_53:rev4: true
+      nist_800_53:rev4:SC-8: true
+      nist_800_53:rev4:SC-8:1: true
+      nist_800_53:rev4:SC-8:2: true
+      nist_800_53:rev4:SC-23: true
+      disa_stig: true
+      RHEL-07-040030: true
+      SRG-OS-000066-GPOS-00034: true
+      cci:CCI-000185: true
+    identifiers:
+      nist_800_53:rev4:
+      - SC-8
+      - SC-8:1
+      - SC-8:2
+      - SC-23
+      disa_stig:
+      - RHEL-07-040030
+      - SRG-OS-000066-GPOS-00034
+      - CCI-000185
+  oval:com.puppet.forge.simp.vsftpd.userlist_enable:
+    settings:
+      parameter: vsftpd::userlist_enable
+      value: true
+    type: puppet-class-parameter
+    controls:
+      nist_800_53:rev4: true
+      nist_800_53:rev4:AC-6: true
+      nist_800_53:rev4:IA-2: true
+      disa_stig: true
+      RHEL-07-040030: true
+      SRG-OS-000066-GPOS-00034: true
+      cci:CCI-000185: true
+    identifiers:
+      nist_800_53:rev4:
+      - AC-6
+      - IA-2
+      disa_stig:
+      - RHEL-07-040030
+      - SRG-OS-000066-GPOS-00034
+      - CCI-000185
+  oval:com.puppet.forge.simp.vsftpd.validate_cert:
+    settings:
+      parameter: vsftpd::validate_cert
+      value: true
+    type: puppet-class-parameter
+    controls:
+      nist_800_53:rev4: true
+      nist_800_53:rev4:SC-8: true
+      nist_800_53:rev4:SC-8:1: true
+      nist_800_53:rev4:SC-8:2: true
+      nist_800_53:rev4:SC-23: true
+      disa_stig: true
+      RHEL-07-040030: true
+      SRG-OS-000066-GPOS-00034: true
+      cci:CCI-000185: true
+    identifiers:
+      nist_800_53:rev4:
+      - SC-8
+      - SC-8:1
+      - SC-8:2
+      - SC-23
+      disa_stig:
+      - RHEL-07-040030
+      - SRG-OS-000066-GPOS-00034
+      - CCI-000185
+  oval:com.puppet.forge.simp.vsftpd.vsftpd_user:
+    settings:
+      parameter: vsftpd::vsftpd_user
+      value: ftp
+    type: puppet-class-parameter
+    controls:
+      nist_800_53:rev4: true
+      nist_800_53:rev4:AC-6: true
+      nist_800_53:rev4:IA-2: true
+      disa_stig: true
+      RHEL-07-020400: true
+      SRG-OS-000480-GPOS-00227: true
+      cci:CCI-000366: true
+    identifiers:
+      nist_800_53:rev4:
+      - AC-6
+      - IA-2
+      disa_stig:
+      - RHEL-07-020400
+      - SRG-OS-000480-GPOS-00227
+      - CCI-000366
