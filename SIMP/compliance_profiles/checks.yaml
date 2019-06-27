@@ -1,25 +1,6 @@
 ---
 version: 2.0.0
 checks:
-  oval:com.puppet.forge.simp.vsftpd.cipher_suite:
-    settings:
-      parameter: vsftpd::cipher_suite
-      value:
-      - HIGH
-    type: puppet-class-parameter
-    controls:
-      disa_stig: true
-      RHEL-07-040030: true
-      SRG-OS-000066-GPOS-00034: true
-      cci:CCI-000185: true
-    identifiers:
-      disa_stig:
-      - RHEL-07-040030
-      - SRG-OS-000066-GPOS-00034
-      - CCI-000185
-    confine:
-      osfamily: RedHat
-      operatingsystemmajrelease: '7'
   oval:com.puppet.forge.simp.vsftpd.config.banner_file:
     settings:
       parameter: vsftpd::config::banner_file
