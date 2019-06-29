@@ -133,9 +133,6 @@ checks:
       - SRG-OS-000471-GPOS-00215
       - CCI-002234
       - CCI-000172
-    confine:
-      osfamily: RedHat
-      operatingsystemmajrelease: '7'
   oval:com.puppet.forge.simp.vsftpd.manage_group:
     settings:
       parameter: vsftpd::manage_group
