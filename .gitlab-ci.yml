@@ -1,6 +1,6 @@
 # The testing matrix considers ruby/puppet versions supported by SIMP and PE:
 #
-# https://puppet.com/docs/pe/2018.1/component_versions_in_recent_pe_releases.html
+# https://puppet.com/docs/pe/2019.0/component_versions_in_recent_pe_releases.html
 # https://puppet.com/misc/puppet-enterprise-lifecycle
 # https://puppet.com/docs/pe/2018.1/overview/getting_support_for_pe.html
 # ------------------------------------------------------------------------------
@@ -43,21 +43,21 @@ variables:
     paths:
       - '.vendor'
   before_script:
-    - 'ruby -e "puts %(Environment Variables:\n  * #{ENV.keys.grep(/PUPPET|SIMP|BEAKER|MATRIX/).map{|v| %(#{v} = #{ENV[v]})}.join(%(\n  * ))})"'
+    - 'ruby -e "puts %(\n\n), %q(=)*80, %(\nSIMP-relevant Environment Variables:\n\n#{e=ENV.keys.grep(/^PUPPET|^SIMP|^BEAKER|MATRIX/); pad=e.map{|x| x.size}.max+1; e.map{|v| %(    * #{%(#{v}:).ljust(pad)} #{39.chr + ENV[v] + 39.chr}\n)}.join}\n),  %q(=)*80, %(\n\n)"'
     - 'declare GEM_BUNDLER_VER=(-v "~> ${BUNDLER_VERSION:-1.17.1}")'
     - 'declare GEM_INSTALL_CMD=(gem install --no-document)'
     - 'declare BUNDLER_INSTALL_CMD=(bundle install --no-binstubs --jobs $(nproc) "${FLAGS[@]}")'
     - 'mkdir -p ${GEM_HOME} ${BUNDLER_BIN}'
     - 'gem list -ie "${GEM_BUNDLER_VER[@]}" --silent bundler || "${GEM_INSTALL_CMD[@]}" --local "${GEM_BUNDLER_VER[@]}" bundler || "${GEM_INSTALL_CMD[@]}" "${GEM_BUNDLER_VER[@]}" bundler'
     - 'rm -rf pkg/ || :'
-    - 'bundle check || rm -f Gemfile.lock && ("${BUNDLER_INSTALL_CMD[@]}" --local || "${BUNDLER_INSTALL_CMD[@]}" || bundle pristine ||  "${BUNDLER_INSTALL_CMD[@]}") || echo "PIPELINE: Bundler could not find everything"'
+    - 'bundle check || rm -f Gemfile.lock && ("${BUNDLER_INSTALL_CMD[@]}" --local || "${BUNDLER_INSTALL_CMD[@]}" || bundle pristine ||  "${BUNDLER_INSTALL_CMD[@]}") || { echo "PIPELINE: Bundler could not install everything (see log output above)" && exit 99 ; }'
 
 # To avoid running a prohibitive number of tests every commit,
 # don't set this env var in your gitlab instance
 .only_with_SIMP_FULL_MATRIX: &only_with_SIMP_FULL_MATRIX
   only:
     variables:
-      - $SIMP_FULL_MATRIX
+      - $SIMP_FULL_MATRIX == "yes"
 
 # Puppet Versions
 #-----------------------------------------------------------------------
@@ -82,7 +82,6 @@ variables:
     PUPPET_VERSION: '~> 6.0'
     BEAKER_PUPPET_COLLECTION: 'puppet6'
     MATRIX_RUBY_VERSION: '2.5'
-
 
 # Testing Environments
 #-----------------------------------------------------------------------
@@ -172,18 +171,18 @@ pup5.5.10-fips:
   script:
     - 'BEAKER_fips=yes bundle exec rake beaker:suites'
 
-pup5.5.10-oel-combined-x64:
+pup5.5.10-oel:
   <<: *pup_5_5_10
   <<: *acceptance_base
   script:
-    - 'bundle exec rake beaker:suites[default,oel-combined-x64]'
+    - 'bundle exec rake beaker:suites[default,oel]'
 
-pup5.5.10-oel-combined-x64-fips:
+pup5.5.10-oel-fips:
   <<: *pup_5_5_10
   <<: *acceptance_base
   <<: *only_with_SIMP_FULL_MATRIX
   script:
-    - 'BEAKER_fips=yes bundle exec rake beaker:suites[default,oel-combined-x64]'
+    - 'BEAKER_fips=yes bundle exec rake beaker:suites[default,oel]'
 
 pup6:
   <<: *pup_6
