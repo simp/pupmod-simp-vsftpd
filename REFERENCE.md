@@ -40,7 +40,7 @@ Default value: simplib::lookup('simp_options::trusted_nets', { 'default_value' =
 
 Data type: `Boolean`
 
-If true, use SIMP's ::iptables to manage firewall rules to accommodate <%= metadata.name %>.
+If true, use SIMP's `iptables` to manage firewall rules to accommodate <%= metadata.name %>.
 
 Default value: simplib::lookup('simp_options::firewall', { 'default_value' => false })
 

@@ -6,28 +6,40 @@
   end
 -%>
 HOSTS:
-  server7:
+  el7-server:
     roles:
-      - server7
+      - server
       - default
     platform: el-7-x86_64
     box: centos/7
     hypervisor: <%= hypervisor %>
-  client7:
+  el7-client:
     roles:
-      - client7
+      - client
     platform: el-7-x86_64
     box: centos/7
     hypervisor: <%= hypervisor %>
-  server6:
+  el8-server:
     roles:
-      - server6
+      - server
+    platform: el-8-x86_64
+    box: centos/8
+    hypervisor: <%= hypervisor %>
+  el8-client:
+    roles:
+      - client
+    platform: el-8-x86_64
+    box: centos/8
+    hypervisor: <%= hypervisor %>
+  el6-server:
+    roles:
+      - server
     platform: el-6-x86_64
     box: centos/6
     hypervisor: <%= hypervisor %>
-  client6:
+  el6-client:
     roles:
-      - client6
+      - client
     platform: el-6-x86_64
     box: centos/6
     hypervisor: <%= hypervisor %>

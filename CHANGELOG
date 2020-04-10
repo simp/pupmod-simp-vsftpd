@@ -1,8 +1,18 @@
+* Fri Apr 10 2020 Trevor Vaughan <tvaughan@onyxpoint.com> - 7.4.0-0
+- Add EL8 support
+- The following dependencies are now optional
+  - simp/haveged
+  - simp/iptables
+  - simp/pki
+  - simp/tcpwrappers
+- Updated acceptance tests to use lftp in TLS mode and fixed SELinux issues
+- Updated the README
+
 * Tue Jun 04 2019 Steven Pritchard <steven.pritchard@onyxpoint.com> - 7.3.0-0
 - Add v2 compliance_markup data
 
 * Wed Apr 10 2019 Joseph Sharkey <shark.bruhaha@gmail.com> - 7.2.1-0
-- Fixed ordering issue between the kernel module loading for 
+- Fixed ordering issue between the kernel module loading for
   iptables and the service being started
 - Updated tests in support of puppet6, and removed puppet4 support
 

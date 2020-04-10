@@ -2,12 +2,9 @@ require 'spec_helper_acceptance'
 
 test_name 'vsftpd class'
 
-['6', '7'].each do |os_major_version|
-  describe "vsftpd class for CentOS #{os_major_version}" do
-    let(:client) { only_host_with_role( hosts, "client#{os_major_version}" ) }
-    let(:server) { only_host_with_role( hosts, "server#{os_major_version}" ) }
-
-    let(:manifest) { "include 'vsftpd'"}
+hosts_with_role(hosts, 'server').each do |server|
+  describe "with server '#{server}'" do
+    let(:manifest) { 'include vsftpd' }
 
     let(:hieradata) {
       <<-EOS
@@ -46,7 +43,7 @@ test_name 'vsftpd class'
       end
 
       it 'should be listening on port 21' do
-        on(server, "netstat -ntap | grep '^tcp.* 0.0.0.0:21 .*/vsftpd'", :acceptable_exit_codes => [0])
+        on(server, %q{ss -plant | grep ':21 .*vsftpd'})
       end
     end
   end
