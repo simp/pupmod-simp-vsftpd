@@ -38,8 +38,8 @@ hosts_with_role(hosts, 'server').each do |server|
 
       it 'should have vsftpd service enabled and running' do
         result = on(server, 'puppet resource service vsftpd')
-        expect(result.stdout).to match(/ensure => 'running'/)
-        expect(result.stdout).to match(/enable => 'true'/)
+        expect(result.stdout).to match(/ensure\s+=>\s+'running'/)
+        expect(result.stdout).to match(/enable\s+=>\s+'true'/)
       end
 
       it 'should be listening on port 21' do
