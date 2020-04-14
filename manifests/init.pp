@@ -6,7 +6,7 @@
 #   A whitelist of subnets (in CIDR notation) permitted access.
 #
 # @param firewall
-#   If true, use SIMP's ::iptables to manage firewall rules to accommodate <%= metadata.name %>.
+#   If true, use SIMP's `iptables` to manage firewall rules to accommodate <%= metadata.name %>.
 #
 # @param pki
 #   * If 'simp', include SIMP's pki module and use pki::copy to manage
@@ -97,6 +97,8 @@ class vsftpd (
 ) {
 
   if $haveged and $ssl_enable {
+    simplib::assert_optional_dependency($module_name, 'simp/haveged')
+
     include 'haveged'
   }
 

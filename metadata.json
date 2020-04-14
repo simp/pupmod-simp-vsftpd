@@ -1,6 +1,6 @@
 {
   "name": "simp-vsftpd",
-  "version": "7.3.0",
+  "version": "7.4.0",
   "author": "SIMP Team",
   "summary": "Manage vsftpd",
   "license": "Apache-2.0",
@@ -10,62 +10,65 @@
   "tags": [
     "simp",
     "vsftpd",
-    "ftp"
+    "ftp",
+    "compliance",
+    "DISA STIG",
+    "STIG",
+    "NIST 800-53"
   ],
   "dependencies": [
     {
       "name": "simp/simplib",
-      "version_requirement": ">= 3.1.0 < 4.0.0"
-    },
-    {
-      "name": "simp/haveged",
-      "version_requirement": ">= 0.3.2 < 1.0.0"
-    },
-    {
-      "name": "simp/logrotate",
-      "version_requirement": ">= 6.0.0 < 7.0.0"
-    },
-    {
-      "name": "simp/pki",
-      "version_requirement": ">= 6.0.0 < 7.0.0"
-    },
-    {
-      "name": "simp/rsyslog",
-      "version_requirement": ">= 7.0.0 < 8.0.0"
-    },
-    {
-      "name": "simp/tcpwrappers",
-      "version_requirement": ">= 6.0.0 < 7.0.0"
+      "version_requirement": ">= 3.1.0 < 5.0.0"
     },
     {
       "name": "puppetlabs/stdlib",
       "version_requirement": ">= 4.13.1 < 7.0.0"
-    },
-    {
-      "name": "simp/iptables",
-      "version_requirement": ">= 6.0.0 < 7.0.0"
     }
   ],
+  "simp": {
+    "optional_dependencies": [
+      {
+        "name": "simp/haveged",
+        "version_requirement": ">= 0.3.2 < 1.0.0"
+      },
+      {
+        "name": "simp/iptables",
+        "version_requirement": ">= 6.0.0 < 7.0.0"
+      },
+      {
+        "name": "simp/pki",
+        "version_requirement": ">= 6.0.0 < 7.0.0"
+      },
+      {
+        "name": "simp/tcpwrappers",
+        "version_requirement": ">= 6.0.0 < 7.0.0"
+      }
+    ]
+  },
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
         "6",
-        "7"
+        "7",
+        "8"
       ]
     },
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
         "6",
-        "7"
+        "7",
+        "8"
       ]
     },
     {
       "operatingsystem": "OracleLinux",
       "operatingsystemrelease": [
         "6",
-        "7"
+        "7",
+        "8"
       ]
     }
   ],

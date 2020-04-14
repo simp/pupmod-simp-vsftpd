@@ -5,6 +5,8 @@
 class vsftpd::config::tcpwrappers {
   assert_private()
 
+  simplib::assert_optional_dependency($module_name, 'simp/tcpwrappers')
+
   include '::tcpwrappers'
 
   tcpwrappers::allow { 'vsftpd':

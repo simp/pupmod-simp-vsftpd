@@ -173,6 +173,8 @@ class vsftpd::config (
   $_ssl_ciphers        = $vsftpd::cipher_suite
 
   if $::vsftpd::pki {
+    simplib::assert_optional_dependency($module_name, 'simp/pki')
+
     pki::copy { 'vsftpd':
       source => $app_pki_external_source,
       pki    => $vsftpd::pki,
