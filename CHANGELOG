@@ -1,3 +1,6 @@
+* Sat Dec 19 2020 Chris Tessmer <chris.tessmer@onyxpoint.com> - 7.4.1
+- Removed EL6 support
+
 * Fri Apr 10 2020 Trevor Vaughan <tvaughan@onyxpoint.com> - 7.4.0-0
 - Add EL8 support
 - The following dependencies are now optional
