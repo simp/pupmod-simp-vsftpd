@@ -1,4 +1,8 @@
-* Sat Dec 19 2020 Chris Tessmer <chris.tessmer@onyxpoint.com> - 7.4.1
+* Wed Jan 20 2021 Trevor Vaughan <tvaughan@onyxpoint.com> - 7.5.0
+- Add puppet 7 support
+- Fix sysctl updates on service restart
+
+* Sat Dec 19 2020 Chris Tessmer <chris.tessmer@onyxpoint.com> - 7.5.0
 - Removed EL6 support
 
 * Fri Apr 10 2020 Trevor Vaughan <tvaughan@onyxpoint.com> - 7.4.0-0
