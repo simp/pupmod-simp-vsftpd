@@ -78,8 +78,7 @@ describe 'vsftpd' do
           it { is_expected.to contain_iptables__listen__tcp_stateful('allow_vsftpd_data_port').with(:dports => '20') }
           it { is_expected.to contain_iptables__listen__tcp_stateful('allow_vsftpd_listen_port').with(:dports => '21') }
           it { is_expected.to_not contain_iptables__listen__tcp_stateful('allow_vsftpd_pasv_ports') }
-          it { is_expected.to contain_exec('check_conntrack_ftp') }
-          it { is_expected.to contain_exec('nf_conntrack_ftp') }
+          it { is_expected.to contain_sysctl('net.netfilter.nf_conntrack_helper').with_value('1') }
         end
 
         context 'PASV port range defined' do

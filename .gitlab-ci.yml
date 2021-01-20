@@ -389,3 +389,4 @@ pup7.x:
   <<: *acceptance_base
   script:
     - 'bundle exec rake beaker:suites[default]'
+
