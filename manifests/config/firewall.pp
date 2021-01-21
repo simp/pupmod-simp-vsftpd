@@ -38,24 +38,17 @@ class vsftpd::config::firewall {
         fail("\$vsftpd::pasv_min_port ('${vsftpd::pasv_min_port}') and \$vsftpd::pasv_max_port ('${vsftpd::pasv_max_port}') must both be defined (or not defined)")
       }
 
-      # This feels like a hack.
-      exec { 'check_conntrack_ftp':
-        command => '/bin/true',
-        onlyif  => '/bin/grep -F "nf_conntrack_ftp" /proc/modules; test $? -ne 0'
+      sysctl { 'net.netfilter.nf_conntrack_helper':
+        value  => '1',
+        silent => true
       }
 
-      exec { 'nf_conntrack_ftp':
-        command     => '/sbin/modprobe -q nf_conntrack_ftp',
-        refreshonly => true
+      if defined(Class['firewalld::reload']) {
+        Class['firewalld::reload'] -> Sysctl['net.netfilter.nf_conntrack_helper']
       }
 
       if defined(Class['iptables::service']) {
-        Exec['check_conntrack_ftp'] ~> Class['iptables::service']
-        Class['iptables::service'] ~> Exec['nf_conntrack_ftp']
-      }
-      elsif defined(Class['firewalld::reload']) {
-        Exec['check_conntrack_ftp'] ~> Class['firewalld::reload']
-        Class['firewalld::reload'] ~> Exec['nf_conntrack_ftp']
+        Class['iptables::service'] -> Sysctl['net.netfilter.nf_conntrack_helper']
       }
     }
   }
