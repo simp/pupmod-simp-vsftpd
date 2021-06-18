@@ -1,3 +1,7 @@
+* Thu Jun 17 2021 Chris Tessmer <chris.tessmer@onyxpoint.com> - 7.6.0
+- Removed support for Puppet 5
+- Ensured support for Puppet 7 in requirements and stdlib
+
 * Wed Jan 20 2021 Trevor Vaughan <tvaughan@onyxpoint.com> - 7.5.0
 - Add puppet 7 support
 - Fix sysctl updates on service restart
