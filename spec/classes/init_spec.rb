@@ -3,7 +3,8 @@ require 'spec_helper'
 describe 'vsftpd' do
   on_supported_os.each do |os, facts|
     let(:facts) do
-      facts.merge( { :fqdn => 'test.host.simp' } )
+      facts.merge( { :fqdn => 'test.host.simp',
+                     :haveged__rngd_enabled => false } )
     end
 
     context "on #{os}" do

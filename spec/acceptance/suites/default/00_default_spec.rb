@@ -13,12 +13,6 @@ hosts_with_role(hosts, 'server').each do |server|
       EOS
     }
 
-    context 'setup' do
-      it 'should install epel' do
-        install_package(server, 'epel-release')
-      end
-    end
-
     context 'default parameters with SIMP pki' do
 
       it 'should work with no errors' do
