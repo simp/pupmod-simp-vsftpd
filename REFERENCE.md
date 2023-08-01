@@ -7,12 +7,12 @@
 ### Classes
 
 * [`vsftpd`](#vsftpd): This class configures a vsftpd server.  It ensures that the appropriate files are in the appropriate places and synchronizes the external mat
-* [`vsftpd::config`](#vsftpdconfig): This class provides a method for setting up the main body of /etc/vsftpd/vsftpd.conf.  * The rest of the parameters can be found on the vsftp
-* [`vsftpd::config::firewall`](#vsftpdconfigfirewall): This class sets up the appropriate IPtables rules based on the value of $fw_rules.  By default, it will allow access only to localhost, you w
-* [`vsftpd::config::tcpwrappers`](#vsftpdconfigtcpwrappers): Sets up tcpwrappers for vsfptd.
-* [`vsftpd::install`](#vsftpdinstall): Installs vsftpd and optionally manages the vsftpd group and user.
-* [`vsftpd::service`](#vsftpdservice): Ensures the vsftpd service is running.
-* [`vsftpd::users`](#vsftpdusers): Manages the vsftpd group and user.
+* [`vsftpd::config`](#vsftpd--config): This class provides a method for setting up the main body of /etc/vsftpd/vsftpd.conf.  * The rest of the parameters can be found on the vsftp
+* [`vsftpd::config::firewall`](#vsftpd--config--firewall): This class sets up the appropriate IPtables rules based on the value of $fw_rules.  By default, it will allow access only to localhost, you w
+* [`vsftpd::config::tcpwrappers`](#vsftpd--config--tcpwrappers): Sets up tcpwrappers for vsfptd.
+* [`vsftpd::install`](#vsftpd--install): Installs vsftpd and optionally manages the vsftpd group and user.
+* [`vsftpd::service`](#vsftpd--service): Ensures the vsftpd service is running.
+* [`vsftpd::users`](#vsftpd--users): Manages the vsftpd group and user.
 
 ## Classes
 
@@ -29,37 +29,37 @@ reasons.
 
 The following parameters are available in the `vsftpd` class:
 
-* [`trusted_nets`](#trusted_nets)
-* [`firewall`](#firewall)
-* [`pki`](#pki)
-* [`tcpwrappers`](#tcpwrappers)
-* [`haveged`](#haveged)
-* [`cipher_suite`](#cipher_suite)
-* [`package_ensure`](#package_ensure)
-* [`vsfptd_user`](#vsfptd_user)
-* [`vsftpd_group`](#vsftpd_group)
-* [`manage_user`](#manage_user)
-* [`vsftpd_uid`](#vsftpd_uid)
-* [`vsftpd_gid`](#vsftpd_gid)
-* [`manage_group`](#manage_group)
-* [`ftp_data_port`](#ftp_data_port)
-* [`listen_address`](#listen_address)
-* [`listen_ipv4`](#listen_ipv4)
-* [`listen_port`](#listen_port)
-* [`local_enable`](#local_enable)
-* [`pasv_enable`](#pasv_enable)
-* [`pasv_max_port`](#pasv_max_port)
-* [`pasv_min_port`](#pasv_min_port)
-* [`ssl_enable`](#ssl_enable)
-* [`require_ssl_reuse`](#require_ssl_reuse)
-* [`userlist_deny`](#userlist_deny)
-* [`userlist_enable`](#userlist_enable)
-* [`user_list`](#user_list)
-* [`pam_service_name`](#pam_service_name)
-* [`validate_cert`](#validate_cert)
-* [`vsftpd_user`](#vsftpd_user)
+* [`trusted_nets`](#-vsftpd--trusted_nets)
+* [`firewall`](#-vsftpd--firewall)
+* [`pki`](#-vsftpd--pki)
+* [`tcpwrappers`](#-vsftpd--tcpwrappers)
+* [`haveged`](#-vsftpd--haveged)
+* [`cipher_suite`](#-vsftpd--cipher_suite)
+* [`package_ensure`](#-vsftpd--package_ensure)
+* [`vsfptd_user`](#-vsftpd--vsfptd_user)
+* [`vsftpd_group`](#-vsftpd--vsftpd_group)
+* [`manage_user`](#-vsftpd--manage_user)
+* [`vsftpd_uid`](#-vsftpd--vsftpd_uid)
+* [`vsftpd_gid`](#-vsftpd--vsftpd_gid)
+* [`manage_group`](#-vsftpd--manage_group)
+* [`ftp_data_port`](#-vsftpd--ftp_data_port)
+* [`listen_address`](#-vsftpd--listen_address)
+* [`listen_ipv4`](#-vsftpd--listen_ipv4)
+* [`listen_port`](#-vsftpd--listen_port)
+* [`local_enable`](#-vsftpd--local_enable)
+* [`pasv_enable`](#-vsftpd--pasv_enable)
+* [`pasv_max_port`](#-vsftpd--pasv_max_port)
+* [`pasv_min_port`](#-vsftpd--pasv_min_port)
+* [`ssl_enable`](#-vsftpd--ssl_enable)
+* [`require_ssl_reuse`](#-vsftpd--require_ssl_reuse)
+* [`userlist_deny`](#-vsftpd--userlist_deny)
+* [`userlist_enable`](#-vsftpd--userlist_enable)
+* [`user_list`](#-vsftpd--user_list)
+* [`pam_service_name`](#-vsftpd--pam_service_name)
+* [`validate_cert`](#-vsftpd--validate_cert)
+* [`vsftpd_user`](#-vsftpd--vsftpd_user)
 
-##### <a name="trusted_nets"></a>`trusted_nets`
+##### <a name="-vsftpd--trusted_nets"></a>`trusted_nets`
 
 Data type: `Simplib::Netlist`
 
@@ -67,7 +67,7 @@ A whitelist of subnets (in CIDR notation) permitted access.
 
 Default value: `simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1','::1'] })`
 
-##### <a name="firewall"></a>`firewall`
+##### <a name="-vsftpd--firewall"></a>`firewall`
 
 Data type: `Boolean`
 
@@ -75,7 +75,7 @@ If true, use SIMP's `iptables` to manage firewall rules to accommodate <%= metad
 
 Default value: `simplib::lookup('simp_options::firewall', { 'default_value' => false })`
 
-##### <a name="pki"></a>`pki`
+##### <a name="-vsftpd--pki"></a>`pki`
 
 Data type: `Variant[Enum['simp'],Boolean]`
 
@@ -93,7 +93,7 @@ Data type: `Variant[Enum['simp'],Boolean]`
 
 Default value: `simplib::lookup('simp_options::pki', { 'default_value' => false })`
 
-##### <a name="tcpwrappers"></a>`tcpwrappers`
+##### <a name="-vsftpd--tcpwrappers"></a>`tcpwrappers`
 
 Data type: `Boolean`
 
@@ -103,7 +103,7 @@ vsftpd.conf to true.
 
 Default value: `simplib::lookup('simp_options::tcpwrappers', { 'default_value' => false })`
 
-##### <a name="haveged"></a>`haveged`
+##### <a name="-vsftpd--haveged"></a>`haveged`
 
 Data type: `Boolean`
 
@@ -111,7 +111,7 @@ If true, include ::haveged to assist with entropy generation.
 
 Default value: `simplib::lookup('simp_options::haveged', { 'default_value' => false })`
 
-##### <a name="cipher_suite"></a>`cipher_suite`
+##### <a name="-vsftpd--cipher_suite"></a>`cipher_suite`
 
 Data type: `Array[String]`
 
@@ -123,7 +123,7 @@ Corresponds to ssl_ciphers in vsftpd.conf.
 
 Default value: `simplib::lookup('simp_options::openssl::cipher_suite', { 'default_value' => ['DEFAULT','!MEDIUM'] })`
 
-##### <a name="package_ensure"></a>`package_ensure`
+##### <a name="-vsftpd--package_ensure"></a>`package_ensure`
 
 Data type: `String`
 
@@ -131,11 +131,11 @@ The ensure status of the vsftpd package
 
 Default value: `simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' })`
 
-##### <a name="vsfptd_user"></a>`vsfptd_user`
+##### <a name="-vsftpd--vsfptd_user"></a>`vsfptd_user`
 
 Set the user for the vsftpd service.
 
-##### <a name="vsftpd_group"></a>`vsftpd_group`
+##### <a name="-vsftpd--vsftpd_group"></a>`vsftpd_group`
 
 Data type: `String`
 
@@ -143,15 +143,15 @@ Set the group for the vsftpd service and files.
 
 Default value: `'ftp'`
 
-##### <a name="manage_user"></a>`manage_user`
+##### <a name="-vsftpd--manage_user"></a>`manage_user`
 
 Data type: `Boolean`
 
 Manage vsftpd user.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="vsftpd_uid"></a>`vsftpd_uid`
+##### <a name="-vsftpd--vsftpd_uid"></a>`vsftpd_uid`
 
 Data type: `Integer`
 
@@ -159,7 +159,7 @@ Integer.  UID of the vsftpd user.
 
 Default value: `14`
 
-##### <a name="vsftpd_gid"></a>`vsftpd_gid`
+##### <a name="-vsftpd--vsftpd_gid"></a>`vsftpd_gid`
 
 Data type: `Integer`
 
@@ -167,15 +167,15 @@ Integer. GID of the vsftpd group.
 
 Default value: `50`
 
-##### <a name="manage_group"></a>`manage_group`
+##### <a name="-vsftpd--manage_group"></a>`manage_group`
 
 Data type: `Boolean`
 
 Manage vsftpd group.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="ftp_data_port"></a>`ftp_data_port`
+##### <a name="-vsftpd--ftp_data_port"></a>`ftp_data_port`
 
 Data type: `Simplib::Port`
 
@@ -183,23 +183,23 @@ Data type: `Simplib::Port`
 
 Default value: `20`
 
-##### <a name="listen_address"></a>`listen_address`
+##### <a name="-vsftpd--listen_address"></a>`listen_address`
 
 Data type: `Optional[Simplib::IP::V4]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="listen_ipv4"></a>`listen_ipv4`
+##### <a name="-vsftpd--listen_ipv4"></a>`listen_ipv4`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="listen_port"></a>`listen_port`
+##### <a name="-vsftpd--listen_port"></a>`listen_port`
 
 Data type: `Simplib::Port`
 
@@ -207,71 +207,71 @@ Data type: `Simplib::Port`
 
 Default value: `21`
 
-##### <a name="local_enable"></a>`local_enable`
+##### <a name="-vsftpd--local_enable"></a>`local_enable`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="pasv_enable"></a>`pasv_enable`
+##### <a name="-vsftpd--pasv_enable"></a>`pasv_enable`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="pasv_max_port"></a>`pasv_max_port`
+##### <a name="-vsftpd--pasv_max_port"></a>`pasv_max_port`
 
 Data type: `Optional[Simplib::Port]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pasv_min_port"></a>`pasv_min_port`
+##### <a name="-vsftpd--pasv_min_port"></a>`pasv_min_port`
 
 Data type: `Optional[Simplib::Port]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_enable"></a>`ssl_enable`
-
-Data type: `Boolean`
-
-
-
-Default value: ``true``
-
-##### <a name="require_ssl_reuse"></a>`require_ssl_reuse`
+##### <a name="-vsftpd--ssl_enable"></a>`ssl_enable`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="userlist_deny"></a>`userlist_deny`
-
-Data type: `Boolean`
-
-
-
-Default value: ``true``
-
-##### <a name="userlist_enable"></a>`userlist_enable`
+##### <a name="-vsftpd--require_ssl_reuse"></a>`require_ssl_reuse`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="user_list"></a>`user_list`
+##### <a name="-vsftpd--userlist_deny"></a>`userlist_deny`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
+
+##### <a name="-vsftpd--userlist_enable"></a>`userlist_enable`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
+
+##### <a name="-vsftpd--user_list"></a>`user_list`
 
 Data type: `Array[String]`
 
@@ -279,7 +279,7 @@ Data type: `Array[String]`
 
 Default value: `['root','bin','daemon','adm','lp','sync','shutdown','halt','mail','news','uucp','operator','games','nobody']`
 
-##### <a name="pam_service_name"></a>`pam_service_name`
+##### <a name="-vsftpd--pam_service_name"></a>`pam_service_name`
 
 Data type: `String`
 
@@ -287,15 +287,15 @@ Data type: `String`
 
 Default value: `'vsftpd'`
 
-##### <a name="validate_cert"></a>`validate_cert`
+##### <a name="-vsftpd--validate_cert"></a>`validate_cert`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="vsftpd_user"></a>`vsftpd_user`
+##### <a name="-vsftpd--vsftpd_user"></a>`vsftpd_user`
 
 Data type: `String`
 
@@ -303,7 +303,7 @@ Data type: `String`
 
 Default value: `'ftp'`
 
-### <a name="vsftpdconfig"></a>`vsftpd::config`
+### <a name="vsftpd--config"></a>`vsftpd::config`
 
 This class provides a method for setting up the main body of
 /etc/vsftpd/vsftpd.conf.
@@ -314,114 +314,114 @@ This class provides a method for setting up the main body of
 
 The following parameters are available in the `vsftpd::config` class:
 
-* [`pki`](#pki)
-* [`app_pki_external_source`](#app_pki_external_source)
-* [`app_pki_dir`](#app_pki_dir)
-* [`app_pki_key`](#app_pki_key)
-* [`app_pki_cert`](#app_pki_cert)
-* [`app_pki_ca`](#app_pki_ca)
-* [`allow_anon_ssl`](#allow_anon_ssl)
-* [`anon_mkdir_write_enable`](#anon_mkdir_write_enable)
-* [`anon_other_write_enable`](#anon_other_write_enable)
-* [`anon_upload_enable`](#anon_upload_enable)
-* [`anon_world_readable_only`](#anon_world_readable_only)
-* [`anonymous_enable`](#anonymous_enable)
-* [`ascii_download_enable`](#ascii_download_enable)
-* [`ascii_upload_enable`](#ascii_upload_enable)
-* [`async_abor_enable`](#async_abor_enable)
-* [`background`](#background)
-* [`check_shell`](#check_shell)
-* [`chmod_enable`](#chmod_enable)
-* [`chown_uploads`](#chown_uploads)
-* [`chroot_list_enable`](#chroot_list_enable)
-* [`chroot_local_user`](#chroot_local_user)
-* [`connect_from_port_20`](#connect_from_port_20)
-* [`deny_email_enable`](#deny_email_enable)
-* [`dirlist_enable`](#dirlist_enable)
-* [`dirmessage_enable`](#dirmessage_enable)
-* [`download_enable`](#download_enable)
-* [`dual_log_enable`](#dual_log_enable)
-* [`force_dot_files`](#force_dot_files)
-* [`force_anon_data_ssl`](#force_anon_data_ssl)
-* [`force_anon_logins_ssl`](#force_anon_logins_ssl)
-* [`force_local_data_ssl`](#force_local_data_ssl)
-* [`force_local_logins_ssl`](#force_local_logins_ssl)
-* [`guest_enable`](#guest_enable)
-* [`hide_ids`](#hide_ids)
-* [`listen_ipv6`](#listen_ipv6)
-* [`lock_upload_files`](#lock_upload_files)
-* [`log_ftp_protocol`](#log_ftp_protocol)
-* [`ls_recurse_enable`](#ls_recurse_enable)
-* [`mdtm_write`](#mdtm_write)
-* [`no_anon_password`](#no_anon_password)
-* [`no_log_lock`](#no_log_lock)
-* [`one_process_model`](#one_process_model)
-* [`passwd_chroot_enable`](#passwd_chroot_enable)
-* [`pasv_addr_resolve`](#pasv_addr_resolve)
-* [`pasv_promiscuous`](#pasv_promiscuous)
-* [`port_enable`](#port_enable)
-* [`port_promiscuous`](#port_promiscuous)
-* [`reverse_lookup_enable`](#reverse_lookup_enable)
-* [`run_as_launching_user`](#run_as_launching_user)
-* [`secure_email_list_enable`](#secure_email_list_enable)
-* [`session_support`](#session_support)
-* [`setproctitle_enable`](#setproctitle_enable)
-* [`ssl_sslv2`](#ssl_sslv2)
-* [`ssl_sslv3`](#ssl_sslv3)
-* [`ssl_tlsv1`](#ssl_tlsv1)
-* [`ssl_tlsv1_1`](#ssl_tlsv1_1)
-* [`ssl_tlsv1_2`](#ssl_tlsv1_2)
-* [`syslog_enable`](#syslog_enable)
-* [`text_userdb_names`](#text_userdb_names)
-* [`tilde_user_enable`](#tilde_user_enable)
-* [`use_localtime`](#use_localtime)
-* [`use_sendfile`](#use_sendfile)
-* [`userlist_file`](#userlist_file)
-* [`userlist_log`](#userlist_log)
-* [`virtual_use_local_privs`](#virtual_use_local_privs)
-* [`write_enable`](#write_enable)
-* [`xferlog_enable`](#xferlog_enable)
-* [`xferlog_std_format`](#xferlog_std_format)
-* [`accept_timeout`](#accept_timeout)
-* [`anon_max_rate`](#anon_max_rate)
-* [`anon_umask`](#anon_umask)
-* [`connect_timeout`](#connect_timeout)
-* [`data_connection_timeout`](#data_connection_timeout)
-* [`delay_failed_login`](#delay_failed_login)
-* [`delay_successful_login`](#delay_successful_login)
-* [`file_open_mode`](#file_open_mode)
-* [`idle_session_timeout`](#idle_session_timeout)
-* [`local_max_rate`](#local_max_rate)
-* [`local_umask`](#local_umask)
-* [`max_clients`](#max_clients)
-* [`max_login_fails`](#max_login_fails)
-* [`max_per_ip`](#max_per_ip)
-* [`trans_chunk_size`](#trans_chunk_size)
-* [`anon_root`](#anon_root)
-* [`banned_email_file`](#banned_email_file)
-* [`banner_file`](#banner_file)
-* [`chown_username`](#chown_username)
-* [`chroot_list_file`](#chroot_list_file)
-* [`cmds_allowed`](#cmds_allowed)
-* [`deny_file`](#deny_file)
-* [`dsa_cert_file`](#dsa_cert_file)
-* [`dsa_private_key_file`](#dsa_private_key_file)
-* [`email_password_file`](#email_password_file)
-* [`hide_file`](#hide_file)
-* [`listen_address6`](#listen_address6)
-* [`local_root`](#local_root)
-* [`message_file`](#message_file)
-* [`nopriv_user`](#nopriv_user)
-* [`pasv_address`](#pasv_address)
-* [`validate_cert`](#validate_cert)
-* [`secure_chroot_dir`](#secure_chroot_dir)
-* [`user_config_dir`](#user_config_dir)
-* [`user_sub_token`](#user_sub_token)
-* [`vsftpd_log_file`](#vsftpd_log_file)
-* [`xferlog_file`](#xferlog_file)
-* [`min_uid`](#min_uid)
+* [`pki`](#-vsftpd--config--pki)
+* [`app_pki_external_source`](#-vsftpd--config--app_pki_external_source)
+* [`app_pki_dir`](#-vsftpd--config--app_pki_dir)
+* [`app_pki_key`](#-vsftpd--config--app_pki_key)
+* [`app_pki_cert`](#-vsftpd--config--app_pki_cert)
+* [`app_pki_ca`](#-vsftpd--config--app_pki_ca)
+* [`allow_anon_ssl`](#-vsftpd--config--allow_anon_ssl)
+* [`anon_mkdir_write_enable`](#-vsftpd--config--anon_mkdir_write_enable)
+* [`anon_other_write_enable`](#-vsftpd--config--anon_other_write_enable)
+* [`anon_upload_enable`](#-vsftpd--config--anon_upload_enable)
+* [`anon_world_readable_only`](#-vsftpd--config--anon_world_readable_only)
+* [`anonymous_enable`](#-vsftpd--config--anonymous_enable)
+* [`ascii_download_enable`](#-vsftpd--config--ascii_download_enable)
+* [`ascii_upload_enable`](#-vsftpd--config--ascii_upload_enable)
+* [`async_abor_enable`](#-vsftpd--config--async_abor_enable)
+* [`background`](#-vsftpd--config--background)
+* [`check_shell`](#-vsftpd--config--check_shell)
+* [`chmod_enable`](#-vsftpd--config--chmod_enable)
+* [`chown_uploads`](#-vsftpd--config--chown_uploads)
+* [`chroot_list_enable`](#-vsftpd--config--chroot_list_enable)
+* [`chroot_local_user`](#-vsftpd--config--chroot_local_user)
+* [`connect_from_port_20`](#-vsftpd--config--connect_from_port_20)
+* [`deny_email_enable`](#-vsftpd--config--deny_email_enable)
+* [`dirlist_enable`](#-vsftpd--config--dirlist_enable)
+* [`dirmessage_enable`](#-vsftpd--config--dirmessage_enable)
+* [`download_enable`](#-vsftpd--config--download_enable)
+* [`dual_log_enable`](#-vsftpd--config--dual_log_enable)
+* [`force_dot_files`](#-vsftpd--config--force_dot_files)
+* [`force_anon_data_ssl`](#-vsftpd--config--force_anon_data_ssl)
+* [`force_anon_logins_ssl`](#-vsftpd--config--force_anon_logins_ssl)
+* [`force_local_data_ssl`](#-vsftpd--config--force_local_data_ssl)
+* [`force_local_logins_ssl`](#-vsftpd--config--force_local_logins_ssl)
+* [`guest_enable`](#-vsftpd--config--guest_enable)
+* [`hide_ids`](#-vsftpd--config--hide_ids)
+* [`listen_ipv6`](#-vsftpd--config--listen_ipv6)
+* [`lock_upload_files`](#-vsftpd--config--lock_upload_files)
+* [`log_ftp_protocol`](#-vsftpd--config--log_ftp_protocol)
+* [`ls_recurse_enable`](#-vsftpd--config--ls_recurse_enable)
+* [`mdtm_write`](#-vsftpd--config--mdtm_write)
+* [`no_anon_password`](#-vsftpd--config--no_anon_password)
+* [`no_log_lock`](#-vsftpd--config--no_log_lock)
+* [`one_process_model`](#-vsftpd--config--one_process_model)
+* [`passwd_chroot_enable`](#-vsftpd--config--passwd_chroot_enable)
+* [`pasv_addr_resolve`](#-vsftpd--config--pasv_addr_resolve)
+* [`pasv_promiscuous`](#-vsftpd--config--pasv_promiscuous)
+* [`port_enable`](#-vsftpd--config--port_enable)
+* [`port_promiscuous`](#-vsftpd--config--port_promiscuous)
+* [`reverse_lookup_enable`](#-vsftpd--config--reverse_lookup_enable)
+* [`run_as_launching_user`](#-vsftpd--config--run_as_launching_user)
+* [`secure_email_list_enable`](#-vsftpd--config--secure_email_list_enable)
+* [`session_support`](#-vsftpd--config--session_support)
+* [`setproctitle_enable`](#-vsftpd--config--setproctitle_enable)
+* [`ssl_sslv2`](#-vsftpd--config--ssl_sslv2)
+* [`ssl_sslv3`](#-vsftpd--config--ssl_sslv3)
+* [`ssl_tlsv1`](#-vsftpd--config--ssl_tlsv1)
+* [`ssl_tlsv1_1`](#-vsftpd--config--ssl_tlsv1_1)
+* [`ssl_tlsv1_2`](#-vsftpd--config--ssl_tlsv1_2)
+* [`syslog_enable`](#-vsftpd--config--syslog_enable)
+* [`text_userdb_names`](#-vsftpd--config--text_userdb_names)
+* [`tilde_user_enable`](#-vsftpd--config--tilde_user_enable)
+* [`use_localtime`](#-vsftpd--config--use_localtime)
+* [`use_sendfile`](#-vsftpd--config--use_sendfile)
+* [`userlist_file`](#-vsftpd--config--userlist_file)
+* [`userlist_log`](#-vsftpd--config--userlist_log)
+* [`virtual_use_local_privs`](#-vsftpd--config--virtual_use_local_privs)
+* [`write_enable`](#-vsftpd--config--write_enable)
+* [`xferlog_enable`](#-vsftpd--config--xferlog_enable)
+* [`xferlog_std_format`](#-vsftpd--config--xferlog_std_format)
+* [`accept_timeout`](#-vsftpd--config--accept_timeout)
+* [`anon_max_rate`](#-vsftpd--config--anon_max_rate)
+* [`anon_umask`](#-vsftpd--config--anon_umask)
+* [`connect_timeout`](#-vsftpd--config--connect_timeout)
+* [`data_connection_timeout`](#-vsftpd--config--data_connection_timeout)
+* [`delay_failed_login`](#-vsftpd--config--delay_failed_login)
+* [`delay_successful_login`](#-vsftpd--config--delay_successful_login)
+* [`file_open_mode`](#-vsftpd--config--file_open_mode)
+* [`idle_session_timeout`](#-vsftpd--config--idle_session_timeout)
+* [`local_max_rate`](#-vsftpd--config--local_max_rate)
+* [`local_umask`](#-vsftpd--config--local_umask)
+* [`max_clients`](#-vsftpd--config--max_clients)
+* [`max_login_fails`](#-vsftpd--config--max_login_fails)
+* [`max_per_ip`](#-vsftpd--config--max_per_ip)
+* [`trans_chunk_size`](#-vsftpd--config--trans_chunk_size)
+* [`anon_root`](#-vsftpd--config--anon_root)
+* [`banned_email_file`](#-vsftpd--config--banned_email_file)
+* [`banner_file`](#-vsftpd--config--banner_file)
+* [`chown_username`](#-vsftpd--config--chown_username)
+* [`chroot_list_file`](#-vsftpd--config--chroot_list_file)
+* [`cmds_allowed`](#-vsftpd--config--cmds_allowed)
+* [`deny_file`](#-vsftpd--config--deny_file)
+* [`dsa_cert_file`](#-vsftpd--config--dsa_cert_file)
+* [`dsa_private_key_file`](#-vsftpd--config--dsa_private_key_file)
+* [`email_password_file`](#-vsftpd--config--email_password_file)
+* [`hide_file`](#-vsftpd--config--hide_file)
+* [`listen_address6`](#-vsftpd--config--listen_address6)
+* [`local_root`](#-vsftpd--config--local_root)
+* [`message_file`](#-vsftpd--config--message_file)
+* [`nopriv_user`](#-vsftpd--config--nopriv_user)
+* [`pasv_address`](#-vsftpd--config--pasv_address)
+* [`validate_cert`](#-vsftpd--config--validate_cert)
+* [`secure_chroot_dir`](#-vsftpd--config--secure_chroot_dir)
+* [`user_config_dir`](#-vsftpd--config--user_config_dir)
+* [`user_sub_token`](#-vsftpd--config--user_sub_token)
+* [`vsftpd_log_file`](#-vsftpd--config--vsftpd_log_file)
+* [`xferlog_file`](#-vsftpd--config--xferlog_file)
+* [`min_uid`](#-vsftpd--config--min_uid)
 
-##### <a name="pki"></a>`pki`
+##### <a name="-vsftpd--config--pki"></a>`pki`
 
 * If 'simp', include SIMP's pki module and use pki::copy to manage
   application certs in /etc/pki/simp_apps/vsftpd/x509
@@ -435,7 +435,7 @@ The following parameters are available in the `vsftpd::config` class:
   * app_pki_ca
   * app_pki_ca_dir
 
-##### <a name="app_pki_external_source"></a>`app_pki_external_source`
+##### <a name="-vsftpd--config--app_pki_external_source"></a>`app_pki_external_source`
 
 Data type: `String`
 
@@ -446,7 +446,7 @@ Data type: `String`
 
 Default value: `simplib::lookup('simp_options::pki::source', { 'default_value' => '/etc/pki/simp/x509' })`
 
-##### <a name="app_pki_dir"></a>`app_pki_dir`
+##### <a name="-vsftpd--config--app_pki_dir"></a>`app_pki_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -456,23 +456,23 @@ It defaults to /etc/pki/simp_apps/vsftpd/pki.
 
 Default value: `'/etc/pki/simp_apps/vsftpd/x509'`
 
-##### <a name="app_pki_key"></a>`app_pki_key`
+##### <a name="-vsftpd--config--app_pki_key"></a>`app_pki_key`
 
 Data type: `Stdlib::Absolutepath`
 
 Path and name of the private SSL key file
 
-Default value: `"${app_pki_dir}/private/${::fqdn}.pem"`
+Default value: `"${app_pki_dir}/private/${facts['networking']['fqdn']}.pem"`
 
-##### <a name="app_pki_cert"></a>`app_pki_cert`
+##### <a name="-vsftpd--config--app_pki_cert"></a>`app_pki_cert`
 
 Data type: `Stdlib::Absolutepath`
 
 Path and name of the public SSL certificate
 
-Default value: `"${app_pki_dir}/public/${::fqdn}.pub"`
+Default value: `"${app_pki_dir}/public/${facts['networking']['fqdn']}.pub"`
 
-##### <a name="app_pki_ca"></a>`app_pki_ca`
+##### <a name="-vsftpd--config--app_pki_ca"></a>`app_pki_ca`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -480,455 +480,455 @@ Path and name of the CA.
 
 Default value: `"${app_pki_dir}/cacerts/cacerts.pem"`
 
-##### <a name="allow_anon_ssl"></a>`allow_anon_ssl`
+##### <a name="-vsftpd--config--allow_anon_ssl"></a>`allow_anon_ssl`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="anon_mkdir_write_enable"></a>`anon_mkdir_write_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="anon_other_write_enable"></a>`anon_other_write_enable`
+##### <a name="-vsftpd--config--anon_mkdir_write_enable"></a>`anon_mkdir_write_enable`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="anon_upload_enable"></a>`anon_upload_enable`
+##### <a name="-vsftpd--config--anon_other_write_enable"></a>`anon_other_write_enable`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--anon_upload_enable"></a>`anon_upload_enable`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="anon_world_readable_only"></a>`anon_world_readable_only`
+##### <a name="-vsftpd--config--anon_world_readable_only"></a>`anon_world_readable_only`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="anonymous_enable"></a>`anonymous_enable`
+##### <a name="-vsftpd--config--anonymous_enable"></a>`anonymous_enable`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="ascii_download_enable"></a>`ascii_download_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="ascii_upload_enable"></a>`ascii_upload_enable`
+##### <a name="-vsftpd--config--ascii_download_enable"></a>`ascii_download_enable`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="async_abor_enable"></a>`async_abor_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="background"></a>`background`
+##### <a name="-vsftpd--config--ascii_upload_enable"></a>`ascii_upload_enable`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="check_shell"></a>`check_shell`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="chmod_enable"></a>`chmod_enable`
+##### <a name="-vsftpd--config--async_abor_enable"></a>`async_abor_enable`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="chown_uploads"></a>`chown_uploads`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="chroot_list_enable"></a>`chroot_list_enable`
+##### <a name="-vsftpd--config--background"></a>`background`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="chroot_local_user"></a>`chroot_local_user`
+##### <a name="-vsftpd--config--check_shell"></a>`check_shell`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="connect_from_port_20"></a>`connect_from_port_20`
+##### <a name="-vsftpd--config--chmod_enable"></a>`chmod_enable`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--chown_uploads"></a>`chown_uploads`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--chroot_list_enable"></a>`chroot_list_enable`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--chroot_local_user"></a>`chroot_local_user`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--connect_from_port_20"></a>`connect_from_port_20`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="deny_email_enable"></a>`deny_email_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="dirlist_enable"></a>`dirlist_enable`
+##### <a name="-vsftpd--config--deny_email_enable"></a>`deny_email_enable`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="dirmessage_enable"></a>`dirmessage_enable`
+##### <a name="-vsftpd--config--dirlist_enable"></a>`dirlist_enable`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--dirmessage_enable"></a>`dirmessage_enable`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="download_enable"></a>`download_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="dual_log_enable"></a>`dual_log_enable`
+##### <a name="-vsftpd--config--download_enable"></a>`download_enable`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="force_dot_files"></a>`force_dot_files`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="force_anon_data_ssl"></a>`force_anon_data_ssl`
+##### <a name="-vsftpd--config--dual_log_enable"></a>`dual_log_enable`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="force_anon_logins_ssl"></a>`force_anon_logins_ssl`
+##### <a name="-vsftpd--config--force_dot_files"></a>`force_dot_files`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="force_local_data_ssl"></a>`force_local_data_ssl`
+##### <a name="-vsftpd--config--force_anon_data_ssl"></a>`force_anon_data_ssl`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--force_anon_logins_ssl"></a>`force_anon_logins_ssl`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--force_local_data_ssl"></a>`force_local_data_ssl`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="force_local_logins_ssl"></a>`force_local_logins_ssl`
+##### <a name="-vsftpd--config--force_local_logins_ssl"></a>`force_local_logins_ssl`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="guest_enable"></a>`guest_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="hide_ids"></a>`hide_ids`
+##### <a name="-vsftpd--config--guest_enable"></a>`guest_enable`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="listen_ipv6"></a>`listen_ipv6`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="lock_upload_files"></a>`lock_upload_files`
+##### <a name="-vsftpd--config--hide_ids"></a>`hide_ids`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="log_ftp_protocol"></a>`log_ftp_protocol`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="ls_recurse_enable"></a>`ls_recurse_enable`
+##### <a name="-vsftpd--config--listen_ipv6"></a>`listen_ipv6`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mdtm_write"></a>`mdtm_write`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="no_anon_password"></a>`no_anon_password`
+##### <a name="-vsftpd--config--lock_upload_files"></a>`lock_upload_files`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="no_log_lock"></a>`no_log_lock`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="one_process_model"></a>`one_process_model`
+##### <a name="-vsftpd--config--log_ftp_protocol"></a>`log_ftp_protocol`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="passwd_chroot_enable"></a>`passwd_chroot_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="pasv_addr_resolve"></a>`pasv_addr_resolve`
+##### <a name="-vsftpd--config--ls_recurse_enable"></a>`ls_recurse_enable`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pasv_promiscuous"></a>`pasv_promiscuous`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="port_enable"></a>`port_enable`
+##### <a name="-vsftpd--config--mdtm_write"></a>`mdtm_write`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="port_promiscuous"></a>`port_promiscuous`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="reverse_lookup_enable"></a>`reverse_lookup_enable`
+##### <a name="-vsftpd--config--no_anon_password"></a>`no_anon_password`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="run_as_launching_user"></a>`run_as_launching_user`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="secure_email_list_enable"></a>`secure_email_list_enable`
+##### <a name="-vsftpd--config--no_log_lock"></a>`no_log_lock`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="session_support"></a>`session_support`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="setproctitle_enable"></a>`setproctitle_enable`
+##### <a name="-vsftpd--config--one_process_model"></a>`one_process_model`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ssl_sslv2"></a>`ssl_sslv2`
+##### <a name="-vsftpd--config--passwd_chroot_enable"></a>`passwd_chroot_enable`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--pasv_addr_resolve"></a>`pasv_addr_resolve`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--pasv_promiscuous"></a>`pasv_promiscuous`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--port_enable"></a>`port_enable`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--port_promiscuous"></a>`port_promiscuous`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--reverse_lookup_enable"></a>`reverse_lookup_enable`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--run_as_launching_user"></a>`run_as_launching_user`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--secure_email_list_enable"></a>`secure_email_list_enable`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--session_support"></a>`session_support`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--setproctitle_enable"></a>`setproctitle_enable`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--ssl_sslv2"></a>`ssl_sslv2`
 
 Data type: `Boolean`
 
 
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="ssl_sslv3"></a>`ssl_sslv3`
-
-Data type: `Boolean`
-
-
-
-Default value: ``false``
-
-##### <a name="ssl_tlsv1"></a>`ssl_tlsv1`
+##### <a name="-vsftpd--config--ssl_sslv3"></a>`ssl_sslv3`
 
 Data type: `Boolean`
 
 
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="ssl_tlsv1_1"></a>`ssl_tlsv1_1`
-
-Data type: `Boolean`
-
-
-
-Default value: ``false``
-
-##### <a name="ssl_tlsv1_2"></a>`ssl_tlsv1_2`
+##### <a name="-vsftpd--config--ssl_tlsv1"></a>`ssl_tlsv1`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `false`
 
-##### <a name="syslog_enable"></a>`syslog_enable`
+##### <a name="-vsftpd--config--ssl_tlsv1_1"></a>`ssl_tlsv1_1`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `false`
 
-##### <a name="text_userdb_names"></a>`text_userdb_names`
+##### <a name="-vsftpd--config--ssl_tlsv1_2"></a>`ssl_tlsv1_2`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
+
+##### <a name="-vsftpd--config--syslog_enable"></a>`syslog_enable`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
+
+##### <a name="-vsftpd--config--text_userdb_names"></a>`text_userdb_names`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="tilde_user_enable"></a>`tilde_user_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: ``undef``
-
-##### <a name="use_localtime"></a>`use_localtime`
+##### <a name="-vsftpd--config--tilde_user_enable"></a>`tilde_user_enable`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="use_sendfile"></a>`use_sendfile`
+##### <a name="-vsftpd--config--use_localtime"></a>`use_localtime`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="userlist_file"></a>`userlist_file`
+##### <a name="-vsftpd--config--use_sendfile"></a>`use_sendfile`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--userlist_file"></a>`userlist_file`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -936,127 +936,127 @@ Data type: `Stdlib::Absolutepath`
 
 Default value: `'/etc/vsftpd/user_list'`
 
-##### <a name="userlist_log"></a>`userlist_log`
+##### <a name="-vsftpd--config--userlist_log"></a>`userlist_log`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="virtual_use_local_privs"></a>`virtual_use_local_privs`
+##### <a name="-vsftpd--config--virtual_use_local_privs"></a>`virtual_use_local_privs`
 
 Data type: `Optional[Boolean]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="write_enable"></a>`write_enable`
-
-Data type: `Boolean`
-
-
-
-Default value: ``true``
-
-##### <a name="xferlog_enable"></a>`xferlog_enable`
+##### <a name="-vsftpd--config--write_enable"></a>`write_enable`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="xferlog_std_format"></a>`xferlog_std_format`
+##### <a name="-vsftpd--config--xferlog_enable"></a>`xferlog_enable`
 
 Data type: `Boolean`
 
 
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="accept_timeout"></a>`accept_timeout`
+##### <a name="-vsftpd--config--xferlog_std_format"></a>`xferlog_std_format`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
+
+##### <a name="-vsftpd--config--accept_timeout"></a>`accept_timeout`
 
 Data type: `Optional[Integer]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="anon_max_rate"></a>`anon_max_rate`
+##### <a name="-vsftpd--config--anon_max_rate"></a>`anon_max_rate`
 
 Data type: `Optional[Integer]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="anon_umask"></a>`anon_umask`
+##### <a name="-vsftpd--config--anon_umask"></a>`anon_umask`
 
 Data type: `Optional[Simplib::Umask]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="connect_timeout"></a>`connect_timeout`
-
-Data type: `Optional[Integer]`
-
-
-
-Default value: ``undef``
-
-##### <a name="data_connection_timeout"></a>`data_connection_timeout`
+##### <a name="-vsftpd--config--connect_timeout"></a>`connect_timeout`
 
 Data type: `Optional[Integer]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="delay_failed_login"></a>`delay_failed_login`
-
-Data type: `Optional[Integer]`
-
-
-
-Default value: ``undef``
-
-##### <a name="delay_successful_login"></a>`delay_successful_login`
+##### <a name="-vsftpd--config--data_connection_timeout"></a>`data_connection_timeout`
 
 Data type: `Optional[Integer]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="file_open_mode"></a>`file_open_mode`
+##### <a name="-vsftpd--config--delay_failed_login"></a>`delay_failed_login`
+
+Data type: `Optional[Integer]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--delay_successful_login"></a>`delay_successful_login`
+
+Data type: `Optional[Integer]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--file_open_mode"></a>`file_open_mode`
 
 Data type: `Optional[Simplib::Umask]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="idle_session_timeout"></a>`idle_session_timeout`
-
-Data type: `Optional[Integer]`
-
-
-
-Default value: ``undef``
-
-##### <a name="local_max_rate"></a>`local_max_rate`
+##### <a name="-vsftpd--config--idle_session_timeout"></a>`idle_session_timeout`
 
 Data type: `Optional[Integer]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="local_umask"></a>`local_umask`
+##### <a name="-vsftpd--config--local_max_rate"></a>`local_max_rate`
+
+Data type: `Optional[Integer]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--local_umask"></a>`local_umask`
 
 Data type: `Simplib::Umask`
 
@@ -1064,55 +1064,55 @@ Data type: `Simplib::Umask`
 
 Default value: `'022'`
 
-##### <a name="max_clients"></a>`max_clients`
+##### <a name="-vsftpd--config--max_clients"></a>`max_clients`
 
 Data type: `Optional[Integer]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="max_login_fails"></a>`max_login_fails`
-
-Data type: `Optional[Integer]`
-
-
-
-Default value: ``undef``
-
-##### <a name="max_per_ip"></a>`max_per_ip`
+##### <a name="-vsftpd--config--max_login_fails"></a>`max_login_fails`
 
 Data type: `Optional[Integer]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="trans_chunk_size"></a>`trans_chunk_size`
+##### <a name="-vsftpd--config--max_per_ip"></a>`max_per_ip`
 
 Data type: `Optional[Integer]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="anon_root"></a>`anon_root`
+##### <a name="-vsftpd--config--trans_chunk_size"></a>`trans_chunk_size`
+
+Data type: `Optional[Integer]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--anon_root"></a>`anon_root`
 
 Data type: `Optional[String]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="banned_email_file"></a>`banned_email_file`
+##### <a name="-vsftpd--config--banned_email_file"></a>`banned_email_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="banner_file"></a>`banner_file`
+##### <a name="-vsftpd--config--banner_file"></a>`banner_file`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1120,111 +1120,111 @@ Data type: `Stdlib::Absolutepath`
 
 Default value: `'/etc/issue.net'`
 
-##### <a name="chown_username"></a>`chown_username`
+##### <a name="-vsftpd--config--chown_username"></a>`chown_username`
 
 Data type: `Optional[String]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="chroot_list_file"></a>`chroot_list_file`
+##### <a name="-vsftpd--config--chroot_list_file"></a>`chroot_list_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cmds_allowed"></a>`cmds_allowed`
+##### <a name="-vsftpd--config--cmds_allowed"></a>`cmds_allowed`
 
 Data type: `Optional[Array[String]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="deny_file"></a>`deny_file`
-
-Data type: `Optional[String]`
-
-
-
-Default value: ``undef``
-
-##### <a name="dsa_cert_file"></a>`dsa_cert_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-Default value: ``undef``
-
-##### <a name="dsa_private_key_file"></a>`dsa_private_key_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-Default value: ``undef``
-
-##### <a name="email_password_file"></a>`email_password_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-Default value: ``undef``
-
-##### <a name="hide_file"></a>`hide_file`
+##### <a name="-vsftpd--config--deny_file"></a>`deny_file`
 
 Data type: `Optional[String]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="listen_address6"></a>`listen_address6`
+##### <a name="-vsftpd--config--dsa_cert_file"></a>`dsa_cert_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--dsa_private_key_file"></a>`dsa_private_key_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--email_password_file"></a>`email_password_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--hide_file"></a>`hide_file`
+
+Data type: `Optional[String]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--listen_address6"></a>`listen_address6`
 
 Data type: `Optional[Simplib::IP::V6]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="local_root"></a>`local_root`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-Default value: ``undef``
-
-##### <a name="message_file"></a>`message_file`
+##### <a name="-vsftpd--config--local_root"></a>`local_root`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="nopriv_user"></a>`nopriv_user`
+##### <a name="-vsftpd--config--message_file"></a>`message_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--nopriv_user"></a>`nopriv_user`
 
 Data type: `Optional[String]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pasv_address"></a>`pasv_address`
+##### <a name="-vsftpd--config--pasv_address"></a>`pasv_address`
 
 Data type: `Optional[Simplib::Host]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="validate_cert"></a>`validate_cert`
+##### <a name="-vsftpd--config--validate_cert"></a>`validate_cert`
 
 Data type: `Boolean`
 
@@ -1232,47 +1232,47 @@ Data type: `Boolean`
 
 Default value: `$::vsftpd::validate_cert`
 
-##### <a name="secure_chroot_dir"></a>`secure_chroot_dir`
+##### <a name="-vsftpd--config--secure_chroot_dir"></a>`secure_chroot_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="user_config_dir"></a>`user_config_dir`
+##### <a name="-vsftpd--config--user_config_dir"></a>`user_config_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="user_sub_token"></a>`user_sub_token`
+##### <a name="-vsftpd--config--user_sub_token"></a>`user_sub_token`
 
 Data type: `Optional[String]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="vsftpd_log_file"></a>`vsftpd_log_file`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-
-
-Default value: ``undef``
-
-##### <a name="xferlog_file"></a>`xferlog_file`
+##### <a name="-vsftpd--config--vsftpd_log_file"></a>`vsftpd_log_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="min_uid"></a>`min_uid`
+##### <a name="-vsftpd--config--xferlog_file"></a>`xferlog_file`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--min_uid"></a>`min_uid`
 
 Data type: `String`
 
@@ -1280,7 +1280,7 @@ Data type: `String`
 
 Default value: `'500'`
 
-### <a name="vsftpdconfigfirewall"></a>`vsftpd::config::firewall`
+### <a name="vsftpd--config--firewall"></a>`vsftpd::config::firewall`
 
 This class sets up the appropriate IPtables rules based on the value of
 $fw_rules.
@@ -1290,20 +1290,20 @@ define an array at fw_rules to add additional hosts.
 
 Localhost is always listed as a host that is allowed to access the system.
 
-### <a name="vsftpdconfigtcpwrappers"></a>`vsftpd::config::tcpwrappers`
+### <a name="vsftpd--config--tcpwrappers"></a>`vsftpd::config::tcpwrappers`
 
 Sets up tcpwrappers for vsfptd.
 
-### <a name="vsftpdinstall"></a>`vsftpd::install`
+### <a name="vsftpd--install"></a>`vsftpd::install`
 
 Installs vsftpd and optionally manages the vsftpd group
 and user.
 
-### <a name="vsftpdservice"></a>`vsftpd::service`
+### <a name="vsftpd--service"></a>`vsftpd::service`
 
 Ensures the vsftpd service is running.
 
-### <a name="vsftpdusers"></a>`vsftpd::users`
+### <a name="vsftpd--users"></a>`vsftpd::users`
 
 Manages the vsftpd group and user.
 
