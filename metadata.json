@@ -1,6 +1,6 @@
 {
   "name": "simp-vsftpd",
-  "version": "7.7.0",
+  "version": "7.8.0",
   "author": "SIMP Team",
   "summary": "Manage vsftpd",
   "license": "Apache-2.0",
@@ -70,6 +70,12 @@
     },
     {
       "operatingsystem": "Rocky",
+      "operatingsystemrelease": [
+        "8"
+      ]
+    },
+    {
+      "operatingsystem": "AlmaLinux",
       "operatingsystemrelease": [
         "8"
       ]
