@@ -9,14 +9,14 @@ describe 'An anonymous (plaintext) FTP session' do
         describe "with client '#{client}'" do
           before(:all) do
             # Ensure that our test doesn't match messages from other tests
-            @msg_uuid = @msg_uuid || {}
-            @msg_uuid[__FILE__] = Time.now.to_f.to_s.gsub('.','_') + '_PLAINTEXT'
+            @msg_uuid ||= {}
+            @msg_uuid[__FILE__] = Time.now.to_f.to_s.tr('.', '_') + '_PLAINTEXT'
           end
 
-          let(:client_fqdn){ fact_on( client, 'fqdn' ) }
-          let(:server_fqdn){ fact_on( server, 'fqdn' ) }
+          let(:client_fqdn) { fact_on(client, 'fqdn') }
+          let(:server_fqdn) { fact_on(server, 'fqdn') }
 
-          let(:client_manifest) {
+          let(:client_manifest) do
             <<-EOS
               # Switch firewall control from firewalld over to iptables in EL7
               # Presumably this would already be done on a runnying system.
@@ -41,14 +41,16 @@ describe 'An anonymous (plaintext) FTP session' do
                 owner   => 'root',
               }
             EOS
-          }
+          end
 
-          let(:client_hieradata) {{
-            'simp_options::firewall'     => true,
-            'simp_options::trusted_nets' => ['any']
-          }}
+          let(:client_hieradata) do
+            {
+              'simp_options::firewall' => true,
+           'simp_options::trusted_nets' => ['any']
+            }
+          end
 
-          let(:server_manifest) {
+          let(:server_manifest) do
             <<-EOS
               include 'iptables'
 
@@ -71,50 +73,51 @@ describe 'An anonymous (plaintext) FTP session' do
                 owner   => 'root',
               }
             EOS
-          }
+          end
 
-          let(:server_hieradata) {{
-            'simp_options::firewall'     => true,
-            'simp_options::trusted_nets' => ['any']
-          }}
+          let(:server_hieradata) do
+            {
+              'simp_options::firewall' => true,
+           'simp_options::trusted_nets' => ['any']
+            }
+          end
 
           context 'basic puppet apply' do
-
-            it 'should configure server without errors' do
+            it 'configures server without errors' do
               set_hieradata_on(server, server_hieradata)
-              apply_manifest_on(server, server_manifest, :catch_failures => false)
+              apply_manifest_on(server, server_manifest, catch_failures: false)
               # Our exec 'hack' takes an extra run.
-              apply_manifest_on(server, server_manifest, :catch_failures => true)
+              apply_manifest_on(server, server_manifest, catch_failures: true)
             end
 
-            it 'should configure server idempotently' do
-              apply_manifest_on(server, server_manifest, :catch_changes => true)
+            it 'configures server idempotently' do
+              apply_manifest_on(server, server_manifest, catch_changes: true)
             end
 
-            it 'should configure client without errors' do
+            it 'configures client without errors' do
               set_hieradata_on(client, client_hieradata)
-              apply_manifest_on(client, client_manifest, :catch_failures => true)
+              apply_manifest_on(client, client_manifest, catch_failures: true)
             end
 
-            it 'should configure client idempotently' do
-              apply_manifest_on(client, client_manifest, :catch_changes => true)
+            it 'configures client idempotently' do
+              apply_manifest_on(client, client_manifest, catch_changes: true)
             end
           end
 
           context 'connection' do
-            let(:ftp_cmd){ "lftp ftp://#{server_fqdn}/pub/" }
+            let(:ftp_cmd) { "lftp ftp://#{server_fqdn}/pub/" }
 
-            it 'should successfully log in with active anonymous FTP' do
-              on( client, "#{ftp_cmd} -e 'ls; exit'", :acceptable_exit_codes => [0] )
+            it 'successfullies log in with active anonymous FTP' do
+              on(client, "#{ftp_cmd} -e 'ls; exit'", acceptable_exit_codes: [0])
             end
 
-            it 'should successfully download a file using anonymous FTP' do
-              on( client, "#{ftp_cmd} -e 'get TEST.download.#{@msg_uuid[__FILE__]}; exit'", :acceptable_exit_codes => [0] )
+            it 'successfullies download a file using anonymous FTP' do
+              on(client, "#{ftp_cmd} -e 'get TEST.download.#{@msg_uuid[__FILE__]}; exit'", acceptable_exit_codes: [0])
             end
 
             # anonymous FTP cannot upload by default
-            it 'should fail to upload a file using anonymous FTP' do
-              on( client, %Q(#{ftp_cmd} -e 'put /root/TEST.upload.#{@msg_uuid[__FILE__]}; exit'), :acceptable_exit_codes => [1] )
+            it 'fails to upload a file using anonymous FTP' do
+              on(client, %(#{ftp_cmd} -e 'put /root/TEST.upload.#{@msg_uuid[__FILE__]}; exit'), acceptable_exit_codes: [1])
             end
 
             ### # NOTE: Commented out because FTP client is ridiculous, but keeping in back
@@ -122,16 +125,16 @@ describe 'An anonymous (plaintext) FTP session' do
             ###         to set up.  Remove before committing.
             ###  let(:netrc_template) {
             ###    <<-EOS
-            ###machine SERVER
+            # ##machine SERVER
             ###        login LOGIN
             ###        password PASSWORD
             ###
-            ###macdef connection_test
+            # ##macdef connection_test
             ###        cd /pub
             ###        ls -la
             ###        quit
             ###
-            ###macdef upload_test
+            # ##macdef upload_test
             ###        cd /pub/tests
             ###        bin
             ###        put filename.tar.gz
