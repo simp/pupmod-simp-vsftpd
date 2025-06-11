@@ -15,12 +15,8 @@ describe 'An FTP-over-TLS session' do
 
       hosts_with_role(hosts, 'client').each do |client|
         describe "with client '#{client}'" do
-          before(:all) do
-            # Ensure that our test doesn't match messages from other tests
-            @msg_uuid ||= {}
-            @msg_uuid[__FILE__] = Time.now.to_f.to_s.tr('.', '_') + '_TLS'
-          end
-
+          # Ensure that our test doesn't match messages from other tests
+          let(:msg_uuid_tls) { Time.now.to_f.to_s.tr('.', '_') + '_TLS' }
           let(:client_fqdn) { fact_on(client, 'fqdn') }
           let(:server_fqdn) { fact_on(server, 'fqdn') }
 
@@ -38,7 +34,7 @@ describe 'An FTP-over-TLS session' do
                 trusted_nets => ['any'],
               }
 
-              file{ '/root/TEST.upload.#{@msg_uuid[__FILE__]}':
+              file{ '/root/TEST.upload.#{msg_uuid_tls}':
                 ensure  => 'file',
                 content => '123',
                 mode    => '644',
@@ -80,7 +76,7 @@ describe 'An FTP-over-TLS session' do
                 mode    => '0600'
               }
               ->
-              file{ '/home/foo/TEST.download.#{@msg_uuid[__FILE__]}':
+              file{ '/home/foo/TEST.download.#{msg_uuid_tls}':
                 ensure  => 'file',
                 content => '456',
                 mode    => '644',
@@ -155,11 +151,11 @@ describe 'An FTP-over-TLS session' do
                 on(server, 'setsebool -P ftp_home_dir=1')
               end
 
-              on(client, "#{ftp_cmd} -e 'get TEST.download.#{@msg_uuid[__FILE__]}; exit'", acceptable_exit_codes: [0])
+              on(client, "#{ftp_cmd} -e 'get TEST.download.#{msg_uuid_tls}; exit'", acceptable_exit_codes: [0])
             end
 
             it 'successfullies upload a file using FTP-over-SSL' do
-              on(client, %(#{ftp_cmd} -e 'put /root/TEST.upload.#{@msg_uuid[__FILE__]}; exit'), acceptable_exit_codes: [0])
+              on(client, %(#{ftp_cmd} -e 'put /root/TEST.upload.#{msg_uuid_tls}; exit'), acceptable_exit_codes: [0])
             end
           end
         end

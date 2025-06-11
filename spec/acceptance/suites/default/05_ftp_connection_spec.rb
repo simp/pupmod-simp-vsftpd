@@ -7,12 +7,8 @@ describe 'An anonymous (plaintext) FTP session' do
     describe "with server '#{server}'" do
       hosts_with_role(hosts, 'client').each do |client|
         describe "with client '#{client}'" do
-          before(:all) do
-            # Ensure that our test doesn't match messages from other tests
-            @msg_uuid ||= {}
-            @msg_uuid[__FILE__] = Time.now.to_f.to_s.tr('.', '_') + '_PLAINTEXT'
-          end
-
+          # Ensure that our test doesn't match messages from other tests
+          let(:msg_uuid_plaintext) { Time.now.to_f.to_s.tr('.', '_') + '_PLAINTEXT' }
           let(:client_fqdn) { fact_on(client, 'fqdn') }
           let(:server_fqdn) { fact_on(server, 'fqdn') }
 
@@ -34,7 +30,7 @@ describe 'An anonymous (plaintext) FTP session' do
               # A client to test the FTP connection
               package{ 'lftp': ensure => present }
 
-              file{ '/root/TEST.upload.#{@msg_uuid[__FILE__]}':
+              file{ '/root/TEST.upload.#{msg_uuid_plaintext}':
                 ensure  => 'file',
                 content => '123',
                 mode    => '644',
@@ -66,7 +62,7 @@ describe 'An anonymous (plaintext) FTP session' do
                 pasv_max_port => 10100
               }
               ->
-              file{ '/var/ftp/pub/TEST.download.#{@msg_uuid[__FILE__]}':
+              file{ '/var/ftp/pub/TEST.download.#{msg_uuid_plaintext}':
                 ensure  => 'file',
                 content => '456',
                 mode    => '644',
@@ -112,12 +108,12 @@ describe 'An anonymous (plaintext) FTP session' do
             end
 
             it 'successfullies download a file using anonymous FTP' do
-              on(client, "#{ftp_cmd} -e 'get TEST.download.#{@msg_uuid[__FILE__]}; exit'", acceptable_exit_codes: [0])
+              on(client, "#{ftp_cmd} -e 'get TEST.download.#{msg_uuid_plaintext}; exit'", acceptable_exit_codes: [0])
             end
 
             # anonymous FTP cannot upload by default
             it 'fails to upload a file using anonymous FTP' do
-              on(client, %(#{ftp_cmd} -e 'put /root/TEST.upload.#{@msg_uuid[__FILE__]}; exit'), acceptable_exit_codes: [1])
+              on(client, %(#{ftp_cmd} -e 'put /root/TEST.upload.#{msg_uuid_plaintext}; exit'), acceptable_exit_codes: [1])
             end
 
             ### # NOTE: Commented out because FTP client is ridiculous, but keeping in back
