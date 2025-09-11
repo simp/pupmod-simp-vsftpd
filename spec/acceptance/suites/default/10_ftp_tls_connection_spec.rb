@@ -139,11 +139,11 @@ describe 'An FTP-over-TLS session' do
               create_remote_file(client, "#{homedir}/.lftprc", lftp_config)
             end
 
-            it 'successfullies log in a user using FTP-over-SSL' do
+            it 'successfully logs in a user using FTP-over-SSL' do
               on(client, "#{ftp_cmd} -e 'ls; exit'", acceptable_exit_codes: [0])
             end
 
-            it 'successfullies download a file using FTP-over-SSL' do
+            it 'successfully downloads a file using FTP-over-SSL' do
               # selinux policy by default does not allow ftp in home directories
               bools = Hash[on(server, 'getsebool -a').stdout.split("\n").map { |x| x.split(%r{\s+-->\s+}) }]
 
@@ -154,7 +154,7 @@ describe 'An FTP-over-TLS session' do
               on(client, "#{ftp_cmd} -e 'get TEST.download.#{msg_uuid_tls}; exit'", acceptable_exit_codes: [0])
             end
 
-            it 'successfullies upload a file using FTP-over-SSL' do
+            it 'successfully uploads a file using FTP-over-SSL' do
               on(client, %(#{ftp_cmd} -e 'put /root/TEST.upload.#{msg_uuid_tls}; exit'), acceptable_exit_codes: [0])
             end
           end

@@ -103,11 +103,11 @@ describe 'An anonymous (plaintext) FTP session' do
           context 'connection' do
             let(:ftp_cmd) { "lftp ftp://#{server_fqdn}/pub/" }
 
-            it 'successfullies log in with active anonymous FTP' do
+            it 'successfully logs in with active anonymous FTP' do
               on(client, "#{ftp_cmd} -e 'ls; exit'", acceptable_exit_codes: [0])
             end
 
-            it 'successfullies download a file using anonymous FTP' do
+            it 'successfully downloads a file using anonymous FTP' do
               on(client, "#{ftp_cmd} -e 'get TEST.download.#{msg_uuid_plaintext}; exit'", acceptable_exit_codes: [0])
             end
 
