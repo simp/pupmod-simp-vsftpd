@@ -11,11 +11,18 @@ describe 'vsftpd' do
     context "on #{os}" do
       context 'with default parameters of ::vsftpd::config and ::vsftpd' do
         let(:facts) do
-          os_facts.merge({ ipv6_enabled: false })
+          os_facts.merge(
+            ipv6_enabled: false,
+          )
         end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_file('/etc/vsftpd').with({ ensure: 'directory', group: 'ftp' }) }
+        it do
+          is_expected.to contain_file('/etc/vsftpd').with(
+            ensure: 'directory',
+            group: 'ftp',
+          )
+        end
         it { is_expected.to contain_file('/etc/vsftpd/ftpusers').with(group: 'ftp') }
         it {
           is_expected.to contain_file('/etc/vsftpd/user_list').with_content(<<~EOM,
@@ -89,13 +96,15 @@ describe 'vsftpd' do
 
       context 'with all vsftpd.conf parameters, ipv4 listen and booleans true' do
         let(:facts) do
-          os_facts.merge({ ipv6_enabled: false })
+          os_facts.merge(
+            ipv6_enabled: false,
+          )
         end
         let(:hieradata) { 'vsftpd_for_all_conf_params_true' }
 
         it { is_expected.to compile.with_all_deps }
         it {
-          is_expected.to contain_file('/some/userlist/file').with_content(<<~EOM,
+          is_expected.to contain_file('/some/userlist/file').with_content(<<~EOM)
             # vsftpd userlist
             # If userlist_deny=NO, only allow users in this file
             # If userlist_deny=YES (default), never allow users in this file, and
@@ -106,7 +115,6 @@ describe 'vsftpd' do
             bar
             baz
           EOM
-                                                                         )
         }
 
         it {
@@ -236,13 +244,15 @@ describe 'vsftpd' do
 
       context 'with ssl enabled, ipv6 listen and booleans false' do
         let(:facts) do
-          os_facts.merge({ ipv6_enabled: true })
+          os_facts.merge(
+            ipv6_enabled: true,
+          )
         end
         let(:hieradata) { 'vsftpd_for_conf_params_false' }
 
         it { is_expected.to compile.with_all_deps }
         it {
-          is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(<<~EOM,
+          is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(<<~EOM)
             allow_anon_ssl=NO
             force_anon_data_ssl=NO
             force_anon_logins_ssl=NO
@@ -328,13 +338,14 @@ describe 'vsftpd' do
             pam_service_name=pam_service_name
             userlist_file=/etc/vsftpd/user_list
           EOM
-                                                                             )
         }
       end
 
       context 'with ipv4 and ipv6 listen' do
         let(:facts) do
-          os_facts.merge({ ipv6_enabled: true })
+          os_facts.merge(
+            ipv6_enabled: true,
+          )
         end
         let(:hieradata) { 'vsftpd_with_both_ipv4_and_ipv6_listen' }
 

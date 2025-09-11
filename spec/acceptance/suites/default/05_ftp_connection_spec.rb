@@ -13,7 +13,7 @@ describe 'An anonymous (plaintext) FTP session' do
           let(:server_fqdn) { fact_on(server, 'fqdn') }
 
           let(:client_manifest) do
-            <<-EOS
+            <<~EOS
               # Switch firewall control from firewalld over to iptables in EL7
               # Presumably this would already be done on a runnying system.
               include 'iptables'
@@ -28,9 +28,9 @@ describe 'An anonymous (plaintext) FTP session' do
               }
 
               # A client to test the FTP connection
-              package{ 'lftp': ensure => present }
+              package { 'lftp': ensure => present }
 
-              file{ '/root/TEST.upload.#{msg_uuid_plaintext}':
+              file { '/root/TEST.upload.#{msg_uuid_plaintext}':
                 ensure  => 'file',
                 content => '123',
                 mode    => '644',
@@ -42,12 +42,12 @@ describe 'An anonymous (plaintext) FTP session' do
           let(:client_hieradata) do
             {
               'simp_options::firewall' => true,
-           'simp_options::trusted_nets' => ['any'],
+              'simp_options::trusted_nets' => ['any'],
             }
           end
 
           let(:server_manifest) do
-            <<-EOS
+            <<~EOS
               include 'iptables'
 
               iptables::listen::tcp_stateful { 'ssh':
@@ -62,7 +62,7 @@ describe 'An anonymous (plaintext) FTP session' do
                 pasv_max_port => 10100
               }
               ->
-              file{ '/var/ftp/pub/TEST.download.#{msg_uuid_plaintext}':
+              file { '/var/ftp/pub/TEST.download.#{msg_uuid_plaintext}':
                 ensure  => 'file',
                 content => '456',
                 mode    => '644',
@@ -74,7 +74,7 @@ describe 'An anonymous (plaintext) FTP session' do
           let(:server_hieradata) do
             {
               'simp_options::firewall' => true,
-           'simp_options::trusted_nets' => ['any'],
+              'simp_options::trusted_nets' => ['any'],
             }
           end
 

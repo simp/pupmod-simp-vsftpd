@@ -21,20 +21,20 @@ describe 'An FTP-over-TLS session' do
           let(:server_fqdn) { fact_on(server, 'fqdn') }
 
           let(:client_manifest) do
-            <<-EOS
+            <<~EOS
               include 'iptables'
 
               iptables::listen::tcp_stateful { 'ssh':
-                dports => 22,
+                dports       => 22,
                 trusted_nets => ['any'],
               }
               # ephemeral ports for FTP's "active mode"
               iptables::listen::tcp_stateful { 'ephemeral_ports':
-                dports => '32768:61000',
+                dports       => '32768:61000',
                 trusted_nets => ['any'],
               }
 
-              file{ '/root/TEST.upload.#{msg_uuid_tls}':
+              file { '/root/TEST.upload.#{msg_uuid_tls}':
                 ensure  => 'file',
                 content => '123',
                 mode    => '644',
@@ -42,41 +42,41 @@ describe 'An FTP-over-TLS session' do
               }
 
               # A client to test the FTP connection
-              package{ 'lftp': ensure => present }
+              package { 'lftp': ensure => present }
             EOS
           end
 
           let(:client_hieradata) do
             {
               'simp_options::firewall' => true,
-            'simp_options::trusted_nets' => ['any'],
+              'simp_options::trusted_nets' => ['any'],
             }
           end
 
           let(:server_manifest) do
-            <<-EOS
+            <<~EOS
               # Switch firewall control from firewalld over to iptables in EL7
               # Presumably this would already be done on a running system.
               include 'iptables'
               iptables::listen::tcp_stateful { 'ssh':
-                dports => 22,
+                dports       => 22,
                 trusted_nets => ['0.0.0.0/0'],
               }
 
-              user{ 'foo':
+              user { 'foo':
                 password   => '$1$MpLw9Ljh$wCbneeNVSYQt8L3slbjrs.', # H35zUl5mA4Fiiy3KT
                 home       => '/home/foo',
                 managehome => true,
               }
 
-              file{ '/home/foo':
+              file { '/home/foo':
                 ensure  => 'directory',
                 owner   => 'foo',
                 group   => 'foo',
                 mode    => '0600'
               }
               ->
-              file{ '/home/foo/TEST.download.#{msg_uuid_tls}':
+              file { '/home/foo/TEST.download.#{msg_uuid_tls}':
                 ensure  => 'file',
                 content => '456',
                 mode    => '644',
@@ -96,10 +96,10 @@ describe 'An FTP-over-TLS session' do
           let(:server_hieradata) do
             {
               'simp_options::firewall' => true,
-            'simp_options::pki'          => true,
-            'simp_options::pki::source'  => '/etc/pki/simp-testing/pki',
-            'simp_options::trusted_nets' => ['0.0.0.0/0'],
-            'simp_options::auditd'       => false,
+              'simp_options::pki' => true,
+              'simp_options::pki::source' => '/etc/pki/simp-testing/pki',
+              'simp_options::trusted_nets' => ['0.0.0.0/0'],
+              'simp_options::auditd' => false,
             }
           end
 

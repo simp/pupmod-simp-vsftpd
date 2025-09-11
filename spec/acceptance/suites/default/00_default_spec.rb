@@ -7,7 +7,7 @@ hosts_with_role(hosts, 'server').each do |server|
     let(:manifest) { 'include vsftpd' }
 
     let(:hieradata) do
-      <<-EOS
+      <<~EOS
         simp_options::pki: true
         simp_options::pki::source: '/etc/pki/simp-testing/pki'
       EOS

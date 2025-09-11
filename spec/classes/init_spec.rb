@@ -3,8 +3,10 @@ require 'spec_helper'
 describe 'vsftpd' do
   on_supported_os.each do |os, facts|
     let(:facts) do
-      facts.merge({ fqdn: 'test.host.simp',
-                     haveged__rngd_enabled: false })
+      facts.merge(
+        fqdn: 'test.host.simp',
+        haveged__rngd_enabled: false,
+      )
     end
 
     context "on #{os}" do
@@ -28,11 +30,11 @@ describe 'vsftpd' do
         it { is_expected.to contain_package('vsftpd').that_requires('User[ftp]') }
         it { is_expected.to contain_service('vsftpd').with(ensure: 'running') }
         it { is_expected.to create_file('/etc/ftpusers') }
-        it {
-          is_expected.to create_ftpusers('/etc/ftpusers').with({
-                                                                 min_id: '500',
-                                                               })
-        }
+        it do
+          is_expected.to create_ftpusers('/etc/ftpusers').with(
+            min_id: '500',
+          )
+        end
       end
 
       context 'with haveged enabled' do
@@ -70,7 +72,7 @@ describe 'vsftpd' do
           let(:params) do
             {
               vsftpd_user: 'vsftpd',
-           vsftpd_group: 'vsftpd',
+              vsftpd_group: 'vsftpd',
             }
           end
 
@@ -96,8 +98,8 @@ describe 'vsftpd' do
           let(:params) do
             {
               firewall: true,
-           pasv_min_port: 10_000,
-           pasv_max_port: 10_100,
+              pasv_min_port: 10_000,
+              pasv_max_port: 10_100,
             }
           end
 
@@ -109,7 +111,7 @@ describe 'vsftpd' do
           let(:params) do
             {
               firewall: true,
-           pasv_min_port: 10_000,
+              pasv_min_port: 10_000,
             }
           end
 
@@ -120,7 +122,7 @@ describe 'vsftpd' do
           let(:params) do
             {
               firewall: true,
-           pasv_max_port: 10_100,
+              pasv_max_port: 10_100,
             }
           end
 
@@ -141,11 +143,11 @@ describe 'vsftpd' do
 
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('pki') }
-        it {
+        it do
           is_expected.to contain_pki__copy('vsftpd').with(
-         group: 'ftp',
-       )
-        }
+            group: 'ftp',
+          )
+        end
         it { is_expected.to contain_file('/etc/pki/simp_apps/vsftpd/x509') }
       end
 
@@ -155,11 +157,11 @@ describe 'vsftpd' do
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('vsftpd::config::tcpwrappers') }
         it { is_expected.to contain_class('tcpwrappers') }
-        it {
+        it do
           is_expected.to contain_tcpwrappers__allow('vsftpd').with(
-          pattern: ['192.168.122.0/24'],
-        )
-        }
+            pattern: ['192.168.122.0/24'],
+          )
+        end
       end
     end
   end
