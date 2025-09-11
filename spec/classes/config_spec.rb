@@ -25,7 +25,7 @@ describe 'vsftpd' do
         end
         it { is_expected.to contain_file('/etc/vsftpd/ftpusers').with(group: 'ftp') }
         it {
-          is_expected.to contain_file('/etc/vsftpd/user_list').with_content(<<~EOM,
+          is_expected.to contain_file('/etc/vsftpd/user_list').with_content(<<~EOM)
             # vsftpd userlist
             # If userlist_deny=NO, only allow users in this file
             # If userlist_deny=YES (default), never allow users in this file, and
@@ -47,11 +47,10 @@ describe 'vsftpd' do
             games
             nobody
           EOM
-                                                                           )
         }
 
         it {
-          is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(<<~EOM,
+          is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(<<~EOM)
             force_local_data_ssl=YES
             force_local_logins_ssl=YES
             ssl_sslv2=NO
@@ -90,7 +89,6 @@ describe 'vsftpd' do
             pam_service_name=vsftpd
             userlist_file=/etc/vsftpd/user_list
           EOM
-                                                                             )
         }
       end
 
@@ -118,7 +116,7 @@ describe 'vsftpd' do
         }
 
         it {
-          is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(<<~EOM,
+          is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(<<~EOM)
             allow_anon_ssl=YES
             force_anon_data_ssl=YES
             force_anon_logins_ssl=YES
@@ -238,7 +236,6 @@ describe 'vsftpd' do
             vsftpd_log_file=/some/vsftpd/log/file
             xferlog_file=/some/xfer/log/file
           EOM
-                                                                             )
         }
       end
 

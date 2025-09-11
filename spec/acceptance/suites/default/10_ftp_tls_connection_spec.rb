@@ -48,7 +48,7 @@ describe 'An FTP-over-TLS session' do
 
           let(:client_hieradata) do
             {
-              'simp_options::firewall' => true,
+              'simp_options::firewall'     => true,
               'simp_options::trusted_nets' => ['any'],
             }
           end
@@ -95,11 +95,11 @@ describe 'An FTP-over-TLS session' do
 
           let(:server_hieradata) do
             {
-              'simp_options::firewall' => true,
-              'simp_options::pki' => true,
-              'simp_options::pki::source' => '/etc/pki/simp-testing/pki',
+              'simp_options::firewall'     => true,
+              'simp_options::pki'          => true,
+              'simp_options::pki::source'  => '/etc/pki/simp-testing/pki',
               'simp_options::trusted_nets' => ['0.0.0.0/0'],
-              'simp_options::auditd' => false,
+              'simp_options::auditd'       => false,
             }
           end
 
