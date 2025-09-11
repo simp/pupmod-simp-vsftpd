@@ -49,7 +49,7 @@ describe 'An FTP-over-TLS session' do
           let(:client_hieradata) do
             {
               'simp_options::firewall' => true,
-            'simp_options::trusted_nets' => ['any']
+            'simp_options::trusted_nets' => ['any'],
             }
           end
 

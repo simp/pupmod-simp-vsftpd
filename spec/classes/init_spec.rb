@@ -30,7 +30,7 @@ describe 'vsftpd' do
         it { is_expected.to create_file('/etc/ftpusers') }
         it {
           is_expected.to create_ftpusers('/etc/ftpusers').with({
-                                                                 min_id: '500'
+                                                                 min_id: '500',
                                                                })
         }
       end
@@ -97,7 +97,7 @@ describe 'vsftpd' do
             {
               firewall: true,
            pasv_min_port: 10_000,
-           pasv_max_port: 10_100
+           pasv_max_port: 10_100,
             }
           end
 
@@ -120,7 +120,7 @@ describe 'vsftpd' do
           let(:params) do
             {
               firewall: true,
-           pasv_max_port: 10_100
+           pasv_max_port: 10_100,
             }
           end
 

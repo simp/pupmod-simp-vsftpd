@@ -42,7 +42,7 @@ describe 'An anonymous (plaintext) FTP session' do
           let(:client_hieradata) do
             {
               'simp_options::firewall' => true,
-           'simp_options::trusted_nets' => ['any']
+           'simp_options::trusted_nets' => ['any'],
             }
           end
 
@@ -74,7 +74,7 @@ describe 'An anonymous (plaintext) FTP session' do
           let(:server_hieradata) do
             {
               'simp_options::firewall' => true,
-           'simp_options::trusted_nets' => ['any']
+           'simp_options::trusted_nets' => ['any'],
             }
           end
 
