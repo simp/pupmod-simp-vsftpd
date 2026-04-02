@@ -151,7 +151,6 @@ class vsftpd::config (
     fail('$::vsftpd::listen_ipv4 and $::vsftpd::config::listen_ipv6 are mutually exculsive')
   }
 
-  $_tcp_wrappers       = $vsftpd::tcpwrappers
   $_listen_port        = $vsftpd::listen_port
   $_listen_address     = $vsftpd::listen_address
   $_ftp_data_port      = $vsftpd::ftp_data_port

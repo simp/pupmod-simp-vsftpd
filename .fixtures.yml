@@ -21,6 +21,5 @@ fixtures:
     simplib: https://github.com/simp/pupmod-simp-simplib.git
     stdlib: https://github.com/simp/puppetlabs-stdlib.git
     systemd: https://github.com/simp/puppet-systemd.git
-    tcpwrappers: https://github.com/simp/pupmod-simp-tcpwrappers.git
   symlinks:
     vsftpd: "#{source_dir}"
