@@ -21,11 +21,6 @@
 #     * app_pki_ca
 #     * app_pki_ca_dir
 #
-# @param tcpwrappers
-#   If true, use SIMP's ::tcpwrappers to configure TCP Wrappers to
-#   accommodate <%= metadata.name %> and set 'tcp_wrappers' value in
-#   vsftpd.conf to true.
-#
 # @param haveged
 #   If true, include ::haveged to assist with entropy generation.
 #
@@ -66,7 +61,6 @@ class vsftpd (
   # SIMP options
   Boolean                       $firewall          = simplib::lookup('simp_options::firewall', { 'default_value' => false }),
   Variant[Enum['simp'],Boolean] $pki               = simplib::lookup('simp_options::pki', { 'default_value' => false }),
-  Boolean                       $tcpwrappers       = simplib::lookup('simp_options::tcpwrappers', { 'default_value' => false }),
   Simplib::Netlist              $trusted_nets      = simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1','::1'] }),
   Boolean                       $haveged           = simplib::lookup('simp_options::haveged', { 'default_value' => false }),
   Array[String]                 $cipher_suite      = simplib::lookup('simp_options::openssl::cipher_suite', { 'default_value' => ['DEFAULT','!MEDIUM'] }),
@@ -115,8 +109,5 @@ class vsftpd (
 
   if $firewall {
     include 'vsftpd::config::firewall'
-  }
-  if $tcpwrappers {
-    include 'vsftpd::config::tcpwrappers'
   }
 }

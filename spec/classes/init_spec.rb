@@ -22,7 +22,6 @@ describe 'vsftpd' do
 
         it { is_expected.not_to contain_class('vsftpd::config::firewall') }
         it { is_expected.not_to contain_pki__copy('vsftpd') }
-        it { is_expected.not_to contain_class('vsftpd::config::tcpwrappers') }
 
         it { is_expected.to contain_user('ftp') }
         it { is_expected.to contain_group('ftp') }
@@ -151,18 +150,6 @@ describe 'vsftpd' do
         it { is_expected.to contain_file('/etc/pki/simp_apps/vsftpd/x509') }
       end
 
-      context 'with tcpwrappers enabled' do
-        let(:params) { { tcpwrappers: true } }
-
-        it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_class('vsftpd::config::tcpwrappers') }
-        it { is_expected.to contain_class('tcpwrappers') }
-        it do
-          is_expected.to contain_tcpwrappers__allow('vsftpd').with(
-            pattern: ['192.168.122.0/24'],
-          )
-        end
-      end
     end
   end
 end

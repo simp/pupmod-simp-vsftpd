@@ -172,7 +172,7 @@ setproctitle_enable=<%= bool_translate[@setproctitle_enable] %>
 ssl_enable=<%= bool_translate[@_ssl_enable] %>
 require_ssl_reuse=<%= bool_translate[@_require_ssl_reuse] %>
 syslog_enable=<%= bool_translate[@syslog_enable] %>
-tcp_wrappers=<%= bool_translate[@_tcp_wrappers] %>
+tcp_wrappers=NO
 <% unless @text_userdb_names.nil? then -%>
 text_userdb_names=<%= bool_translate[@text_userdb_names] %>
 <% end -%>
