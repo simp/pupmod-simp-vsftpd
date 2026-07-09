@@ -7,94 +7,94 @@ This file provides guidance to AI agents when working with code in this reposito
 `simp-vsftpd` is a SIMP Puppet module that installs, configures, and runs the
 **vsftpd FTP server** with SIMP hardening. The public `vsftpd` class is a thin
 orchestrator that `include`s four private worker classes in a strict order and
-wires the optional feature integrations (`manifests/init.pp:105-121`):
+wires the optional feature integrations (`manifests/init.pp`):
 
 ```
 vsftpd::users -> vsftpd::install -> vsftpd::config ~> vsftpd::service -> vsftpd
 ```
 
-(`manifests/init.pp:110-114` — note the `~>` notify edge from `config` to
+(`manifests/init.pp` — note the `~>` notify edge from `config` to
 `service` so a config change restarts the daemon.)
 
 - **`vsftpd::users`** (`manifests/users.pp`) — manages the `ftp` group/user
   (defaults gid `50` / uid `14`, home `/var/ftp`, shell `/sbin/nologin`),
-  each gated by `$manage_group` / `$manage_user` (`users.pp:8-26`).
+  each gated by `$manage_group` / `$manage_user` (`users.pp`).
 - **`vsftpd::install`** (`manifests/install.pp`) — `package { 'vsftpd' }` at
-  `$vsftpd::package_ensure` (`install.pp:9-11`).
+  `$vsftpd::package_ensure` (`install.pp`).
 - **`vsftpd::config`** (`manifests/config.pp`) — the bulk of the logic: renders
   `/etc/vsftpd/vsftpd.conf` from `templates/vsftpd.conf.erb`, manages the FTP
   user allow-list file (default `/etc/vsftpd/user_list`) from
   `templates/user_list.erb`, ships static `files/ftpusers` and `files/vsftpd.pam`,
   manages the `/etc/vsftpd` directory (recursive+purge), optionally copies TLS
   certs via `pki::copy`, and manages `/etc/ftpusers` with the `ftpusers` type
-  (`config.pp:175-243`).
+  (`config.pp`).
 - **`vsftpd::service`** (`manifests/service.pp`) — `service { 'vsftpd' }`
-  running+enabled (`service.pp:8-13`).
+  running+enabled (`service.pp`).
 
 Two optional integrations are pulled in from `init.pp` only when their toggle is
-true: `vsftpd::config::firewall` (`init.pp:116-118`) and
-`vsftpd::config::tcpwrappers` (`init.pp:119-121`).
+true: `vsftpd::config::firewall` (`init.pp`) and
+`vsftpd::config::tcpwrappers` (`init.pp`).
 
 ### FTPS / TLS
 
 TLS is central to this module's hardening posture. **Local users are forced to
-SSL for security reasons** (per the class docstring, `init.pp:60-61`):
+SSL for security reasons** (per the class docstring, `init.pp`):
 `$force_local_data_ssl` and `$force_local_logins_ssl` both default to `true`
-(`config.pp:66-67`), and `$ssl_enable` defaults to `true` (`init.pp:86`). Only
+(`config.pp`), and `$ssl_enable` defaults to `true` (`init.pp`). Only
 TLSv1.2 is on by default — `$ssl_tlsv1_2 = true`, while SSLv2/SSLv3/TLSv1/TLSv1.1
-are all `false` (`config.pp:88-92`). The OpenSSL cipher suite comes from
+are all `false` (`config.pp`). The OpenSSL cipher suite comes from
 `simp_options::openssl::cipher_suite` (default `['DEFAULT','!MEDIUM']`,
-`init.pp:72`) and is joined with `:` in the template
-(`templates/vsftpd.conf.erb:27`). Cert paths default under
-`/etc/pki/simp_apps/vsftpd/x509` keyed on the node FQDN (`config.pp:136-139`).
+`init.pp`) and is joined with `:` in the template
+(`templates/vsftpd.conf.erb`). Cert paths default under
+`/etc/pki/simp_apps/vsftpd/x509` keyed on the node FQDN (`config.pp`).
 
 ## Gotchas / non-obvious details
 
 - **The four worker classes are private; consumers use `include 'vsftpd'`.**
   `vsftpd::install`, `vsftpd::config`, `vsftpd::service`,
   `vsftpd::config::tcpwrappers`, and `vsftpd::config::firewall` each call
-  `assert_private()` (`install.pp:7`, `config.pp:148`, `service.pp:6`,
-  `config/tcpwrappers.pp:6`, `config/firewall.pp:12`), as does `vsftpd::users`
-  (`users.pp:6`) — 6 `assert_private()` sites in all. Only `vsftpd` (init.pp) is
+  `assert_private()` (`install.pp`, `config.pp`, `service.pp`,
+  `config/tcpwrappers.pp`, `config/firewall.pp`), as does `vsftpd::users`
+  (`users.pp`) — 6 `assert_private()` sites in all. Only `vsftpd` (init.pp) is
   public.
 - **Each optional integration is double-gated.** Every optional dependency is
   declared optional in `metadata.json` (`simp.optional_dependencies`) and is
   asserted with `simplib::assert_optional_dependency` *only when its feature
   toggle is on* — never hard-`include`d unconditionally. The four assert sites:
-  - `simp/haveged` — `init.pp:100`, inside `if $haveged and $ssl_enable`
-    (`init.pp:99`).
-  - `simp/iptables` — `config/firewall.pp:16`, inside `if $vsftpd::listen_ipv4`
-    (`config/firewall.pp:15`); the firewall class itself is only included when
-    `$firewall` is true (`init.pp:116`).
-  - `simp/tcpwrappers` — `config/tcpwrappers.pp:8`; the class is only included
-    when `$tcpwrappers` is true (`init.pp:119`).
-  - `simp/pki` — `config.pp:176`, inside `if $::vsftpd::pki` (`config.pp:175`).
+  - `simp/haveged` — `init.pp`, inside `if $haveged and $ssl_enable`
+    (`init.pp`).
+  - `simp/iptables` — `config/firewall.pp`, inside `if $vsftpd::listen_ipv4`
+    (`config/firewall.pp`); the firewall class itself is only included when
+    `$firewall` is true (`init.pp`).
+  - `simp/tcpwrappers` — `config/tcpwrappers.pp`; the class is only included
+    when `$tcpwrappers` is true (`init.pp`).
+  - `simp/pki` — `config.pp`, inside `if $::vsftpd::pki` (`config.pp`).
 - **`$pki` is tri-state, not boolean.** `Variant[Enum['simp'],Boolean]`
-  (`init.pp:68`): `'simp'` includes SIMP's pki module and copies certs via
+  (`init.pp`): `'simp'` includes SIMP's pki module and copies certs via
   `pki::copy`; `true` copies certs via `pki::copy` *without* including pki;
   `false` does neither and you must set `app_pki_*` yourself
-  (`config.pp:4-15`).
+  (`config.pp`).
 - **`haveged` entropy is only pulled in when SSL is also enabled** — the guard is
-  `if $haveged and $ssl_enable` (`init.pp:99`), because the entropy is for TLS.
+  `if $haveged and $ssl_enable` (`init.pp`), because the entropy is for TLS.
 - **`listen_ipv4` and `config::listen_ipv6` are mutually exclusive** — setting
-  both `fail()`s at compile time (`config.pp:150-152`; note the `exculsive`
+  both `fail()`s at compile time (`config.pp`; note the `exculsive`
   typo in the message, left as-is).
 - **`/etc/vsftpd` is managed `recurse => true, purge => true`**
-  (`config.pp:186-195`) — unmanaged files placed there will be removed on the
+  (`config.pp`) — unmanaged files placed there will be removed on the
   next run.
 - **Passive-mode firewall rules need both min and max ports.** In the firewall
   class, if only one of `pasv_min_port` / `pasv_max_port` is set it `fail()`s
-  (`config/firewall.pp:37-39`); when both are set it opens the range and sets
-  `net.netfilter.nf_conntrack_helper=1` via sysctl (`config/firewall.pp:41-44`).
-  The firewall class is IPv4-only (`# TODO support ipv6`, `config/firewall.pp:14`).
+  (`config/firewall.pp`); when both are set it opens the range and sets
+  `net.netfilter.nf_conntrack_helper=1` via sysctl (`config/firewall.pp`).
+  The firewall class is IPv4-only (`# TODO support ipv6`, `config/firewall.pp`).
 - **The user allow-list semantics are inverted by default.** `$userlist_deny`
-  defaults to `true` (`init.pp:88`), so the users listed in `user_list.erb`
-  (the `$user_list` array, default `root bin daemon ... nobody`, `init.pp:90`)
+  defaults to `true` (`init.pp`), so the users listed in `user_list.erb`
+  (the `$user_list` array, default `root bin daemon ... nobody`, `init.pp`)
   are the users *denied* access — see the header comment in
-  `templates/user_list.erb:1-6`.
+  `templates/user_list.erb`.
 - **`/etc/ftpusers` is managed only when `$min_uid` is non-empty**
-  (`config.pp:231`, default `'500'`); the `ftpusers` type prunes users below
-  `min_id` from that file (`config.pp:239-242`).
+  (`config.pp`, default `'500'`); the `ftpusers` type prunes users below
+  `min_id` from that file (`config.pp`).
 - **`simp/simp_options` is NOT a declared dependency** in `metadata.json`, yet
   the manifests consume the `simp_options::*` seam via `simplib::lookup`
   (the lookup function is provided by `simp/simplib`).
@@ -105,16 +105,16 @@ The module routes all SIMP feature toggles through `simplib::lookup(...,
 { 'default_value' => ... })` with an explicit default rather than assuming
 `simp_options` is included:
 
-| Line | Key | `default_value` |
+| File | Key | `default_value` |
 |------|-----|-----------------|
-| `init.pp:67` | `simp_options::firewall` | `false` |
-| `init.pp:68` | `simp_options::pki` | `false` |
-| `init.pp:69` | `simp_options::tcpwrappers` | `false` |
-| `init.pp:70` | `simp_options::trusted_nets` | `['127.0.0.1','::1']` |
-| `init.pp:71` | `simp_options::haveged` | `false` |
-| `init.pp:72` | `simp_options::openssl::cipher_suite` | `['DEFAULT','!MEDIUM']` |
-| `init.pp:73` | `simp_options::package_ensure` | `'installed'` |
-| `config.pp:135` | `simp_options::pki::source` | `'/etc/pki/simp/x509'` |
+| `init.pp` | `simp_options::firewall` | `false` |
+| `init.pp` | `simp_options::pki` | `false` |
+| `init.pp` | `simp_options::tcpwrappers` | `false` |
+| `init.pp` | `simp_options::trusted_nets` | `['127.0.0.1','::1']` |
+| `init.pp` | `simp_options::haveged` | `false` |
+| `init.pp` | `simp_options::openssl::cipher_suite` | `['DEFAULT','!MEDIUM']` |
+| `init.pp` | `simp_options::package_ensure` | `'installed'` |
+| `config.pp` | `simp_options::pki::source` | `'/etc/pki/simp/x509'` |
 
 Keep adding new SIMP toggles this way — with an explicit default — rather than
 assuming `simp_options` is in the catalog.
@@ -126,7 +126,7 @@ Module dependencies (from `metadata.json`):
 - `simp/simplib` `>= 4.9.0 < 6.0.0` — provides `simplib::lookup`,
   `simplib::assert_optional_dependency`, the `Simplib::*` data types
   (`Netlist`, `Port`, `IP::V4`, `IP::V6`, `Host`, `Umask`) used across the
-  manifests, and the `ftpusers` type used in `config.pp:239`.
+  manifests, and the `ftpusers` type used in `config.pp`.
 - `puppetlabs/stdlib` `>= 8.0.0 < 10.0.0` — provides the `Stdlib::Absolutepath`
   type and `empty()`.
 
@@ -142,8 +142,8 @@ used only when the corresponding feature toggle is on (see Gotchas):
 Runtime requirement (from `metadata.json` `requirements`): `openvox
 >= 8.0.0 < 9.0.0`. This module has migrated its runtime baseline to **OpenVox**.
 The `Gemfile` reflects the transition: its default version range is `['>= 8',
-'< 9']` (`Gemfile:23`), and it installs **both** the `openvox` and `puppet`
-gems via ``['openvox', 'puppet'].each do |gem_name|`` (`Gemfile:30`) — a
+'< 9']` (`Gemfile`), and it installs **both** the `openvox` and `puppet`
+gems via ``['openvox', 'puppet'].each do |gem_name|`` (`Gemfile`) — a
 transitional shim kept until the `puppet` dependency is dropped from other gems.
 
 Supported OS matrix (from `metadata.json`): CentOS 9/10; RedHat 8/9/10;
@@ -169,7 +169,7 @@ OracleLinux 8/9/10; Rocky 8/9/10; AlmaLinux 8/9/10.
 - `templates/user_list.erb` — the FTP user allow/deny list (iterates
   `@_user_list`).
 - `files/ftpusers`, `files/vsftpd.pam` — static payloads served via
-  `puppet:///modules/vsftpd/...` (`config.pp:201,219`).
+  `puppet:///modules/vsftpd/...` (`config.pp`).
 - `metadata.json` — deps, optional deps, OS matrix, OpenVox requirement.
 - `spec/classes/init_spec.rb`, `spec/classes/config_spec.rb` — rspec-puppet
   unit tests.
@@ -196,9 +196,9 @@ lint/unit jobs plus a live acceptance job:
 - `releng-checks` (version/tag/changelog checks + `pdk build --force`)
 - `spec-tests` (`bundle exec rake parallel_spec`, Puppet 8.x / Ruby 3.2)
 - **`acceptance`** — an **active** beaker job. Matrix nodes `almalinux9` and
-  `almalinux10` (`pr_tests.yml:122-123`); the final step runs
+  `almalinux10` (`pr_tests.yml`); the final step runs
   `bundle exec rake beaker:suites[default,<node>]` under
-  `BEAKER_HYPERVISOR: 'vagrant_libvirt'` (`pr_tests.yml:143`), after installing
+  `BEAKER_HYPERVISOR: 'vagrant_libvirt'` (`pr_tests.yml`), after installing
   vagrant-libvirt + qemu on the runner.
 
 ## Common commands
@@ -226,10 +226,10 @@ puppet strings generate --format markdown --out REFERENCE.md
 bundle exec rake beaker:suites[default]
 ```
 
-Relevant gem pins (from `Gemfile`): `rubocop ~> 1.88.0` (`Gemfile:16`),
-`puppetlabs_spec_helper ~> 8.0.0` (`Gemfile:33`), `simp-rake-helpers ~> 5.24.0`
-(`Gemfile:39`), `simp-beaker-helpers ~> 2.0.0` (`Gemfile:56`). The default
-Puppet/OpenVox test range is `['>= 8', '< 9']` (`Gemfile:23`).
+Relevant gem pins (from `Gemfile`): `rubocop ~> 1.88.0` (`Gemfile`),
+`puppetlabs_spec_helper ~> 8.0.0` (`Gemfile`), `simp-rake-helpers ~> 5.24.0`
+(`Gemfile`), `simp-beaker-helpers ~> 2.0.0` (`Gemfile`). The default
+Puppet/OpenVox test range is `['>= 8', '< 9']` (`Gemfile`).
 
 ## Conventions
 
