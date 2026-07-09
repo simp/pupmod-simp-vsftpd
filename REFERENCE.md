@@ -36,7 +36,7 @@ The following parameters are available in the `vsftpd` class:
 * [`haveged`](#-vsftpd--haveged)
 * [`cipher_suite`](#-vsftpd--cipher_suite)
 * [`package_ensure`](#-vsftpd--package_ensure)
-* [`vsfptd_user`](#-vsftpd--vsfptd_user)
+* [`vsftpd_user`](#-vsftpd--vsftpd_user)
 * [`vsftpd_group`](#-vsftpd--vsftpd_group)
 * [`manage_user`](#-vsftpd--manage_user)
 * [`vsftpd_uid`](#-vsftpd--vsftpd_uid)
@@ -57,7 +57,6 @@ The following parameters are available in the `vsftpd` class:
 * [`user_list`](#-vsftpd--user_list)
 * [`pam_service_name`](#-vsftpd--pam_service_name)
 * [`validate_cert`](#-vsftpd--validate_cert)
-* [`vsftpd_user`](#-vsftpd--vsftpd_user)
 
 ##### <a name="-vsftpd--trusted_nets"></a>`trusted_nets`
 
@@ -131,9 +130,13 @@ The ensure status of the vsftpd package
 
 Default value: `simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' })`
 
-##### <a name="-vsftpd--vsfptd_user"></a>`vsfptd_user`
+##### <a name="-vsftpd--vsftpd_user"></a>`vsftpd_user`
+
+Data type: `String`
 
 Set the user for the vsftpd service.
+
+Default value: `'ftp'`
 
 ##### <a name="-vsftpd--vsftpd_group"></a>`vsftpd_group`
 
@@ -179,7 +182,8 @@ Default value: `true`
 
 Data type: `Simplib::Port`
 
-
+The port used for the data connection when `port_enable` is in effect
+(active mode FTP). Corresponds to ftp_data_port in vsftpd.conf.
 
 Default value: `20`
 
@@ -187,7 +191,8 @@ Default value: `20`
 
 Data type: `Optional[Simplib::IP::V4]`
 
-
+IPv4 address to bind the listening socket to, if the machine has
+more than one IPv4 address. Corresponds to listen_address in vsftpd.conf.
 
 Default value: `undef`
 
@@ -195,7 +200,8 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+If true, put the server into standalone mode listening on an IPv4
+socket. Corresponds to the `listen` setting in vsftpd.conf.
 
 Default value: `true`
 
@@ -203,7 +209,8 @@ Default value: `true`
 
 Data type: `Simplib::Port`
 
-
+The port on which the FTP server listens. Corresponds to listen_port
+in vsftpd.conf.
 
 Default value: `21`
 
@@ -211,7 +218,8 @@ Default value: `21`
 
 Data type: `Boolean`
 
-
+If true, local users are enabled and permitted to log in. Corresponds
+to local_enable in vsftpd.conf.
 
 Default value: `true`
 
@@ -219,7 +227,8 @@ Default value: `true`
 
 Data type: `Boolean`
 
-
+If true, PASV (passive mode) data connections are permitted.
+Corresponds to pasv_enable in vsftpd.conf.
 
 Default value: `true`
 
@@ -227,7 +236,8 @@ Default value: `true`
 
 Data type: `Optional[Simplib::Port]`
 
-
+The maximum port number to allocate for PASV style data connections.
+Corresponds to pasv_max_port in vsftpd.conf.
 
 Default value: `undef`
 
@@ -235,7 +245,8 @@ Default value: `undef`
 
 Data type: `Optional[Simplib::Port]`
 
-
+The minimum port number to allocate for PASV style data connections.
+Corresponds to pasv_min_port in vsftpd.conf.
 
 Default value: `undef`
 
@@ -243,7 +254,9 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+If true, SSL/TLS support (and the associated SSL configuration in
+vsftpd::config) is enabled for the server. Corresponds to ssl_enable
+in vsftpd.conf.
 
 Default value: `true`
 
@@ -251,7 +264,9 @@ Default value: `true`
 
 Data type: `Boolean`
 
-
+If true, all SSL data connections are required to exhibit SSL session
+reuse, proving that they know the same master secret as the control
+channel. Corresponds to require_ssl_reuse in vsftpd.conf.
 
 Default value: `true`
 
@@ -259,7 +274,9 @@ Default value: `true`
 
 Data type: `Boolean`
 
-
+If true, the users named in `user_list` are denied login; if false,
+only users in that list are permitted to log in. Corresponds to
+userlist_deny in vsftpd.conf.
 
 Default value: `true`
 
@@ -267,7 +284,9 @@ Default value: `true`
 
 Data type: `Boolean`
 
-
+If true, vsftpd will load the list of usernames from `user_list` and
+deny (or, with userlist_deny=false, allow) logins before the user is
+asked for a password. Corresponds to userlist_enable in vsftpd.conf.
 
 Default value: `true`
 
@@ -275,7 +294,10 @@ Default value: `true`
 
 Data type: `Array[String]`
 
-
+Array of usernames evaluated against `userlist_enable`/`userlist_deny`
+and, when local_enable is set, also denied straight away at the
+old-style `ftpusers` check. Written out to the file referenced by
+vsftpd::config::userlist_file.
 
 Default value: `['root','bin','daemon','adm','lp','sync','shutdown','halt','mail','news','uucp','operator','games','nobody']`
 
@@ -283,7 +305,8 @@ Default value: `['root','bin','daemon','adm','lp','sync','shutdown','halt','mail
 
 Data type: `String`
 
-
+The name of the PAM service that vsftpd will use for authentication.
+Corresponds to pam_service_name in vsftpd.conf.
 
 Default value: `'vsftpd'`
 
@@ -291,17 +314,11 @@ Default value: `'vsftpd'`
 
 Data type: `Boolean`
 
-
+If true, validate the client SSL certificate. Passed through to
+vsftpd::config's validate_cert parameter, which is written to
+validate_cert in vsftpd.conf.
 
 Default value: `true`
-
-##### <a name="-vsftpd--vsftpd_user"></a>`vsftpd_user`
-
-Data type: `String`
-
-
-
-Default value: `'ftp'`
 
 ### <a name="vsftpd--config"></a>`vsftpd::config`
 
@@ -314,7 +331,6 @@ This class provides a method for setting up the main body of
 
 The following parameters are available in the `vsftpd::config` class:
 
-* [`pki`](#-vsftpd--config--pki)
 * [`app_pki_external_source`](#-vsftpd--config--app_pki_external_source)
 * [`app_pki_dir`](#-vsftpd--config--app_pki_dir)
 * [`app_pki_key`](#-vsftpd--config--app_pki_key)
@@ -338,6 +354,7 @@ The following parameters are available in the `vsftpd::config` class:
 * [`connect_from_port_20`](#-vsftpd--config--connect_from_port_20)
 * [`deny_email_enable`](#-vsftpd--config--deny_email_enable)
 * [`dirlist_enable`](#-vsftpd--config--dirlist_enable)
+* [`userlist_file`](#-vsftpd--config--userlist_file)
 * [`dirmessage_enable`](#-vsftpd--config--dirmessage_enable)
 * [`download_enable`](#-vsftpd--config--download_enable)
 * [`dual_log_enable`](#-vsftpd--config--dual_log_enable)
@@ -376,7 +393,6 @@ The following parameters are available in the `vsftpd::config` class:
 * [`tilde_user_enable`](#-vsftpd--config--tilde_user_enable)
 * [`use_localtime`](#-vsftpd--config--use_localtime)
 * [`use_sendfile`](#-vsftpd--config--use_sendfile)
-* [`userlist_file`](#-vsftpd--config--userlist_file)
 * [`userlist_log`](#-vsftpd--config--userlist_log)
 * [`virtual_use_local_privs`](#-vsftpd--config--virtual_use_local_privs)
 * [`write_enable`](#-vsftpd--config--write_enable)
@@ -420,20 +436,6 @@ The following parameters are available in the `vsftpd::config` class:
 * [`vsftpd_log_file`](#-vsftpd--config--vsftpd_log_file)
 * [`xferlog_file`](#-vsftpd--config--xferlog_file)
 * [`min_uid`](#-vsftpd--config--min_uid)
-
-##### <a name="-vsftpd--config--pki"></a>`pki`
-
-* If 'simp', include SIMP's pki module and use pki::copy to manage
-  application certs in /etc/pki/simp_apps/vsftpd/x509
-* If true, do *not* include SIMP's pki module, but still use pki::copy
-  to manage certs in /etc/pki/simp_apps/vsftpd/x509
-* If false, do not include SIMP's pki module and do not use pki::copy
-  to manage certs.  You will need to appropriately assign a subset of:
-  * app_pki_dir
-  * app_pki_key
-  * app_pki_cert
-  * app_pki_ca
-  * app_pki_ca_dir
 
 ##### <a name="-vsftpd--config--app_pki_external_source"></a>`app_pki_external_source`
 
@@ -484,7 +486,8 @@ Default value: `"${app_pki_dir}/cacerts/cacerts.pem"`
 
 Data type: `Optional[Boolean]`
 
-
+If true, anonymous users are permitted to use SSL/TLS data and login
+connections. Corresponds to allow_anon_ssl in vsftpd.conf.
 
 Default value: `undef`
 
@@ -492,7 +495,9 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
+If true (and `write_enable` is also true), anonymous users are
+permitted to create new directories. Corresponds to
+anon_mkdir_write_enable in vsftpd.conf.
 
 Default value: `undef`
 
@@ -500,7 +505,10 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
+If true (and `write_enable` is also true), anonymous users are
+permitted to perform write operations other than upload and mkdir
+(e.g. delete, rename). Corresponds to anon_other_write_enable in
+vsftpd.conf.
 
 Default value: `undef`
 
@@ -508,7 +516,9 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+If true (and `write_enable` is also true), anonymous users are
+permitted to upload files. Corresponds to anon_upload_enable in
+vsftpd.conf.
 
 Default value: `true`
 
@@ -516,7 +526,9 @@ Default value: `true`
 
 Data type: `Optional[Boolean]`
 
-
+If true, anonymous users may only download files which are
+world-readable. Corresponds to anon_world_readable_only in
+vsftpd.conf.
 
 Default value: `undef`
 
@@ -524,7 +536,8 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+If true, anonymous login is permitted. Corresponds to
+anonymous_enable in vsftpd.conf.
 
 Default value: `true`
 
@@ -532,7 +545,9 @@ Default value: `true`
 
 Data type: `Optional[Boolean]`
 
-
+If true, ASCII mangling is performed on file downloads (when
+requested by the client). Corresponds to ascii_download_enable in
+vsftpd.conf.
 
 Default value: `undef`
 
@@ -540,7 +555,8 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
+If true, ASCII mangling is performed on file uploads (when requested
+by the client). Corresponds to ascii_upload_enable in vsftpd.conf.
 
 Default value: `undef`
 
@@ -548,7 +564,9 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
+If true, support for the non-standard "async ABOR" interrupt
+mechanism is enabled. Corresponds to async_abor_enable in
+vsftpd.conf.
 
 Default value: `undef`
 
@@ -556,7 +574,9 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
+If true, vsftpd forks and backgrounds itself at startup, rather than
+`run_as_launching_user`ing in the foreground. Corresponds to
+background in vsftpd.conf.
 
 Default value: `undef`
 
@@ -564,7 +584,9 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
+If false, vsftpd does not check that local users' shells, as listed
+in /etc/passwd, are listed in /etc/shells. Corresponds to
+check_shell in vsftpd.conf.
 
 Default value: `undef`
 
@@ -572,7 +594,8 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
+If true, the FTP SITE CHMOD command is supported for local users.
+Corresponds to chmod_enable in vsftpd.conf.
 
 Default value: `undef`
 
@@ -580,7 +603,9 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
+If true, files uploaded by anonymous users are owned by the
+username given in `chown_username`. Corresponds to chown_uploads in
+vsftpd.conf.
 
 Default value: `undef`
 
@@ -588,7 +613,11 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
+If true, the list of local users in the file specified by
+`chroot_list_file` is used, in conjunction with
+`chroot_local_user`, to control which users are chrooted into
+their home directory. Corresponds to chroot_list_enable in
+vsftpd.conf.
 
 Default value: `undef`
 
@@ -596,7 +625,9 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
+If true, local users are placed in a chroot jail in their home
+directory after login. Corresponds to chroot_local_user in
+vsftpd.conf.
 
 Default value: `undef`
 
@@ -604,7 +635,9 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+If true, PORT (active mode) data connections are sourced from port
+20 (ftp-data) on the server. Corresponds to connect_from_port_20 in
+vsftpd.conf.
 
 Default value: `true`
 
@@ -612,7 +645,9 @@ Default value: `true`
 
 Data type: `Optional[Boolean]`
 
-
+If true, anonymous logins using a password listed in the file
+specified by `banned_email_file` are denied. Corresponds to
+deny_email_enable in vsftpd.conf.
 
 Default value: `undef`
 
@@ -620,311 +655,8 @@ Default value: `undef`
 
 Data type: `Optional[Boolean]`
 
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--dirmessage_enable"></a>`dirmessage_enable`
-
-Data type: `Boolean`
-
-
-
-Default value: `true`
-
-##### <a name="-vsftpd--config--download_enable"></a>`download_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--dual_log_enable"></a>`dual_log_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--force_dot_files"></a>`force_dot_files`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--force_anon_data_ssl"></a>`force_anon_data_ssl`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--force_anon_logins_ssl"></a>`force_anon_logins_ssl`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--force_local_data_ssl"></a>`force_local_data_ssl`
-
-Data type: `Boolean`
-
-
-
-Default value: `true`
-
-##### <a name="-vsftpd--config--force_local_logins_ssl"></a>`force_local_logins_ssl`
-
-Data type: `Boolean`
-
-
-
-Default value: `true`
-
-##### <a name="-vsftpd--config--guest_enable"></a>`guest_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--hide_ids"></a>`hide_ids`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--listen_ipv6"></a>`listen_ipv6`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--lock_upload_files"></a>`lock_upload_files`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--log_ftp_protocol"></a>`log_ftp_protocol`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--ls_recurse_enable"></a>`ls_recurse_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--mdtm_write"></a>`mdtm_write`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--no_anon_password"></a>`no_anon_password`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--no_log_lock"></a>`no_log_lock`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--one_process_model"></a>`one_process_model`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--passwd_chroot_enable"></a>`passwd_chroot_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--pasv_addr_resolve"></a>`pasv_addr_resolve`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--pasv_promiscuous"></a>`pasv_promiscuous`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--port_enable"></a>`port_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--port_promiscuous"></a>`port_promiscuous`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--reverse_lookup_enable"></a>`reverse_lookup_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--run_as_launching_user"></a>`run_as_launching_user`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--secure_email_list_enable"></a>`secure_email_list_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--session_support"></a>`session_support`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--setproctitle_enable"></a>`setproctitle_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--ssl_sslv2"></a>`ssl_sslv2`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
-##### <a name="-vsftpd--config--ssl_sslv3"></a>`ssl_sslv3`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
-##### <a name="-vsftpd--config--ssl_tlsv1"></a>`ssl_tlsv1`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
-##### <a name="-vsftpd--config--ssl_tlsv1_1"></a>`ssl_tlsv1_1`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
-##### <a name="-vsftpd--config--ssl_tlsv1_2"></a>`ssl_tlsv1_2`
-
-Data type: `Boolean`
-
-
-
-Default value: `true`
-
-##### <a name="-vsftpd--config--syslog_enable"></a>`syslog_enable`
-
-Data type: `Boolean`
-
-
-
-Default value: `true`
-
-##### <a name="-vsftpd--config--text_userdb_names"></a>`text_userdb_names`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--tilde_user_enable"></a>`tilde_user_enable`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--use_localtime"></a>`use_localtime`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vsftpd--config--use_sendfile"></a>`use_sendfile`
-
-Data type: `Optional[Boolean]`
-
-
+If false, all directory listing is disabled, for both anonymous and
+local users alike. Corresponds to dirlist_enable in vsftpd.conf.
 
 Default value: `undef`
 
@@ -932,15 +664,395 @@ Default value: `undef`
 
 Data type: `Stdlib::Absolutepath`
 
-
+The path to the file to which vsftpd::user_list is rendered, and
+which vsftpd consults per `userlist_enable`/`userlist_deny`.
+Corresponds to userlist_file in vsftpd.conf.
 
 Default value: `'/etc/vsftpd/user_list'`
+
+##### <a name="-vsftpd--config--dirmessage_enable"></a>`dirmessage_enable`
+
+Data type: `Boolean`
+
+If true, vsftpd displays the content of a per-directory message file
+(given by `message_file`) when a directory is first entered.
+Corresponds to dirmessage_enable in vsftpd.conf.
+
+Default value: `true`
+
+##### <a name="-vsftpd--config--download_enable"></a>`download_enable`
+
+Data type: `Optional[Boolean]`
+
+If false, all download requests are denied, for both anonymous and
+local users alike. Corresponds to download_enable in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--dual_log_enable"></a>`dual_log_enable`
+
+Data type: `Optional[Boolean]`
+
+If true (and `xferlog_enable` is also true), vsftpd logs to both the
+vsftpd-format log file (`vsftpd_log_file`) and the wu-ftpd-format
+log file (`xferlog_file`). Corresponds to dual_log_enable in
+vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--force_dot_files"></a>`force_dot_files`
+
+Data type: `Optional[Boolean]`
+
+If true, vsftpd will list files starting with a leading dot, other
+than the traditional "." and "..". Corresponds to force_dot_files
+in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--force_anon_data_ssl"></a>`force_anon_data_ssl`
+
+Data type: `Optional[Boolean]`
+
+If true, anonymous users must use a secure SSL/TLS connection for
+data transfer. Corresponds to force_anon_data_ssl in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--force_anon_logins_ssl"></a>`force_anon_logins_ssl`
+
+Data type: `Optional[Boolean]`
+
+If true, anonymous users must use a secure SSL/TLS connection to
+send the password. Corresponds to force_anon_logins_ssl in
+vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--force_local_data_ssl"></a>`force_local_data_ssl`
+
+Data type: `Boolean`
+
+If true, local (non-anonymous) users must use a secure SSL/TLS
+connection for data transfer. Corresponds to force_local_data_ssl
+in vsftpd.conf.
+
+Default value: `true`
+
+##### <a name="-vsftpd--config--force_local_logins_ssl"></a>`force_local_logins_ssl`
+
+Data type: `Boolean`
+
+If true, local (non-anonymous) users must use a secure SSL/TLS
+connection to send the password. Corresponds to
+force_local_logins_ssl in vsftpd.conf.
+
+Default value: `true`
+
+##### <a name="-vsftpd--config--guest_enable"></a>`guest_enable`
+
+Data type: `Optional[Boolean]`
+
+If true, local users other than the anonymous user are treated as
+"guest" logins and mapped to the user specified by `nopriv_user` (or
+`guest_username`). Corresponds to guest_enable in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--hide_ids"></a>`hide_ids`
+
+Data type: `Optional[Boolean]`
+
+If true, all user and group information in directory listings is
+displayed as "ftp". Corresponds to hide_ids in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--listen_ipv6"></a>`listen_ipv6`
+
+Data type: `Optional[Boolean]`
+
+If true, put the server into standalone mode listening on an IPv6
+socket, when IPv6 is supported by the underlying facts. Corresponds
+to listen_ipv6 in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--lock_upload_files"></a>`lock_upload_files`
+
+Data type: `Optional[Boolean]`
+
+If true, vsftpd uses advisory file locking on uploaded files during
+any period of the upload. Corresponds to lock_upload_files in
+vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--log_ftp_protocol"></a>`log_ftp_protocol`
+
+Data type: `Optional[Boolean]`
+
+If true (and `xferlog_std_format` is false), vsftpd will log all FTP
+requests and responses, in addition to transfers. Corresponds to
+log_ftp_protocol in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--ls_recurse_enable"></a>`ls_recurse_enable`
+
+Data type: `Optional[Boolean]`
+
+If true, support for the "ls -R" recursive listing option is
+enabled. Corresponds to ls_recurse_enable in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--mdtm_write"></a>`mdtm_write`
+
+Data type: `Optional[Boolean]`
+
+If true, support for the non-standard "site utime" command is
+enabled, needed for the MDTM FTP command to be used for changing
+file modification times. Corresponds to mdtm_write in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--no_anon_password"></a>`no_anon_password`
+
+Data type: `Optional[Boolean]`
+
+If true, the anonymous user is not asked for a password when
+logging in. Corresponds to no_anon_password in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--no_log_lock"></a>`no_log_lock`
+
+Data type: `Optional[Boolean]`
+
+If true, vsftpd does not lock the log file that is used for the
+standard vsftpd log format (`vsftpd_log_file`). Corresponds to
+no_log_lock in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--one_process_model"></a>`one_process_model`
+
+Data type: `Optional[Boolean]`
+
+If true (and Linux only), vsftpd uses a security model which uses
+one process per connection with no inter-process communication,
+instead of the default two-process model. Corresponds to
+one_process_model in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--passwd_chroot_enable"></a>`passwd_chroot_enable`
+
+Data type: `Optional[Boolean]`
+
+If true (and `chroot_local_user` is also true), vsftpd will look for
+the user's chroot root directory in /etc/passwd, using
+`user_sub_token` substitution. Corresponds to passwd_chroot_enable
+in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--pasv_addr_resolve"></a>`pasv_addr_resolve`
+
+Data type: `Optional[Boolean]`
+
+If true, `pasv_address` is resolved as a DNS name rather than an IP
+address. Corresponds to pasv_addr_resolve in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--pasv_promiscuous"></a>`pasv_promiscuous`
+
+Data type: `Optional[Boolean]`
+
+If true, vsftpd does not check that the IP address of the data
+connection matches the IP address of the control connection in PASV
+mode. Corresponds to pasv_promiscuous in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--port_enable"></a>`port_enable`
+
+Data type: `Optional[Boolean]`
+
+If true, PORT (active mode) style data connections are supported.
+Corresponds to port_enable in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--port_promiscuous"></a>`port_promiscuous`
+
+Data type: `Optional[Boolean]`
+
+If true, vsftpd does not check that the IP address of the data
+connection matches the IP address of the control connection in PORT
+mode. Corresponds to port_promiscuous in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--reverse_lookup_enable"></a>`reverse_lookup_enable`
+
+Data type: `Optional[Boolean]`
+
+If true, vsftpd will attempt to perform reverse DNS lookups on
+client IP addresses for logging and libwrap/tcpwrappers access
+control purposes. Corresponds to reverse_lookup_enable in
+vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--run_as_launching_user"></a>`run_as_launching_user`
+
+Data type: `Optional[Boolean]`
+
+If true, vsftpd drops the concept of a distinct vsftpd internal
+(typically 'ftp') user, and instead impersonates the user that
+launches vsftpd for all vsftpd activity. Corresponds to
+run_as_launching_user in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--secure_email_list_enable"></a>`secure_email_list_enable`
+
+Data type: `Optional[Boolean]`
+
+If true (and `deny_email_enable` is also true), anonymous logins
+using a password listed in `banned_email_file` are treated as an
+invalid login, rather than merely a denied one. Corresponds to
+secure_email_list_enable in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--session_support"></a>`session_support`
+
+Data type: `Optional[Boolean]`
+
+If true, vsftpd attempts to maintain and update utmp/wtmp log
+entries for FTP sessions. Corresponds to session_support in
+vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--setproctitle_enable"></a>`setproctitle_enable`
+
+Data type: `Optional[Boolean]`
+
+If true, vsftpd will report each session's status via the process
+title (as shown by tools such as `ps`), e.g. showing the client IP
+and current activity. Corresponds to setproctitle_enable in
+vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--ssl_sslv2"></a>`ssl_sslv2`
+
+Data type: `Boolean`
+
+If true, permit SSL v2 protocol connections. Corresponds to
+ssl_sslv2 in vsftpd.conf.
+
+Default value: `false`
+
+##### <a name="-vsftpd--config--ssl_sslv3"></a>`ssl_sslv3`
+
+Data type: `Boolean`
+
+If true, permit SSL v3 protocol connections. Corresponds to
+ssl_sslv3 in vsftpd.conf.
+
+Default value: `false`
+
+##### <a name="-vsftpd--config--ssl_tlsv1"></a>`ssl_tlsv1`
+
+Data type: `Boolean`
+
+If true, permit TLS v1.0 protocol connections. Corresponds to
+ssl_tlsv1 in vsftpd.conf.
+
+Default value: `false`
+
+##### <a name="-vsftpd--config--ssl_tlsv1_1"></a>`ssl_tlsv1_1`
+
+Data type: `Boolean`
+
+If true, permit TLS v1.1 protocol connections. Corresponds to
+ssl_tlsv1_1 in vsftpd.conf.
+
+Default value: `false`
+
+##### <a name="-vsftpd--config--ssl_tlsv1_2"></a>`ssl_tlsv1_2`
+
+Data type: `Boolean`
+
+If true, permit TLS v1.2 protocol connections. Corresponds to
+ssl_tlsv1_2 in vsftpd.conf.
+
+Default value: `true`
+
+##### <a name="-vsftpd--config--syslog_enable"></a>`syslog_enable`
+
+Data type: `Boolean`
+
+If true (and `xferlog_enable` is also true), vsftpd will log to
+syslog rather than to the file specified by `vsftpd_log_file`.
+Corresponds to syslog_enable in vsftpd.conf.
+
+Default value: `true`
+
+##### <a name="-vsftpd--config--text_userdb_names"></a>`text_userdb_names`
+
+Data type: `Optional[Boolean]`
+
+If true, textual usernames and group names are used in the output
+of directory listings, rather than numeric IDs, even when a
+NIS/remote user/group database is in use. Corresponds to
+text_userdb_names in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--tilde_user_enable"></a>`tilde_user_enable`
+
+Data type: `Optional[Boolean]`
+
+If true, vsftpd supports "~<user>" syntax for indicating the home
+directory of a user, wherever the client specifies a file path.
+Corresponds to tilde_user_enable in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--use_localtime"></a>`use_localtime`
+
+Data type: `Optional[Boolean]`
+
+If true, vsftpd will display directory listing times, and use for
+the purposes of MDTM, in your machine's local time zone, rather
+than GMT. Corresponds to use_localtime in vsftpd.conf.
+
+Default value: `undef`
+
+##### <a name="-vsftpd--config--use_sendfile"></a>`use_sendfile`
+
+Data type: `Optional[Boolean]`
+
+If false, vsftpd will not use the sendfile() system call to
+transmit files to clients. Corresponds to use_sendfile in
+vsftpd.conf.
+
+Default value: `undef`
 
 ##### <a name="-vsftpd--config--userlist_log"></a>`userlist_log`
 
 Data type: `Boolean`
 
-
+If true, vsftpd will log denied login attempts (per userlist_deny)
+from users named in the `vsftpd::user_list`. Corresponds to
+userlist_log in vsftpd.conf.
 
 Default value: `true`
 
@@ -948,7 +1060,9 @@ Default value: `true`
 
 Data type: `Optional[Boolean]`
 
-
+If true, virtual users use the same privileges as local users,
+rather than the (more restricted) privileges of anonymous users.
+Corresponds to virtual_use_local_privs in vsftpd.conf.
 
 Default value: `undef`
 
@@ -956,7 +1070,9 @@ Default value: `undef`
 
 Data type: `Boolean`
 
-
+If true, FTP commands which change the filesystem are permitted,
+e.g. STOR, DELE, RNFR, RNTO, MKD, RMD, APPE, and SITE. Corresponds
+to write_enable in vsftpd.conf.
 
 Default value: `true`
 
@@ -964,7 +1080,9 @@ Default value: `true`
 
 Data type: `Boolean`
 
-
+If true, vsftpd will log details of uploads/downloads to the log
+file specified by `vsftpd_log_file` or `xferlog_file`. Corresponds
+to xferlog_enable in vsftpd.conf.
 
 Default value: `true`
 
@@ -972,7 +1090,9 @@ Default value: `true`
 
 Data type: `Boolean`
 
-
+If true, vsftpd will log transfers in the standard wu-ftpd-style
+xferlog format, rather than vsftpd's own log format. Corresponds to
+xferlog_std_format in vsftpd.conf.
 
 Default value: `true`
 
@@ -980,7 +1100,9 @@ Default value: `true`
 
 Data type: `Optional[Integer]`
 
-
+The maximum time, in seconds, that a remote client is allowed to
+spend negotiating a PASV style data connection. Corresponds to
+accept_timeout in vsftpd.conf.
 
 Default value: `undef`
 
@@ -988,7 +1110,8 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+The maximum data transfer rate permitted, in bytes per second, for
+anonymous users. Corresponds to anon_max_rate in vsftpd.conf.
 
 Default value: `undef`
 
@@ -996,7 +1119,8 @@ Default value: `undef`
 
 Data type: `Optional[Simplib::Umask]`
 
-
+The umask used for file creation by anonymous users. Corresponds to
+anon_umask in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1004,7 +1128,9 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+The maximum time, in seconds, that a remote client is allowed to
+spend negotiating a PORT style data connection. Corresponds to
+connect_timeout in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1012,7 +1138,9 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+The maximum time, in seconds, that a data connection may stall for,
+with no data transfer, before vsftpd will terminate the connection.
+Corresponds to data_connection_timeout in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1020,7 +1148,8 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+The delay, in seconds, before responding to a failed login attempt.
+Corresponds to delay_failed_login in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1028,7 +1157,8 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+The delay, in seconds, before responding to a successful login
+attempt. Corresponds to delay_successful_login in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1036,7 +1166,9 @@ Default value: `undef`
 
 Data type: `Optional[Simplib::Umask]`
 
-
+The permissions with which any uploaded files are created (subject
+to the umask setting). Corresponds to file_open_mode in
+vsftpd.conf.
 
 Default value: `undef`
 
@@ -1044,7 +1176,9 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+The maximum time, in seconds, that a remote client may spend
+between FTP commands, before the session is closed. Corresponds to
+idle_session_timeout in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1052,7 +1186,9 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+The maximum data transfer rate permitted, in bytes per second, for
+local (authenticated) users. Corresponds to local_max_rate in
+vsftpd.conf.
 
 Default value: `undef`
 
@@ -1060,7 +1196,8 @@ Default value: `undef`
 
 Data type: `Simplib::Umask`
 
-
+The umask used for file creation by local (authenticated) users.
+Corresponds to local_umask in vsftpd.conf.
 
 Default value: `'022'`
 
@@ -1068,7 +1205,8 @@ Default value: `'022'`
 
 Data type: `Optional[Integer]`
 
-
+The maximum number of simultaneous clients permitted, beyond which
+connections are refused. Corresponds to max_clients in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1076,7 +1214,8 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+The maximum number of failed logins permitted before the client is
+disconnected. Corresponds to max_login_fails in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1084,7 +1223,8 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+The maximum number of simultaneous clients permitted from the same
+source IP address. Corresponds to max_per_ip in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1092,7 +1232,9 @@ Default value: `undef`
 
 Data type: `Optional[Integer]`
 
-
+The size, in bytes, of the chunks used by the underlying
+sendfile/write system calls used to transmit a file. Corresponds to
+trans_chunk_size in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1100,7 +1242,8 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The directory that vsftpd will try to change to after an anonymous
+login. Corresponds to anon_root in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1108,7 +1251,9 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-
+The path to the file which contains a list of anonymous email
+passwords which are denied access, when `deny_email_enable` is set.
+Corresponds to banned_email_file in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1116,7 +1261,9 @@ Default value: `undef`
 
 Data type: `Stdlib::Absolutepath`
 
-
+The path to a file whose contents are displayed to the connecting
+client before the login prompt. Corresponds to banner_file in
+vsftpd.conf.
 
 Default value: `'/etc/issue.net'`
 
@@ -1124,7 +1271,9 @@ Default value: `'/etc/issue.net'`
 
 Data type: `Optional[String]`
 
-
+The username to which uploaded anonymous files are attributed, when
+`chown_uploads` is set. Corresponds to chown_username in
+vsftpd.conf.
 
 Default value: `undef`
 
@@ -1132,7 +1281,9 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-
+The path to the file containing the list of local users evaluated
+by `chroot_list_enable`. Corresponds to chroot_list_file in
+vsftpd.conf.
 
 Default value: `undef`
 
@@ -1140,7 +1291,9 @@ Default value: `undef`
 
 Data type: `Optional[Array[String]]`
 
-
+Array of explicitly permitted FTP commands. If set, any FTP command
+not in this list is rejected. Corresponds to cmds_allowed in
+vsftpd.conf.
 
 Default value: `undef`
 
@@ -1148,7 +1301,9 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+A regular expression (or glob) applied against filenames; matching
+filenames are hidden from directory listings and access is denied.
+Corresponds to deny_file in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1156,7 +1311,8 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-
+Path and name of the DSA certificate file to use for SSL
+connections. Corresponds to dsa_cert_file in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1164,7 +1320,8 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-
+Path and name of the DSA private key file to use for SSL
+connections. Corresponds to dsa_private_key_file in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1172,7 +1329,10 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-
+The path to the file containing a list of anonymous email passwords
+which are permitted access, used in conjunction with
+`secure_email_list_enable`. Corresponds to email_password_file in
+vsftpd.conf.
 
 Default value: `undef`
 
@@ -1180,7 +1340,10 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+A regular expression (or glob) applied against filenames; matching
+filenames are hidden from directory listings, but access is still
+permitted if the exact name is known. Corresponds to hide_file in
+vsftpd.conf.
 
 Default value: `undef`
 
@@ -1188,7 +1351,9 @@ Default value: `undef`
 
 Data type: `Optional[Simplib::IP::V6]`
 
-
+The IPv6 address on which to listen for connections, if the
+standalone vsftpd is handling both IPv4 and IPv6. Corresponds to
+listen_address6 in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1196,7 +1361,8 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-
+The directory that vsftpd will try to change to after a local
+(authenticated) login. Corresponds to local_root in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1204,7 +1370,9 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-
+The filename which, if it exists in a newly entered directory, is
+displayed to the remote user when `dirmessage_enable` is set.
+Corresponds to message_file in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1212,7 +1380,9 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The unprivileged system user that vsftpd uses when it needs to
+change to an unprivileged user, e.g. for the anonymous or guest FTP
+account. Corresponds to nopriv_user in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1220,7 +1390,9 @@ Default value: `undef`
 
 Data type: `Optional[Simplib::Host]`
 
-
+The IP address (or resolvable name, with `pasv_addr_resolve`) to
+report to clients as the address to connect to for PASV style data
+connections. Corresponds to pasv_address in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1228,15 +1400,20 @@ Default value: `undef`
 
 Data type: `Boolean`
 
+If true, validate the client SSL certificate. Defaults to the value
+of the `vsftpd::validate_cert` parameter. Corresponds to
+validate_cert in vsftpd.conf.
 
-
-Default value: `$::vsftpd::validate_cert`
+Default value: `$vsftpd::validate_cert`
 
 ##### <a name="-vsftpd--config--secure_chroot_dir"></a>`secure_chroot_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-
+The path to an empty directory, not writable by the ftp user, used
+by vsftpd as a secure chroot jail for various operations which do
+not require access to the filesystem. Corresponds to
+secure_chroot_dir in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1244,7 +1421,9 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-
+The path to a directory containing per-user configuration override
+files, named after the local username. Corresponds to
+user_config_dir in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1252,7 +1431,9 @@ Default value: `undef`
 
 Data type: `Optional[String]`
 
-
+The string which, when found in various path options (such as
+`local_root`), is substituted with the local username. Corresponds
+to user_sub_token in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1260,7 +1441,9 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-
+The path to the file to which vsftpd will write its standard-format
+log, when `xferlog_std_format` is false. Corresponds to
+vsftpd_log_file in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1268,7 +1451,9 @@ Default value: `undef`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
-
+The path to the file to which vsftpd will write its wu-ftpd-style
+xferlog, when `xferlog_std_format` is true. Corresponds to
+xferlog_file in vsftpd.conf.
 
 Default value: `undef`
 
@@ -1276,7 +1461,9 @@ Default value: `undef`
 
 Data type: `String`
 
-
+The minimum UID used to populate /etc/ftpusers (via the ftpusers
+define) with system accounts that should be denied FTP access. If
+empty, /etc/ftpusers is not managed.
 
 Default value: `'500'`
 
