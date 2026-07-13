@@ -7,9 +7,9 @@ class vsftpd::config::tcpwrappers {
 
   simplib::assert_optional_dependency($module_name, 'simp/tcpwrappers')
 
-  include '::tcpwrappers'
+  include 'tcpwrappers'
 
   tcpwrappers::allow { 'vsftpd':
-    pattern => $::vsftpd::trusted_nets
+    pattern => $vsftpd::trusted_nets
   }
 }
