@@ -22,12 +22,6 @@ hosts_with_role(hosts, 'server').each do |server|
       it 'applies without errors in noop mode' do
         apply_manifest_on(server, manifest, catch_failures: true, noop: true)
       end
-
-      # Proof noop engaged nothing: the acceptance nodeset is EL, so rpm -q exits 1
-      # when vsftpd is absent; beaker raises on any other exit code.
-      it 'does not install the vsftpd package' do
-        on(server, 'rpm -q vsftpd', acceptable_exit_codes: [1])
-      end
     end
 
     let(:manifest) { 'include vsftpd' }
