@@ -1510,4 +1510,3 @@ Ensures the vsftpd service is running.
 ### <a name="vsftpd--users"></a>`vsftpd::users`
 
 Manages the vsftpd group and user.
-
