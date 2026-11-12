@@ -144,7 +144,7 @@ used only when the corresponding feature toggle is on (see Gotchas):
 - `simp/tcpwrappers` `>= 6.2.0 < 7.0.0` — TCP Wrappers access control.
 
 Runtime requirement (from `metadata.json` `requirements`): `openvox
->= 8.0.0 < 9.0.0`. This module has migrated its runtime baseline to **OpenVox**.
+>= 8.0.0 < 10.0.0`. This module has migrated its runtime baseline to **OpenVox**.
 The `Gemfile` reflects the transition: its default version range is `['>= 8',
 '< 9']` (`Gemfile`), and it installs **both** the `openvox` and `puppet`
 gems via ``['openvox', 'puppet'].each do |gem_name|`` (`Gemfile`) — a
