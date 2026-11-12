@@ -34,6 +34,7 @@ The following parameters are available in the `vsftpd` class:
 * [`pki`](#-vsftpd--pki)
 * [`tcpwrappers`](#-vsftpd--tcpwrappers)
 * [`haveged`](#-vsftpd--haveged)
+* [`rngd`](#-vsftpd--rngd)
 * [`cipher_suite`](#-vsftpd--cipher_suite)
 * [`package_ensure`](#-vsftpd--package_ensure)
 * [`vsftpd_user`](#-vsftpd--vsftpd_user)
@@ -106,9 +107,25 @@ Default value: `simplib::lookup('simp_options::tcpwrappers', { 'default_value' =
 
 Data type: `Boolean`
 
-If true, include ::haveged to assist with entropy generation.
+Deprecated. If true, include ::haveged to assist with entropy generation.
+
+`simp/haveged` is an optional dependency and must be installed separately.
+Use `rngd` instead.
 
 Default value: `simplib::lookup('simp_options::haveged', { 'default_value' => false })`
+
+##### <a name="-vsftpd--rngd"></a>`rngd`
+
+Data type: `Boolean`
+
+If true, include ::rngd to assist with entropy generation. Only applies
+when `ssl_enable` is true.
+
+`simp/rngd` is an optional dependency and must be installed separately.
+By default `rngd` only installs `rng-tools`; set `rngd::service_ensure`
+and `rngd::service_enable` to manage the service.
+
+Default value: `false`
 
 ##### <a name="-vsftpd--cipher_suite"></a>`cipher_suite`
 
@@ -1493,3 +1510,4 @@ Ensures the vsftpd service is running.
 ### <a name="vsftpd--users"></a>`vsftpd::users`
 
 Manages the vsftpd group and user.
+

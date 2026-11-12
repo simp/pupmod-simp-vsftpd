@@ -1,3 +1,10 @@
+* Thu Nov 12 2026 Steven Pritchard <steve@sicura.us> - 9.2.0
+- Add `vsftpd::rngd` to include the `rngd` class for entropy generation when
+  `ssl_enable` is true
+- Deprecate `vsftpd::haveged` (and its `simp_options::haveged` default); it
+  will be removed in the next major release
+- `simp/rngd` is a new optional dependency; `simp/haveged` remains optional
+
 * Thu Oct 08 2026 Steven Pritchard <steve@sicura.us> - 9.1.0
 - Add support for OpenVox 9
 - Update metadata.json dependency ranges from the Forge

@@ -16,6 +16,7 @@ describe 'vsftpd' do
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('vsftpd') }
         it { is_expected.not_to contain_class('haveged') }
+        it { is_expected.not_to contain_class('rngd') }
         it { is_expected.to contain_class('vsftpd::install') }
         it { is_expected.to contain_class('vsftpd::config') }
         it { is_expected.to contain_class('vsftpd::service') }
@@ -50,6 +51,23 @@ describe 'vsftpd' do
 
           it { is_expected.to compile.with_all_deps }
           it { is_expected.not_to contain_class('haveged') }
+        end
+      end
+
+      context 'with rngd enabled' do
+        context 'with ssl enabled (by default)' do
+          let(:params) { { rngd: true } }
+
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.to contain_class('rngd') }
+          it { is_expected.not_to contain_class('haveged') }
+        end
+
+        context 'with ssl not enabled' do
+          let(:params) { { rngd: true, ssl_enable: false } }
+
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.not_to contain_class('rngd') }
         end
       end
 
