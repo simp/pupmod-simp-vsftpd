@@ -27,7 +27,20 @@
 #   vsftpd.conf to true.
 #
 # @param haveged
-#   If true, include ::haveged to assist with entropy generation.
+#   Deprecated. If true, include ::haveged to assist with entropy generation.
+#
+#   Defaults to `simp_options::haveged`, unless `rngd` is true.
+#
+#   `simp/haveged` is an optional dependency and must be installed separately.
+#   Use `rngd` instead.
+#
+# @param rngd
+#   If true, include ::rngd to assist with entropy generation. Only applies
+#   when `ssl_enable` is true.
+#
+#   `simp/rngd` is an optional dependency and must be installed separately.
+#   By default `rngd` only installs `rng-tools`; set `rngd::service_ensure`
+#   and `rngd::service_enable` to manage the service.
 #
 # @param cipher_suite
 #   OpenSSL cipher suite to use.
@@ -134,7 +147,8 @@ class vsftpd (
   Variant[Enum['simp'],Boolean] $pki               = simplib::lookup('simp_options::pki', { 'default_value' => false }),
   Boolean                       $tcpwrappers       = simplib::lookup('simp_options::tcpwrappers', { 'default_value' => false }),
   Simplib::Netlist              $trusted_nets      = simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1','::1'] }),
-  Boolean                       $haveged           = simplib::lookup('simp_options::haveged', { 'default_value' => false }),
+  Boolean                       $rngd              = false,
+  Boolean                       $haveged           = (simplib::lookup('simp_options::haveged', { 'default_value' => false }) and !$rngd),
   Array[String]                 $cipher_suite      = simplib::lookup('simp_options::openssl::cipher_suite', { 'default_value' => ['DEFAULT','!MEDIUM'] }),
   String                        $package_ensure    = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
 
@@ -161,7 +175,15 @@ class vsftpd (
   Integer                       $vsftpd_uid        = 14,
   String                        $vsftpd_user       = 'ftp',
 ) {
+  if $rngd and $ssl_enable {
+    simplib::assert_optional_dependency($module_name, 'simp/rngd')
+
+    include 'rngd'
+  }
+
   if $haveged and $ssl_enable {
+    deprecation('vsftpd::haveged', "${module_name}: 'vsftpd::haveged' (and 'simp_options::haveged') is deprecated and will be removed in the next major release. Use 'vsftpd::rngd' instead.", false)
+
     simplib::assert_optional_dependency($module_name, 'simp/haveged')
 
     include 'haveged'

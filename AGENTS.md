@@ -60,9 +60,10 @@ are all `false` (`config.pp`). The OpenSSL cipher suite comes from
 - **Each optional integration is double-gated.** Every optional dependency is
   declared optional in `metadata.json` (`simp.optional_dependencies`) and is
   asserted with `simplib::assert_optional_dependency` *only when its feature
-  toggle is on* — never hard-`include`d unconditionally. The four assert sites:
-  - `simp/haveged` — `init.pp`, inside `if $haveged and $ssl_enable`
-    (`init.pp`).
+  toggle is on* — never hard-`include`d unconditionally. The assert sites:
+  - `simp/rngd` — `init.pp`, inside `if $rngd and $ssl_enable` (`init.pp`).
+  - `simp/haveged` (deprecated) — `init.pp`, inside
+    `if $haveged and $ssl_enable` (`init.pp`); emits a `deprecation()` warning.
   - `simp/iptables` — `config/firewall.pp`, inside `if $vsftpd::listen_ipv4`
     (`config/firewall.pp`); the firewall class itself is only included when
     `$firewall` is true (`init.pp`).
@@ -74,8 +75,9 @@ are all `false` (`config.pp`). The OpenSSL cipher suite comes from
   `pki::copy`; `true` copies certs via `pki::copy` *without* including pki;
   `false` does neither and you must set `app_pki_*` yourself
   (`config.pp`).
-- **`haveged` entropy is only pulled in when SSL is also enabled** — the guard is
-  `if $haveged and $ssl_enable` (`init.pp`), because the entropy is for TLS.
+- **`rngd` (and deprecated `haveged`) entropy is only pulled in when SSL is also
+  enabled** — the guard is `if $rngd and $ssl_enable` (`init.pp`), because the
+  entropy is for TLS.
 - **`listen_ipv4` and `config::listen_ipv6` are mutually exclusive** — setting
   both `fail()`s at compile time (`config.pp`; note the `exculsive`
   typo in the message, left as-is).
@@ -123,24 +125,26 @@ assuming `simp_options` is in the catalog.
 
 Module dependencies (from `metadata.json`):
 
-- `simp/simplib` `>= 4.9.0 < 6.0.0` — provides `simplib::lookup`,
+- `simp/simplib` `>= 4.9.0 < 8.0.0` — provides `simplib::lookup`,
   `simplib::assert_optional_dependency`, the `Simplib::*` data types
   (`Netlist`, `Port`, `IP::V4`, `IP::V6`, `Host`, `Umask`) used across the
   manifests, and the `ftpusers` type used in `config.pp`.
-- `puppetlabs/stdlib` `>= 8.0.0 < 10.0.0` — provides the `Stdlib::Absolutepath`
+- `puppetlabs/stdlib` `>= 9.2.0 < 11.0.0` — provides the `Stdlib::Absolutepath`
   type and `empty()`.
 
 Optional dependencies (from `metadata.json` `simp.optional_dependencies`), each
 used only when the corresponding feature toggle is on (see Gotchas):
 
-- `simp/haveged` `>= 0.4.5 < 1.0.0` — entropy generation for TLS.
-- `simp/iptables` `>= 6.5.3 < 9.0.0` — firewall rules
+- `simp/rngd` `>= 0.2.0 < 1.0.0` — entropy generation for TLS.
+- `simp/haveged` `>= 0.4.5 < 1.0.0` — deprecated; entropy generation for TLS
+  via `vsftpd::haveged`.
+- `simp/iptables` `>= 6.5.3 < 10.0.0` — firewall rules
   (`iptables::listen::tcp_stateful`).
 - `simp/pki` `>= 6.2.0 < 8.0.0` — TLS cert distribution via `pki::copy`.
 - `simp/tcpwrappers` `>= 6.2.0 < 7.0.0` — TCP Wrappers access control.
 
 Runtime requirement (from `metadata.json` `requirements`): `openvox
->= 8.0.0 < 9.0.0`. This module has migrated its runtime baseline to **OpenVox**.
+>= 8.0.0 < 10.0.0`. This module has migrated its runtime baseline to **OpenVox**.
 The `Gemfile` reflects the transition: its default version range is `['>= 8',
 '< 9']` (`Gemfile`), and it installs **both** the `openvox` and `puppet`
 gems via ``['openvox', 'puppet'].each do |gem_name|`` (`Gemfile`) — a
@@ -239,7 +243,7 @@ Puppet/OpenVox test range is `['>= 8', '< 9']` (`Gemfile`).
 - **Route SIMP feature toggles through
   `simplib::lookup('simp_options::*', { 'default_value' => ... })`** with an
   explicit default rather than assuming `simp_options` is included.
-- **Guard every optional integration** (`haveged`, `iptables`, `pki`,
+- **Guard every optional integration** (`rngd`, `haveged`, `iptables`, `pki`,
   `tcpwrappers`) with `simplib::assert_optional_dependency` behind its feature
   toggle — declare it in `metadata.json` `simp.optional_dependencies`, never
   hard-`include` it unconditionally.

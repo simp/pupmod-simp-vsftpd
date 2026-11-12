@@ -1,3 +1,14 @@
+* Thu Nov 12 2026 Steven Pritchard <steve@sicura.us> - 9.2.0
+- Add `vsftpd::rngd` to include the `rngd` class for entropy generation when
+  `ssl_enable` is true
+- Deprecate `vsftpd::haveged` (and its `simp_options::haveged` default); it
+  will be removed in the next major release
+- `vsftpd::haveged` now defaults to `false` when `vsftpd::rngd` is `true`,
+  even if `simp_options::haveged` is `true`
+- `simp/rngd` is a new optional dependency; `simp/haveged` remains optional
+- Require `puppetlabs/stdlib` >= 9.2.0, for the 3-argument `deprecation()`.
+  Environments on stdlib 9.0.x or 9.1.x must upgrade stdlib.
+
 * Thu Oct 08 2026 Steven Pritchard <steve@sicura.us> - 9.1.0
 - Add support for OpenVox 9
 - Update metadata.json dependency ranges from the Forge
