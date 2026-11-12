@@ -71,6 +71,24 @@ describe 'vsftpd' do
         end
       end
 
+      context 'with simp_options::haveged true' do
+        let(:hieradata) { 'simp_options_haveged' }
+
+        context 'by default' do
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.to contain_class('haveged') }
+          it { is_expected.not_to contain_class('rngd') }
+        end
+
+        context 'with rngd enabled' do
+          let(:params) { { rngd: true } }
+
+          it { is_expected.to compile.with_all_deps }
+          it { is_expected.to contain_class('rngd') }
+          it { is_expected.not_to contain_class('haveged') }
+        end
+      end
+
       context 'when customizing install' do
         context 'when not managing vsftpd group' do
           let(:params) { { manage_group: false } }

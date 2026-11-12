@@ -29,6 +29,8 @@
 # @param haveged
 #   Deprecated. If true, include ::haveged to assist with entropy generation.
 #
+#   Defaults to `simp_options::haveged`, unless `rngd` is true.
+#
 #   `simp/haveged` is an optional dependency and must be installed separately.
 #   Use `rngd` instead.
 #
@@ -145,8 +147,8 @@ class vsftpd (
   Variant[Enum['simp'],Boolean] $pki               = simplib::lookup('simp_options::pki', { 'default_value' => false }),
   Boolean                       $tcpwrappers       = simplib::lookup('simp_options::tcpwrappers', { 'default_value' => false }),
   Simplib::Netlist              $trusted_nets      = simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1','::1'] }),
-  Boolean                       $haveged           = simplib::lookup('simp_options::haveged', { 'default_value' => false }),
   Boolean                       $rngd              = false,
+  Boolean                       $haveged           = (simplib::lookup('simp_options::haveged', { 'default_value' => false }) and !$rngd),
   Array[String]                 $cipher_suite      = simplib::lookup('simp_options::openssl::cipher_suite', { 'default_value' => ['DEFAULT','!MEDIUM'] }),
   String                        $package_ensure    = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
 

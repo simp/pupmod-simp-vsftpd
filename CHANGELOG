@@ -3,7 +3,11 @@
   `ssl_enable` is true
 - Deprecate `vsftpd::haveged` (and its `simp_options::haveged` default); it
   will be removed in the next major release
+- `vsftpd::haveged` now defaults to `false` when `vsftpd::rngd` is `true`,
+  even if `simp_options::haveged` is `true`
 - `simp/rngd` is a new optional dependency; `simp/haveged` remains optional
+- Raise the `puppetlabs/stdlib` floor to 9.2.0, for the 3-argument
+  `deprecation()`. Requiring OpenVox 8 already ruled out stdlib 8.x
 
 * Thu Oct 08 2026 Steven Pritchard <steve@sicura.us> - 9.1.0
 - Add support for OpenVox 9
