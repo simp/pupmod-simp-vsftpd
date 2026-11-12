@@ -125,11 +125,11 @@ assuming `simp_options` is in the catalog.
 
 Module dependencies (from `metadata.json`):
 
-- `simp/simplib` `>= 4.9.0 < 6.0.0` — provides `simplib::lookup`,
+- `simp/simplib` `>= 4.9.0 < 8.0.0` — provides `simplib::lookup`,
   `simplib::assert_optional_dependency`, the `Simplib::*` data types
   (`Netlist`, `Port`, `IP::V4`, `IP::V6`, `Host`, `Umask`) used across the
   manifests, and the `ftpusers` type used in `config.pp`.
-- `puppetlabs/stdlib` `>= 8.0.0 < 10.0.0` — provides the `Stdlib::Absolutepath`
+- `puppetlabs/stdlib` `>= 9.2.0 < 11.0.0` — provides the `Stdlib::Absolutepath`
   type and `empty()`.
 
 Optional dependencies (from `metadata.json` `simp.optional_dependencies`), each
@@ -138,7 +138,7 @@ used only when the corresponding feature toggle is on (see Gotchas):
 - `simp/rngd` `>= 0.2.0 < 1.0.0` — entropy generation for TLS.
 - `simp/haveged` `>= 0.4.5 < 1.0.0` — deprecated; entropy generation for TLS
   via `vsftpd::haveged`.
-- `simp/iptables` `>= 6.5.3 < 9.0.0` — firewall rules
+- `simp/iptables` `>= 6.5.3 < 10.0.0` — firewall rules
   (`iptables::listen::tcp_stateful`).
 - `simp/pki` `>= 6.2.0 < 8.0.0` — TLS cert distribution via `pki::copy`.
 - `simp/tcpwrappers` `>= 6.2.0 < 7.0.0` — TCP Wrappers access control.
