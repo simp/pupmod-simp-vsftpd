@@ -1,6 +1,6 @@
 {
   "name": "simp-vsftpd",
-  "version": "9.2.0",
+  "version": "10.0.0",
   "author": "SIMP Team",
   "summary": "Manage vsftpd",
   "license": "Apache-2.0",
@@ -43,10 +43,6 @@
       {
         "name": "simp/rngd",
         "version_requirement": ">= 0.2.0 < 1.0.0"
-      },
-      {
-        "name": "simp/tcpwrappers",
-        "version_requirement": ">= 6.2.0 < 7.0.0"
       }
     ]
   },

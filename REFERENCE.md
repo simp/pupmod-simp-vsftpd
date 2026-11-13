@@ -9,7 +9,6 @@
 * [`vsftpd`](#vsftpd): This class configures a vsftpd server.  It ensures that the appropriate files are in the appropriate places and synchronizes the external mat
 * [`vsftpd::config`](#vsftpd--config): This class provides a method for setting up the main body of /etc/vsftpd/vsftpd.conf.  * The rest of the parameters can be found on the vsftp
 * [`vsftpd::config::firewall`](#vsftpd--config--firewall): This class sets up the appropriate IPtables rules based on the value of $fw_rules.  By default, it will allow access only to localhost, you w
-* [`vsftpd::config::tcpwrappers`](#vsftpd--config--tcpwrappers): Sets up tcpwrappers for vsfptd.
 * [`vsftpd::install`](#vsftpd--install): Installs vsftpd and optionally manages the vsftpd group and user.
 * [`vsftpd::service`](#vsftpd--service): Ensures the vsftpd service is running.
 * [`vsftpd::users`](#vsftpd--users): Manages the vsftpd group and user.
@@ -32,7 +31,6 @@ The following parameters are available in the `vsftpd` class:
 * [`trusted_nets`](#-vsftpd--trusted_nets)
 * [`firewall`](#-vsftpd--firewall)
 * [`pki`](#-vsftpd--pki)
-* [`tcpwrappers`](#-vsftpd--tcpwrappers)
 * [`haveged`](#-vsftpd--haveged)
 * [`rngd`](#-vsftpd--rngd)
 * [`cipher_suite`](#-vsftpd--cipher_suite)
@@ -92,16 +90,6 @@ Data type: `Variant[Enum['simp'],Boolean]`
   * app_pki_ca_dir
 
 Default value: `simplib::lookup('simp_options::pki', { 'default_value' => false })`
-
-##### <a name="-vsftpd--tcpwrappers"></a>`tcpwrappers`
-
-Data type: `Boolean`
-
-If true, use SIMP's ::tcpwrappers to configure TCP Wrappers to
-accommodate <%= metadata.name %> and set 'tcp_wrappers' value in
-vsftpd.conf to true.
-
-Default value: `simplib::lookup('simp_options::tcpwrappers', { 'default_value' => false })`
 
 ##### <a name="-vsftpd--haveged"></a>`haveged`
 
@@ -1495,10 +1483,6 @@ By default, it will allow access only to localhost, you will need to
 define an array at fw_rules to add additional hosts.
 
 Localhost is always listed as a host that is allowed to access the system.
-
-### <a name="vsftpd--config--tcpwrappers"></a>`vsftpd::config::tcpwrappers`
-
-Sets up tcpwrappers for vsfptd.
 
 ### <a name="vsftpd--install"></a>`vsftpd::install`
 
