@@ -185,7 +185,6 @@ describe 'vsftpd' do
         end
         it { is_expected.to contain_file('/etc/pki/simp_apps/vsftpd/x509') }
       end
-
     end
   end
 end
