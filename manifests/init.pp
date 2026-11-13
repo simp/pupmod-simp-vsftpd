@@ -22,7 +22,20 @@
 #     * app_pki_ca_dir
 #
 # @param haveged
-#   If true, include ::haveged to assist with entropy generation.
+#   Deprecated. If true, include ::haveged to assist with entropy generation.
+#
+#   Defaults to `simp_options::haveged`, unless `rngd` is true.
+#
+#   `simp/haveged` is an optional dependency and must be installed separately.
+#   Use `rngd` instead.
+#
+# @param rngd
+#   If true, include ::rngd to assist with entropy generation. Only applies
+#   when `ssl_enable` is true.
+#
+#   `simp/rngd` is an optional dependency and must be installed separately.
+#   By default `rngd` only installs `rng-tools`; set `rngd::service_ensure`
+#   and `rngd::service_enable` to manage the service.
 #
 # @param cipher_suite
 #   OpenSSL cipher suite to use.
@@ -33,7 +46,7 @@
 #
 # @param package_ensure The ensure status of the vsftpd package
 #
-# @param vsfptd_user
+# @param vsftpd_user
 #   Set the user for the vsftpd service.
 #
 # @param vsftpd_group
@@ -51,6 +64,72 @@
 # @param manage_group
 #   Manage vsftpd group.
 #
+# @param ftp_data_port
+#   The port used for the data connection when `port_enable` is in effect
+#   (active mode FTP). Corresponds to ftp_data_port in vsftpd.conf.
+#
+# @param listen_address
+#   IPv4 address to bind the listening socket to, if the machine has
+#   more than one IPv4 address. Corresponds to listen_address in vsftpd.conf.
+#
+# @param listen_ipv4
+#   If true, put the server into standalone mode listening on an IPv4
+#   socket. Corresponds to the `listen` setting in vsftpd.conf.
+#
+# @param listen_port
+#   The port on which the FTP server listens. Corresponds to listen_port
+#   in vsftpd.conf.
+#
+# @param local_enable
+#   If true, local users are enabled and permitted to log in. Corresponds
+#   to local_enable in vsftpd.conf.
+#
+# @param pasv_enable
+#   If true, PASV (passive mode) data connections are permitted.
+#   Corresponds to pasv_enable in vsftpd.conf.
+#
+# @param pasv_max_port
+#   The maximum port number to allocate for PASV style data connections.
+#   Corresponds to pasv_max_port in vsftpd.conf.
+#
+# @param pasv_min_port
+#   The minimum port number to allocate for PASV style data connections.
+#   Corresponds to pasv_min_port in vsftpd.conf.
+#
+# @param ssl_enable
+#   If true, SSL/TLS support (and the associated SSL configuration in
+#   vsftpd::config) is enabled for the server. Corresponds to ssl_enable
+#   in vsftpd.conf.
+#
+# @param require_ssl_reuse
+#   If true, all SSL data connections are required to exhibit SSL session
+#   reuse, proving that they know the same master secret as the control
+#   channel. Corresponds to require_ssl_reuse in vsftpd.conf.
+#
+# @param userlist_deny
+#   If true, the users named in `user_list` are denied login; if false,
+#   only users in that list are permitted to log in. Corresponds to
+#   userlist_deny in vsftpd.conf.
+#
+# @param userlist_enable
+#   If true, vsftpd will load the list of usernames from `user_list` and
+#   deny (or, with userlist_deny=false, allow) logins before the user is
+#   asked for a password. Corresponds to userlist_enable in vsftpd.conf.
+#
+# @param user_list
+#   Array of usernames evaluated against `userlist_enable`/`userlist_deny`
+#   and, when local_enable is set, also denied straight away at the
+#   old-style `ftpusers` check. Written out to the file referenced by
+#   vsftpd::config::userlist_file.
+#
+# @param pam_service_name
+#   The name of the PAM service that vsftpd will use for authentication.
+#   Corresponds to pam_service_name in vsftpd.conf.
+#
+# @param validate_cert
+#   If true, validate the client SSL certificate. Passed through to
+#   vsftpd::config's validate_cert parameter, which is written to
+#   validate_cert in vsftpd.conf.
 #
 # One thing to note is that local users are forced to SSL for security
 # reasons.
@@ -62,7 +141,8 @@ class vsftpd (
   Boolean                       $firewall          = simplib::lookup('simp_options::firewall', { 'default_value' => false }),
   Variant[Enum['simp'],Boolean] $pki               = simplib::lookup('simp_options::pki', { 'default_value' => false }),
   Simplib::Netlist              $trusted_nets      = simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1','::1'] }),
-  Boolean                       $haveged           = simplib::lookup('simp_options::haveged', { 'default_value' => false }),
+  Boolean                       $rngd              = false,
+  Boolean                       $haveged           = (simplib::lookup('simp_options::haveged', { 'default_value' => false }) and !$rngd),
   Array[String]                 $cipher_suite      = simplib::lookup('simp_options::openssl::cipher_suite', { 'default_value' => ['DEFAULT','!MEDIUM'] }),
   String                        $package_ensure    = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
 
@@ -89,8 +169,15 @@ class vsftpd (
   Integer                       $vsftpd_uid        = 14,
   String                        $vsftpd_user       = 'ftp',
 ) {
+  if $rngd and $ssl_enable {
+    simplib::assert_optional_dependency($module_name, 'simp/rngd')
+
+    include 'rngd'
+  }
 
   if $haveged and $ssl_enable {
+    deprecation('vsftpd::haveged', "${module_name}: 'vsftpd::haveged' (and 'simp_options::haveged') is deprecated and will be removed in the next major release. Use 'vsftpd::rngd' instead.", false)
+
     simplib::assert_optional_dependency($module_name, 'simp/haveged')
 
     include 'haveged'

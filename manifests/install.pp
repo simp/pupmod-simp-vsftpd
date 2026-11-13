@@ -9,5 +9,4 @@ class vsftpd::install {
   package { 'vsftpd':
     ensure => $vsftpd::package_ensure
   }
-
 }

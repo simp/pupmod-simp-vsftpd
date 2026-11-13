@@ -1,12 +1,12 @@
 {
   "name": "simp-vsftpd",
-  "version": "7.11.1",
+  "version": "10.0.0",
   "author": "SIMP Team",
   "summary": "Manage vsftpd",
   "license": "Apache-2.0",
   "source": "https://github.com/simp/pupmod-simp-vsftpd",
   "project_page": "https://github.com/simp/pupmod-simp-vsftpd",
-  "issues_url": "https://simp-project.atlassian.net",
+  "issues_url": "https://github.com/simp/pupmod-simp-vsftpd/issues",
   "tags": [
     "simp",
     "vsftpd",
@@ -19,11 +19,11 @@
   "dependencies": [
     {
       "name": "simp/simplib",
-      "version_requirement": ">= 4.9.0 < 5.0.0"
+      "version_requirement": ">= 4.9.0 < 8.0.0"
     },
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 8.0.0 < 10.0.0"
+      "version_requirement": ">= 9.2.0 < 11.0.0"
     }
   ],
   "simp": {
@@ -34,11 +34,15 @@
       },
       {
         "name": "simp/iptables",
-        "version_requirement": ">= 6.5.3 < 8.0.0"
+        "version_requirement": ">= 6.5.3 < 10.0.0"
       },
       {
         "name": "simp/pki",
-        "version_requirement": ">= 6.2.0 < 7.0.0"
+        "version_requirement": ">= 6.2.0 < 8.0.0"
+      },
+      {
+        "name": "simp/rngd",
+        "version_requirement": ">= 0.2.0 < 1.0.0"
       }
     ]
   },
@@ -46,46 +50,47 @@
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "7",
-        "8",
-        "9"
+        "9",
+        "10"
       ]
     },
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "7",
         "8",
-        "9"
+        "9",
+        "10"
       ]
     },
     {
       "operatingsystem": "OracleLinux",
       "operatingsystemrelease": [
-        "7",
         "8",
-        "9"
+        "9",
+        "10"
       ]
     },
     {
       "operatingsystem": "Rocky",
       "operatingsystemrelease": [
         "8",
-        "9"
+        "9",
+        "10"
       ]
     },
     {
       "operatingsystem": "AlmaLinux",
       "operatingsystemrelease": [
         "8",
-        "9"
+        "9",
+        "10"
       ]
     }
   ],
   "requirements": [
     {
-      "name": "puppet",
-      "version_requirement": ">= 7.0.0 < 9.0.0"
+      "name": "openvox",
+      "version_requirement": ">= 8.0.0 < 10.0.0"
     }
   ]
 }

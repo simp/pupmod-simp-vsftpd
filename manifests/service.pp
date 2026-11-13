@@ -11,5 +11,4 @@ class vsftpd::service {
     hasrestart => true,
     hasstatus  => true,
   }
-
 }
