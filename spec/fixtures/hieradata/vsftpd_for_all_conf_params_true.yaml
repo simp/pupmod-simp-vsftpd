@@ -13,7 +13,6 @@ vsftpd::pasv_max_port: 15
 vsftpd::pasv_min_port: 14
 vsftpd::require_ssl_reuse: true
 vsftpd::ssl_enable: true
-vsftpd::tcpwrappers: true
 vsftpd::user_list:
  - 'foo'
  - 'bar'

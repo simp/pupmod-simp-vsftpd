@@ -31,9 +31,8 @@ vsftpd::users -> vsftpd::install -> vsftpd::config ~> vsftpd::service -> vsftpd
 - **`vsftpd::service`** (`manifests/service.pp`) — `service { 'vsftpd' }`
   running+enabled (`service.pp`).
 
-Two optional integrations are pulled in from `init.pp` only when their toggle is
-true: `vsftpd::config::firewall` (`init.pp`) and
-`vsftpd::config::tcpwrappers` (`init.pp`).
+One optional integration is pulled in from `init.pp` only when its toggle is
+true: `vsftpd::config::firewall` (`init.pp`).
 
 ### FTPS / TLS
 
@@ -51,11 +50,10 @@ are all `false` (`config.pp`). The OpenSSL cipher suite comes from
 ## Gotchas / non-obvious details
 
 - **The four worker classes are private; consumers use `include 'vsftpd'`.**
-  `vsftpd::install`, `vsftpd::config`, `vsftpd::service`,
-  `vsftpd::config::tcpwrappers`, and `vsftpd::config::firewall` each call
-  `assert_private()` (`install.pp`, `config.pp`, `service.pp`,
-  `config/tcpwrappers.pp`, `config/firewall.pp`), as does `vsftpd::users`
-  (`users.pp`) — 6 `assert_private()` sites in all. Only `vsftpd` (init.pp) is
+  `vsftpd::install`, `vsftpd::config`, `vsftpd::service`, and
+  `vsftpd::config::firewall` each call `assert_private()` (`install.pp`,
+  `config.pp`, `service.pp`, `config/firewall.pp`), as does `vsftpd::users`
+  (`users.pp`) — 5 `assert_private()` sites in all. Only `vsftpd` (init.pp) is
   public.
 - **Each optional integration is double-gated.** Every optional dependency is
   declared optional in `metadata.json` (`simp.optional_dependencies`) and is
@@ -67,8 +65,6 @@ are all `false` (`config.pp`). The OpenSSL cipher suite comes from
   - `simp/iptables` — `config/firewall.pp`, inside `if $vsftpd::listen_ipv4`
     (`config/firewall.pp`); the firewall class itself is only included when
     `$firewall` is true (`init.pp`).
-  - `simp/tcpwrappers` — `config/tcpwrappers.pp`; the class is only included
-    when `$tcpwrappers` is true (`init.pp`).
   - `simp/pki` — `config.pp`, inside `if $::vsftpd::pki` (`config.pp`).
 - **`$pki` is tri-state, not boolean.** `Variant[Enum['simp'],Boolean]`
   (`init.pp`): `'simp'` includes SIMP's pki module and copies certs via
@@ -111,7 +107,6 @@ The module routes all SIMP feature toggles through `simplib::lookup(...,
 |------|-----|-----------------|
 | `init.pp` | `simp_options::firewall` | `false` |
 | `init.pp` | `simp_options::pki` | `false` |
-| `init.pp` | `simp_options::tcpwrappers` | `false` |
 | `init.pp` | `simp_options::trusted_nets` | `['127.0.0.1','::1']` |
 | `init.pp` | `simp_options::haveged` | `false` |
 | `init.pp` | `simp_options::openssl::cipher_suite` | `['DEFAULT','!MEDIUM']` |
@@ -141,7 +136,6 @@ used only when the corresponding feature toggle is on (see Gotchas):
 - `simp/iptables` `>= 6.5.3 < 10.0.0` — firewall rules
   (`iptables::listen::tcp_stateful`).
 - `simp/pki` `>= 6.2.0 < 8.0.0` — TLS cert distribution via `pki::copy`.
-- `simp/tcpwrappers` `>= 6.2.0 < 7.0.0` — TCP Wrappers access control.
 
 Runtime requirement (from `metadata.json` `requirements`): `openvox
 >= 8.0.0 < 10.0.0`. This module has migrated its runtime baseline to **OpenVox**.
@@ -164,8 +158,6 @@ OracleLinux 8/9/10; Rocky 8/9/10; AlmaLinux 8/9/10.
   `/etc/ftpusers` management. Carries most vsftpd.conf-facing parameters.
 - `manifests/config/firewall.pp` — `vsftpd::config::firewall` (optional
   iptables rules; IPv4 only).
-- `manifests/config/tcpwrappers.pp` — `vsftpd::config::tcpwrappers` (optional
-  TCP Wrappers allow rule).
 - `manifests/service.pp` — `vsftpd::service` (the `vsftpd` service).
 - `manifests/users.pp` — `vsftpd::users` (the `ftp` group/user).
 - `templates/vsftpd.conf.erb` — the main `/etc/vsftpd/vsftpd.conf` template
@@ -243,8 +235,7 @@ Puppet/OpenVox test range is `['>= 8', '< 9']` (`Gemfile`).
 - **Route SIMP feature toggles through
   `simplib::lookup('simp_options::*', { 'default_value' => ... })`** with an
   explicit default rather than assuming `simp_options` is included.
-- **Guard every optional integration** (`rngd`, `haveged`, `iptables`, `pki`,
-  `tcpwrappers`) with `simplib::assert_optional_dependency` behind its feature
+- **Guard every optional integration** (`rngd`, `haveged`, `iptables`, `pki`) with `simplib::assert_optional_dependency` behind its feature
   toggle — declare it in `metadata.json` `simp.optional_dependencies`, never
   hard-`include` it unconditionally.
 - **Keep vsftpd.conf options driven from the ERB template.** Most options emit

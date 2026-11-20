@@ -73,7 +73,6 @@ describe 'vsftpd' do
             ssl_enable=YES
             require_ssl_reuse=YES
             syslog_enable=YES
-            tcp_wrappers=NO
             userlist_deny=YES
             userlist_enable=YES
             userlist_log=YES
@@ -182,7 +181,6 @@ describe 'vsftpd' do
             ssl_enable=YES
             require_ssl_reuse=YES
             syslog_enable=YES
-            tcp_wrappers=YES
             text_userdb_names=YES
             tilde_user_enable=YES
             use_localtime=YES
@@ -311,7 +309,6 @@ describe 'vsftpd' do
             ssl_enable=YES
             require_ssl_reuse=NO
             syslog_enable=NO
-            tcp_wrappers=NO
             text_userdb_names=NO
             tilde_user_enable=NO
             use_localtime=NO
