@@ -133,7 +133,7 @@ used only when the corresponding feature toggle is on (see Gotchas):
 - `simp/rngd` `>= 0.2.0 < 1.0.0` — entropy generation for TLS.
 - `simp/haveged` `>= 0.4.5 < 1.0.0` — deprecated; entropy generation for TLS
   via `vsftpd::haveged`.
-- `simp/iptables` `>= 6.5.3 < 10.0.0` — firewall rules
+- `simp/iptables` `>= 6.5.3 < 11.0.0` — firewall rules
   (`iptables::listen::tcp_stateful`).
 - `simp/pki` `>= 6.2.0 < 8.0.0` — TLS cert distribution via `pki::copy`.
 
