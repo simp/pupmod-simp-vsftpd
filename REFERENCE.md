@@ -908,9 +908,8 @@ Default value: `undef`
 Data type: `Optional[Boolean]`
 
 If true, vsftpd will attempt to perform reverse DNS lookups on
-client IP addresses for logging and libwrap/tcpwrappers access
-control purposes. Corresponds to reverse_lookup_enable in
-vsftpd.conf.
+client IP addresses for logging purposes. Corresponds to
+reverse_lookup_enable in vsftpd.conf.
 
 Default value: `undef`
 

@@ -1,3 +1,6 @@
+* Mon Nov 23 2026 Hazel Caballero <hazel@sicura.us> - 10.0.1
+- Added a "Breaking changes in 10.0.0" section to the README
+
 * Fri Nov 13 2026 Steven Pritchard <steve@sicura.us> - 10.0.0
 - BREAKING: Remove `vsftpd::tcpwrappers` and the `vsftpd::config::tcpwrappers`
   class. TCP Wrappers is not available on EL8 and later, and `simp/tcpwrappers`
