@@ -49,8 +49,11 @@ setting up TLS protected servers.
 The `vsftpd::tcpwrappers` parameter and the `vsftpd::config::tcpwrappers`
 class have been removed, and `vsftpd.conf` no longer sets `tcp_wrappers`.
 TCP Wrappers is not available on EL8 and later, and `simp/tcpwrappers` is
-archived. Remove any `vsftpd::tcpwrappers` setting from Hiera before
-upgrading.
+archived.
+
+Remove `tcpwrappers` from any resource-style `class { 'vsftpd': }`
+declaration; those fail to compile after the upgrade. A leftover
+`vsftpd::tcpwrappers` Hiera key is ignored and can be removed at any time.
 
 ## Usage
 
