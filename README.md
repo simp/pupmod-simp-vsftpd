@@ -11,6 +11,7 @@
 * [Overview](#overview)
 * [This is a SIMP module](#this-is-a-simp-module)
 * [Module Description](#module-description)
+* [Breaking changes in 10.0.0](#breaking-changes-in-1000)
 * [Usage](#usage)
   * [A Basic Anonymous FTP Server](#a-basic-anonymous-ftp-server)
   * [A TLS Protected FTP Server with Local Accounts](#a-tls-protected-ftp-server-with-local-accounts)
@@ -42,6 +43,14 @@ This module is optimally designed for use within a larger SIMP ecosystem, but it
 
 This module can be used for the configuration of vsftpd and includes support for
 setting up TLS protected servers.
+
+## Breaking changes in 10.0.0
+
+The `vsftpd::tcpwrappers` parameter and the `vsftpd::config::tcpwrappers`
+class have been removed, and `vsftpd.conf` no longer sets `tcp_wrappers`.
+TCP Wrappers is not available on EL8 and later, and `simp/tcpwrappers` is
+archived. Remove any `vsftpd::tcpwrappers` setting from Hiera before
+upgrading.
 
 ## Usage
 
